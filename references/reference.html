@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresa - Gestión Documental</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Inter, Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .header {
+            background: white;
+            padding: 24px 32px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .company-name {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .company-meta {
+            margin-top: 8px;
+            color: #6b7280;
+        }
+
+        .stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .stat-card {
+            background: #eef2ff;
+            padding: 16px;
+            border-radius: 12px;
+            min-width: 180px;
+        }
+
+        .stat-title {
+            font-size: 12px;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            font-weight: 600;
+        }
+
+        .workspace {
+            padding: 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .workspace:last-child {
+            border-bottom: none;
+        }
+
+        .workspace-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .position {
+            background: #f5f7fb;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .filters {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+        }
+
+        .employee-table {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f9fafb;
+        }
+
+        th {
+            text-align: left;
+            padding: 14px;
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #6b7280;
+        }
+
+        td {
+            padding: 16px 14px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: #eef2ff;
+            color: #4338ca;
+            font-size: 12px;
+        }
+
+        .link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-top">
+            <div>
+                <h1 class="company-name">Mar Azul S.A.</h1>
+                <div class="company-meta">
+                    RUC: 0999999999999 · Guayaquil · 235 empleados
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-title">Áreas</div>
+                <div class="stat-value">8</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Cargos</div>
+                <div class="stat-value">26</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Empleados</div>
+                <div class="stat-value">235</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Documentos</div>
+                <div class="stat-value">4.312</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout">
+
+        <aside class="sidebar">
+
+            <section class="card">
+                <div class="card-header">
+                    Áreas de trabajo
+                </div>
+
+                <div class="workspace">
+                    <div class="workspace-title">
+                        Producción
+                    </div>
+
+                    <div class="position">Supervisor</div>
+                    <div class="position">Operador</div>
+                    <div class="position">Inspector</div>
+                </div>
+
+                <div class="workspace">
+                    <div class="workspace-title">
+                        Recursos Humanos
+                    </div>
+
+                    <div class="position">Coordinador RRHH</div>
+                    <div class="position">Analista</div>
+                </div>
+
+                <div class="workspace">
+                    <div class="workspace-title">
+                        Calidad
+                    </div>
+
+                    <div class="position">Jefe de Calidad</div>
+                    <div class="position">Inspector</div>
+                </div>
+            </section>
+
+        </aside>
+
+        <main class="main">
+
+            <section class="filters">
+
+                <input type="text" placeholder="Buscar empleado...">
+
+                <select>
+                    <option>Todas las áreas</option>
+                    <option>Producción</option>
+                    <option>Calidad</option>
+                    <option>RRHH</option>
+                </select>
+
+                <select>
+                    <option>Todos los cargos</option>
+                    <option>Supervisor</option>
+                    <option>Operador</option>
+                    <option>Inspector</option>
+                </select>
+
+            </section>
+
+            <section class="employee-table">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Empleado</th>
+                            <th>Área</th>
+                            <th>Cargo</th>
+                            <th>Estado documental</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                Juan Pérez
+                            </td>
+                            <td>
+                                Producción
+                            </td>
+                            <td>
+                                Supervisor
+                            </td>
+                            <td>
+                                <span class="badge">
+                                    Actualizado
+                                </span>
+                            </td>
+                            <td>
+                                <a href="#" class="link">
+                                    Ver expediente →
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                María Gómez
+                            </td>
+                            <td>
+                                Calidad
+                            </td>
+                            <td>
+                                Inspector
+                            </td>
+                            <td>
+                                <span class="badge">
+                                    Actualizado
+                                </span>
+                            </td>
+                            <td>
+                                <a href="#" class="link">
+                                    Ver expediente →
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Pedro Torres
+                            </td>
+                            <td>
+                                Producción
+                            </td>
+                            <td>
+                                Operador
+                            </td>
+                            <td>
+                                <span class="badge">
+                                    Pendiente
+                                </span>
+                            </td>
+                            <td>
+                                <a href="#" class="link">
+                                    Ver expediente →
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Andrea López
+                            </td>
+                            <td>
+                                RRHH
+                            </td>
+                            <td>
+                                Analista
+                            </td>
+                            <td>
+                                <span class="badge">
+                                    Actualizado
+                                </span>
+                            </td>
+                            <td>
+                                <a href="#" class="link">
+                                    Ver expediente →
+                                </a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
