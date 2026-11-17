@@ -8,7 +8,8 @@
     <flux:table :paginate="$this->data">
         <flux:table.columns>
             <flux:table.column>Empresa</flux:table.column>
-            <flux:table.column>RUC</flux:table.column>
+            <flux:table.column>Riesgo</flux:table.column>
+            <flux:table.column>N. E.</flux:table.column>
             <flux:table.column>Email</flux:table.column>
             <flux:table.column></flux:table.column>
         </flux:table.columns>
@@ -16,7 +17,8 @@
             @foreach ($this->data as $company)
             <flux:table.row :key="$company->id">
                 <flux:table.cell>{{ $company->name }}</flux:table.cell>
-                <flux:table.cell class="whitespace-nowrap font-mono">{{ $company->ruc }}</flux:table.cell>
+                <flux:table.cell class="whitespace-nowrap font-mono">{{ $company->ciiu->level->label() }}</flux:table.cell>
+                <flux:table.cell class="whitespace-nowrap font-mono">{{ $company->employees()->count() }}</flux:table.cell>
                 <flux:table.cell variant="strong">{{ $company->email ?? '-' }}</flux:table.cell>
                 <flux:table.cell class="flex justify-end gap-2">
                     <flux:button variant="ghost" size="xs" icon="pencil"

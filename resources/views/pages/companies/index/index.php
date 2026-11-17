@@ -20,6 +20,6 @@ new #[Title('Empresas')] class extends Component {
     #[Computed]
     public function data()
     {
-        return Company::paginate(10);
+        return Company::orderBy('name')->paginate(10);
     }
 };

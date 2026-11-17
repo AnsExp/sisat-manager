@@ -28,7 +28,7 @@
 </table>
 
 @php
-    $company = App\Models\Company::find(1);
+    $company = App\Models\Company::find(2);
     $totalActivities = 0;
 @endphp
 
