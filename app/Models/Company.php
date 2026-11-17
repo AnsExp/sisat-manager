@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
  * @property string $email
  * @property Workspace[] $workspace
  * @property Employee[] $employees
+ * @property CompanyProcess[] $processes
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -35,5 +36,9 @@ class Company extends Model
     public function ciiu()
     {
         return $this->belongsTo(CIIU::class);
+    }
+
+    public function processes(){
+        return $this->hasMany(CompanyProcess::class);
     }
 }
