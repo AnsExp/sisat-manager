@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('company_processes', function (Blueprint $table) {
+        Schema::create('sisat_modules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained('companies')->nullOnDelete();
-            $table->string('name');
-            $table->boolean('checked')->default(false);
+            $table->string('name')->nullable(false);
+            $table->string('slug')->unique(true)->nullable(false);
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('company_processes');
+        Schema::dropIfExists('sisat_modules');
     }
 };

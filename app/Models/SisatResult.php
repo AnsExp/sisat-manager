@@ -8,25 +8,31 @@ use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
- * @property string $name
  * @property int $company_id
  * @property Company $company
- * @property bool $checked
+ * @property int $sisat_activity_id
+ * @property SisatActivity $sisatActivity
+ * @property array $results
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'company_id', 'checked'])]
-class CompanyProcess extends Model
+#[Fillable(['company_id', 'sisat_activity_id', 'results'])]
+class SisatResult extends Model
 {
     protected function casts()
     {
         return [
-            'checked' => 'boolean',
+            'results' => 'json',
         ];
     }
 
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function sisatActivity()
+    {
+        return $this->belongsTo(SisatActivity::class);
     }
 }

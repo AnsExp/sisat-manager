@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sisat_activity_metas', function (Blueprint $table) {
+        Schema::create('sisat_results', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sisat_activity_id')->nullable(false)->constrained('sisat_activities')->cascadeOnDelete();
-            $table->string('key')->nullable(false);
-            $table->text('value')->nullable(false);
+            $table->foreignId('company_id')->constrained('companies')->cascadeOnDelete();
+            $table->foreignId('sisat_activity_id')->constrained('sisat_activities')->cascadeOnDelete();
+            $table->jsonb('results')->nullable(false);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sisat_activity_metas');
+        Schema::dropIfExists('sisat_results');
     }
 };

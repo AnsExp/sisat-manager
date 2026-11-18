@@ -67,8 +67,8 @@ class CompanySeeder extends Seeder
     {
         $genders = [Gender::MALE->value, Gender::FEMALE->value];
 
-        foreach ([rand(1, 24), rand(25, 49), rand(50, 99), rand(100, 199), rand(200, 350)] as $employeesCount) {
-            foreach (RiskLevel::cases() as $riskLevel) {
+        foreach (RiskLevel::cases() as $riskLevel) {
+            foreach ([rand(1, 24), rand(25, 49), rand(50, 99), rand(100, 199), rand(200, 350)] as $employeesCount) {
                 $ciiuId = CIIU::where('level', $riskLevel->value)->inRandomOrder()->value('id');
                 $company = Company::create(
                     [

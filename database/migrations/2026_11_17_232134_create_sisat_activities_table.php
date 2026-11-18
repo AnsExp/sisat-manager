@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('sisat_activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->nullable(false)->constrained('companies')->cascadeOnDelete();
-            $table->string('module')->nullable(false);
-            $table->string('activity')->nullable(false);
-            $table->json('results')->nullable(false);
+            $table->foreignId('sisat_module_id')->nullable(false)->constrained('sisat_modules')->cascadeOnDelete();
+            $table->string('name')->nullable(false);
+            $table->string('slug')->nullable(false);
+            $table->string('responsable')->nullable(false);
+            $table->string('support')->nullable(true);
+            $table->jsonb('rules')->nullable(false);
             $table->timestamps();
         });
     }
