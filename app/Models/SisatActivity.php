@@ -35,4 +35,14 @@ class SisatActivity extends Model
     {
         return $this->belongsTo(SisatModule::class, 'sisat_module_id');
     }
+
+    public function results()
+    {
+        return $this->hasMany(SisatResult::class);
+    }
+
+    public static function findBySlug(string $slug)
+    {
+        return self::where('slug', $slug)->first();
+    }
 }

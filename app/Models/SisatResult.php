@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
  * @property int $company_id
  * @property Company $company
  * @property int $sisat_activity_id
- * @property SisatActivity $sisatActivity
+ * @property SisatActivity $activity
  * @property array $results
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -31,7 +31,7 @@ class SisatResult extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function sisatActivity()
+    public function activity()
     {
         return $this->belongsTo(SisatActivity::class);
     }

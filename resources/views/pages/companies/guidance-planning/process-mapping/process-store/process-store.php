@@ -1,8 +1,8 @@
 <?php
 
-use App\Models\CompanyProcess;
+use App\Models\SisatActivity;
+use App\Models\SisatResult;
 use Flux\Flux;
-use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -10,25 +10,28 @@ new class extends Component
 {
     public int $companyId = 0;
 
-    public ?int $processId = null;
+    public ?int $resultId = null;
 
     public ?string $name = null;
 
     #[On('load-process')]
-    public function loadProcess(int $companyId, ?int $processId = null)
+    public function loadProcess(int $companyId, ?int $resultId = null)
     {
         $this->companyId = $companyId;
-        $this->processId = $processId;
-        $this->name = $processId ? CompanyProcess::find($processId)?->name : null;
+        $this->resultId = $resultId;
+        $this->name = $resultId ? SisatResult::find($resultId)?->results['label'] : null;
 
         Flux::modal('process-store')->show();
     }
 
     public function submit()
     {
-        CompanyProcess::create([
+        SisatActivity::findBySlug('process_mapping')->results()->create([
             'company_id' => $this->companyId,
-            'name' => $this->name,
+            'results' => [
+                'label' => $this->name,
+                'checked' => false,
+            ],
         ]);
         $this->dispatch('processes-update');
         Flux::modal('process-store')->close();

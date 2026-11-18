@@ -10,6 +10,15 @@ class ProcessMapping implements ActivityItem
 {
     public function calculate(Company $company, SisatActivity $activity)
     {
-        return 0;
+        $results = $activity->results()->where('company_id', $company->id)->get();
+        $total = $results->count();
+        $checked = 0;
+        foreach ($results as $result) {
+            if ($result->results['checked']) {
+                $checked++;
+            }
+        }
+
+        return $checked / $total;
     }
 }

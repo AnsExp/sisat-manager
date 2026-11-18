@@ -22,12 +22,12 @@
     <flux:separator variant="subtle" />
     @foreach ($processes as $index => $process)
         <flux:field variant="inline">
-            <flux:checkbox :checked="$process->checked"
+            <flux:checkbox :checked="(bool)$process->results['checked']"
                 wire:click="toggleProcess({{ $process->id }}, $event.target.checked)" />
-            <flux:label>{{ $process->name }}</flux:label>
+            <flux:label>{{ $process->results['label'] }}</flux:label>
         </flux:field>
     @endforeach
     <flux:button wire:click="$dispatch('load-process',{companyId:{{ $company->id }}})">Agregar procedimiento
     </flux:button>
-    <livewire:pages::companies.guidance_planning.process_mapping.process-store />
+    <livewire:pages::companies.guidance-planning.process-mapping.process-store />
 </div>

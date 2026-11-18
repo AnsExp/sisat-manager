@@ -50,14 +50,14 @@
                                                 style="width: {{ $progress }}%"></div>
                                         </div>
                                         <span class="w-9 text-right font-mono text-xs tabular-nums text-zinc-500">
-                                            {{ $progress }}%
+                                            {{ number_format($progress, 2) }}%
                                         </span>
                                     </div>
 
                                     {{-- Botón enlace con navegación SPA de Livewire --}}
                                     @php
                                         // Construimos el nombre de la ruta dinámicamente
-                                        $routeName = 'companies.' . $module->slug . '.' . $activity->slug;
+                                        $routeName = str_replace('_', '-', 'companies.' . $module->slug . '.' . $activity->slug);
 
                                         // Verificamos si la ruta está registrada en el sistema; si no, usamos '#'
                                         $routeUrl = Route::has($routeName) ? route($routeName, $company) : '#';

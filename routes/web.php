@@ -10,7 +10,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('/companies')->group(function () {
 
         Route::prefix('/{company}/guidance_planning')->group(function () {
-            Route::livewire('/process_mapping', 'pages::companies.guidance_planning.process_mapping')->name('companies.guidance_planning.process_mapping');
+            Route::livewire('/process_mapping', 'pages::companies.guidance-planning.process-mapping')->name('companies.guidance-planning.process-mapping');
         });
 
         Route::livewire('/', 'pages::companies.index')->name('companies.index');
