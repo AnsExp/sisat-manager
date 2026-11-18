@@ -10,7 +10,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('/companies')->group(function () {
 
         Route::prefix('/{company}/guidance_planning')->group(function () {
-            Route::livewire('/process_mapping', 'pages::companies.guidance-planning.process-mapping')->name('companies.guidance-planning.process-mapping');
+            Route::livewire('/process_mapping', 'pages::companies.sisat.guidance-planning.process-mapping')->name('companies.guidance-planning.process-mapping');
+            Route::livewire('/general_diagnosis', 'pages::companies.sisat.guidance-planning.general-diagnosis')->name('companies.guidance-planning.general-diagnosis');
         });
 
         Route::livewire('/', 'pages::companies.index')->name('companies.index');

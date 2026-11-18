@@ -14,7 +14,7 @@
                     1. Orientación y Planificación
                 </flux:breadcrumbs.item>
                 <flux:breadcrumbs.item>
-                    Mapeo de procesos de la actividad laboral, métodos de trabajo (procedimientos).
+                    Mapeo de procesos de la actividad laboral, métodos de trabajo (procedimientos)
                 </flux:breadcrumbs.item>
             </flux:breadcrumbs>
         </flux:subheading>
@@ -29,5 +29,5 @@
     @endforeach
     <flux:button wire:click="$dispatch('load-process',{companyId:{{ $company->id }}})">Agregar procedimiento
     </flux:button>
-    <livewire:pages::companies.guidance-planning.process-mapping.process-store />
+    <livewire:pages::companies.sisat.guidance-planning.process-mapping.process-store />
 </div>
