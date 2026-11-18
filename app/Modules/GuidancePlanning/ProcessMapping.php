@@ -12,6 +12,9 @@ class ProcessMapping implements ActivityItem
     {
         $results = $activity->results()->where('company_id', $company->id)->get();
         $total = $results->count();
+        if ($total === 0) {
+            return 0;
+        }
         $checked = 0;
         foreach ($results as $result) {
             if ($result->results['checked']) {
