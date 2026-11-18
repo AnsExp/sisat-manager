@@ -1,6 +1,7 @@
 @php
     /**
      * @var App\Models\Company $company
+     * @var Illuminate\Database\Eloquent\Collection<int,App\Models\SisatModule> $modules
      */
 @endphp
 
@@ -23,22 +24,22 @@
     </div>
     <flux:heading size="lg" level="2">Objetivos a cumplir</flux:heading>
     <div class="space-y-2">
-        @foreach (config('sisat') as $moduleCode => $module)
+        @foreach ($modules as $module)
             <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
                 <div class="border-b border-zinc-200 px-5 py-3.5 dark:border-zinc-700">
-                    <flux:heading size="sm">{{ $module['name'] }}</flux:heading>
+                    <flux:heading size="sm">{{ $module->name }}</flux:heading>
                 </div>
 
                 <div class="divide-y divide-zinc-100 dark:divide-zinc-800">
-                    @foreach ($module['activities'] as $moduleActivity => $activity)
-                        @if(App\Modules\ModuleChecker::companyHasActivity($company, $moduleCode, $moduleActivity))
+                    @foreach ($module->activities as $activity)
+                        @if(App\Modules\ModuleChecker::checkActivity($company, $activity))
                             @php
-                                $progress = 40; // Variable estática temporal
+                                $progress = App\Modules\ActivityCalculator::calculate($company, $activity) * 100;
                             @endphp
 
                             <div class="flex flex-col justify-between gap-4 px-5 py-3.5 sm:flex-row sm:items-center">
                                 <flux:text class="font-medium text-zinc-800 dark:text-zinc-200">
-                                    {{ $activity['label'] }}
+                                    {{ $activity->name }}
                                 </flux:text>
 
                                 <div class="flex items-center gap-4">
@@ -56,7 +57,7 @@
                                     {{-- Botón enlace con navegación SPA de Livewire --}}
                                     @php
                                         // Construimos el nombre de la ruta dinámicamente
-                                        $routeName = 'companies.' . $moduleCode . '.' . $moduleActivity;
+                                        $routeName = 'companies.' . $module->slug . '.' . $activity->slug;
 
                                         // Verificamos si la ruta está registrada en el sistema; si no, usamos '#'
                                         $routeUrl = Route::has($routeName) ? route($routeName, $company) : '#';

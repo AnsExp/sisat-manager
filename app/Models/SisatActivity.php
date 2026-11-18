@@ -14,7 +14,7 @@ use Illuminate\Support\Carbon;
  * @property WorkStaff $responsable
  * @property WorkStaff|null $support
  * @property int $sisat_module_id
- * @property SisatModule $sisatModule
+ * @property SisatModule $module
  * @property array $rules
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -33,6 +33,6 @@ class SisatActivity extends Model
 
     public function module()
     {
-        return $this->belongsTo(SisatModule::class);
+        return $this->belongsTo(SisatModule::class, 'sisat_module_id');
     }
 }
