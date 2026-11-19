@@ -1,0 +1,61 @@
+- Enfermedades profesionales causadas por la exposición a agentes que resulte de las actividades laborales
+    - Enfermedades causadas por agentes químicos
+        - Enfermedades causadas por berilio o sus compuestos
+        - Enfermedades causadas por cadmio o sus compuestos
+        - Enfermedades causadas por fósforo o sus compuestos
+        - Enfermedades causadas por cromo o sus compuestos
+        - Enfermedades causadas por manganeso o sus compuestos
+        - Enfermedades causadas por arsénico o sus compuestos
+        - Enfermedades causadas por mercurio o sus compuestos
+        - Enfermedades causadas por plomo o sus compuestos
+        - Enfermedades causadas por flúor o sus compuestos
+        - Enfermedades causadas por disulfuro de carbono
+        - Enfermedades causadas por los derivados halogenados de los hidrocarburos alifáticos o aromáticos
+        - Enfermedades causadas por benceno o sus homólogos
+        - Enfermedades causadas por los derivados nitrados y amínicos del benceno o de sus homólogos
+        - Enfermedades causadas por nitroglicerina u otros ésteres del ácido nítrico
+        - Enfermedades causadas por alcoholes, glicoles o cetonas
+        - Enfermedades causadas por sustancias asfixiantes como monóxido de carbono, sulfuro de hidrógeno, cianuro de hidrógeno o sus derivados
+        - Enfermedades causadas por acrilonitrilo
+        - Enfermedades causadas por óxidos de nitrógeno
+        - Enfermedades causadas por vanadio o sus compuestos
+        - Enfermedades causadas por antimonio o sus compuestos
+        - Enfermedades causadas por hexano
+        - Enfermedades causadas por ácidos minerales
+        - Enfermedades causadas por agentes farmacéuticos
+        - Enfermedades causadas por níquel o sus compuestos
+        - Enfermedades causadas por talio o sus compuestos
+        - Enfermedades causadas por osmio o sus compuestos
+        - Enfermedades causadas por selenio o sus compuestos
+        - Enfermedades causadas por cobre o sus compuestos
+        - Enfermedades causadas por platino o sus compuestos
+        - Enfermedades causadas por estaño o sus compuestos
+        - Enfermedades causadas por zinc o sus compuestos
+        - Enfermedades causadas por fosgeno
+        - Enfermedades causadas por sustancias irritantes de la córnea como benzoquinona
+        - Enfermedades causadas por amoniaco
+        - Enfermedades causadas por isocianatos
+        - Enfermedades causadas por plaguicidas
+        - Enfermedades causadas por óxidos de azufre
+        - Enfermedades causadas por disolventes orgánicos
+        - Enfermedades causadas por látex o productos que contienen látex
+        - Enfermedades causadas por cloro
+        - Enfermedades causadas por otros agentes químicos en el trabajo no mencionados en los puntos anteriores cuando se haya establecido, científicamente o por métodos adecuados a las condiciones y la práctica nacionales, un vínculo directo entre la exposición a dichos agentes químicos que resulte de las actividades laborales y la(s) enfermedad(es) contraída(s) por el trabajador
+    - Enfermedades causadas por agentes físicos
+        - Deterioro de la audición causada por ruido
+        - Enfermedades causadas por vibraciones (trastornos de músculos, tendones, huesos, articulaciones, vasos sanguíneos periféricos o nervios periféricos)
+        - Enfermedades causadas por aire comprimido o descomprimido
+        - Enfermedades causadas por radiaciones ionizantes
+        - Enfermedades causadas por radiaciones ópticas (ultravioleta, de luz visible, infrarroja), incluido el láser
+        - Enfermedades causadas por exposición a temperaturas extremas
+        - Enfermedades causadas por otros agentes físicos en el trabajo no mencionados en los puntos anteriores cuando se haya establecido, científicamente o por métodos adecuados a las condiciones y la práctica nacionales, un vínculo directo entre la exposición a dichos agentes físicos que resulte de las actividades laborales y la(s) enfermedad(es) contraída(s) por el trabajador
+    - Agentes biológicos y enfermedades infecciosas o parasitarias
+        - Brucelosis
+        - Virus de la hepatitis
+        - Virus de la inmunodeficiencia humana (VIH)
+        - Tétanos
+        - Tuberculosis
+        - Síndromes tóxicos o inflamatorios asociados con contaminantes bacterianos o fúngicos
+        - Ántrax
+        - Leptospirosis
+        - Enfermedades causadas por otros agentes biológicos en el trabajo no mencionados en los puntos anteriores cuando se haya establecido, científicamente o por métodos adecuados a las condiciones y la práctica nacionales, un vínculo directo entre la exposición a dichos agentes biológicos que resulte de las actividades laborales y la(s) enfermedad(es) contraída(s) por el trabajador
