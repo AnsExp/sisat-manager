@@ -8,9 +8,9 @@
             </div>
 
             <form class="space-y-4" wire:submit.prevent="submit">
-                <flux:select label="Tipo de documento" wire:model="documentType">
+                <flux:select label="Tipo de evaluacion" wire:model="evaluationType">
                     <flux:select.option value="">Seleccione una opción...</flux:select.option>
-                    @foreach (App\Enums\DocumentType::cases() as $type)
+                    @foreach (App\Enums\EvaluationType::cases() as $type)
                     <flux:select.option value="{{ $type->value }}">{{ $type->label() }}</flux:select.option>
                     @endforeach
                 </flux:select>

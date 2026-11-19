@@ -1,7 +1,8 @@
 <?php
 
-use App\Enums\DocumentType;
+use App\Enums\EvaluationType;
 use App\Models\Employee;
+use App\Models\SisatActivity;
 use Flux\Flux;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
@@ -9,12 +10,13 @@ use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
-new class extends Component {
-
+new class extends Component
+{
     use WithFileUploads;
 
-    public string $documentType = '';
-    public TemporaryUploadedFile|null $document = null;
+    public string $evaluationType = '';
+
+    public ?TemporaryUploadedFile $document = null;
 
     public Employee $employee;
 
@@ -27,7 +29,7 @@ new class extends Component {
     {
         return [
             'document' => ['required', File::types(['pdf'])],
-            'documentType' => ['required', Rule::enum(DocumentType::class)],
+            'evaluationType' => ['required', Rule::enum(EvaluationType::class)],
         ];
     }
 
@@ -35,26 +37,24 @@ new class extends Component {
     {
         $this->validate();
 
-        $now = now();
-
         $path = sprintf(
-            '/%s/%s/%s/%s/%s.%s',
-            $now->format('Y'),
-            $now->format('m'),
-            $this->documentType,
-            $this->employee->id_card,
+            'guidance_planning/physical_diagnosis/%s.%s',
             uniqid(),
             $this->document->extension(),
         );
 
-        $this->employee->documents()->create([
-            'filename' => $this->document->getBasename(),
-            'filepath' => $path,
-            'document_type' => $this->documentType,
-            'sha256' => hash('sha256', $this->document->getContent()),
-        ]);
-
         Storage::disk('local')->put($path, $this->document->getContent());
+
+        SisatActivity::findBySlug('physical_diagnosis')->results()->create([
+            'company_id' => $this->employee->company_id,
+            'results' => [
+                'employee' => [
+                    'id' => $this->employee->id,
+                ],
+                'path' => $path,
+                'sha256' => hash('sha256', $this->document->getContent()),
+            ],
+        ]);
 
         $this->document = null;
         Flux::modal('upload-certificate')->close();

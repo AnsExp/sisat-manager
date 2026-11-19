@@ -5,6 +5,7 @@ use App\Enums\WorkAptitude;
 use App\Models\Employee;
 use App\Models\SisatActivity;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Flux\Flux;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -46,6 +47,9 @@ new class extends Component
                 'numberCertificate' => SisatActivity::findBySlug('physical_diagnosis')->results()->count() + 1,
             ]
         )->setPaper('A4', 'portrait');
+
+        Flux::modal('generate-occupational-certificate')->close();
+        $this->resetExcept(['employee']);
 
         return response()->streamDownload(
             fn () => print ($pdf->output()),
