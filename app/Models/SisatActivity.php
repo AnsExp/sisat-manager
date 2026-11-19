@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\WorkStaff;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -36,6 +37,11 @@ class SisatActivity extends Model
         return $this->belongsTo(SisatModule::class, 'sisat_module_id');
     }
 
+    /**
+     * Summary of results
+     *
+     * @return HasMany<SisatResult, SisatActivity>
+     */
     public function results()
     {
         return $this->hasMany(SisatResult::class);

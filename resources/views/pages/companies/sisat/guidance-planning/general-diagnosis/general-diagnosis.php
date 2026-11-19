@@ -17,8 +17,11 @@ new class extends Component
         $this->calculateEmployeesDiagnose();
     }
 
-    #[On("upload-document")]
-    public function uploadDocument(){}
+    #[On('upload-document')]
+    public function uploadDocument()
+    {
+        $this->calculateEmployeesDiagnose();
+    }
 
     private function calculateEmployeesDiagnose()
     {

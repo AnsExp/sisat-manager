@@ -3,6 +3,7 @@
 use App\Models\Employee;
 use App\Models\SisatActivity;
 use Flux\Flux;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;

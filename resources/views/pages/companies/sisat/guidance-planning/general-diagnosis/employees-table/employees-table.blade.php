@@ -5,6 +5,13 @@
 @endphp
 
 <div class="space-y-6">
+
+    <flux:radio.group wire:model.live="filter" variant="pills">
+        <flux:radio value="all" label="Todos" />
+        <flux:radio value="diagnosis" label="Diagnosticados" />
+        <flux:radio value="without_diagnosis" label="Sin diagnosticar" />
+    </flux:radio.group>
+
     <flux:table :paginate="$this->data">
         <flux:table.columns>
             <flux:table.column>Nombre</flux:table.column>
