@@ -13,6 +13,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::livewire('/process_mapping', 'pages::companies.sisat.guidance-planning.process-mapping')->name('companies.guidance-planning.process-mapping');
             Route::livewire('/general_diagnosis', 'pages::companies.sisat.guidance-planning.general-diagnosis')->name('companies.guidance-planning.general-diagnosis');
             Route::livewire('/physical_diagnosis', 'pages::companies.sisat.guidance-planning.physical-diagnosis')->name('companies.guidance-planning.physical-diagnosis');
+            Route::livewire('/mental_diagnosis', 'pages::companies.sisat.guidance-planning.mental-diagnosis')->name('companies.guidance-planning.mental-diagnosis');
         });
 
         Route::livewire('/', 'pages::companies.index')->name('companies.index');

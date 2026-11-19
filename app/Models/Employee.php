@@ -21,6 +21,7 @@ use Illuminate\Support\Carbon;
  * @property int $company_id
  * @property int $workspace_id
  * @property int $position_id
+ * @property Company $company
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -59,6 +60,7 @@ class Employee extends Model
         if ($lastnamesFirst) {
             return "$this->last_name $this->second_last_name $this->first_name $this->second_first_name";
         }
+
         return "$this->first_name $this->second_first_name $this->last_name $this->second_last_name";
     }
 }
