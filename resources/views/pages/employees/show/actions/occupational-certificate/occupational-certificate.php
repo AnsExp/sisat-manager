@@ -1,20 +1,19 @@
 <?php
 
-use App\Enums\ConclutionType;
 use App\Enums\EvaluationType;
+use App\Enums\WorkAptitude;
 use App\Models\Employee;
+use App\Models\SisatActivity;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
-new class extends Component {
+new class extends Component
+{
+    public string $workAptitude = '';
 
-    /**
-     * @var array<string>
-     */
-    public array $recommendations = [];
-    public string $conclution = '';
-    public string $conclutionDetails = '';
+    public string $restrictions = '';
+
     public string $evaluationType = '';
 
     public Employee $employee;
@@ -24,24 +23,12 @@ new class extends Component {
         $this->employee = $employee;
     }
 
-    public function addRecommendation(): void
-    {
-        $this->recommendations[] = '';
-    }
-
-    public function removeRecommendation(int $index): void
-    {
-        array_splice($this->recommendations, $index, 1);
-    }
-
     protected function rules()
     {
         return [
+            'restrictions' => ['nullable', 'string'],
+            'workAptitude' => ['required', Rule::enum(WorkAptitude::class)],
             'evaluationType' => ['required', Rule::enum(EvaluationType::class)],
-            'conclution' => ['required', Rule::enum(ConclutionType::class)],
-            'conclutionDetails' => ['nullable', 'string'],
-            'recommendations' => ['nullable', 'array'],
-            'recommendations.*' => ['required', 'string'],
         ];
     }
 
@@ -53,15 +40,15 @@ new class extends Component {
             'documents.occupational-certificate',
             [
                 'employee' => $this->employee,
-                'conclutionType' => ConclutionType::from($this->conclution),
-                'conclutionDetails' => $this->conclutionDetails,
+                'restrictions' => $this->restrictions ?? '',
+                'workAptitude' => WorkAptitude::from($this->workAptitude),
                 'evaluationType' => EvaluationType::from($this->evaluationType),
-                'recommendations' => $this->recommendations,
+                'numberCertificate' => SisatActivity::findBySlug('physical_diagnosis')->results()->count() + 1,
             ]
-        )->setPaper('A4', 'landscape');
+        )->setPaper('A4', 'portrait');
 
         return response()->streamDownload(
-            fn() => print ($pdf->output()),
+            fn () => print ($pdf->output()),
             "{$this->employee->id_card}.pdf"
         );
     }

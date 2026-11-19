@@ -12,7 +12,7 @@
                 <flux:select label="Tipo de evaluación" wire:model="evaluationType">
                     <flux:select.option value="">Seleccione una opción...</flux:select.option>
                     @foreach (App\Enums\EvaluationType::cases() as $type)
-                    <flux:select.option value="{{ $type->value }}">{{ $type->label() }}</flux:select.option>
+                        <flux:select.option value="{{ $type->value }}">{{ $type->label() }}</flux:select.option>
                     @endforeach
                 </flux:select>
                 <div class="space-y-2">
@@ -20,26 +20,12 @@
                         Después de la valoración médica ocupacional se certifica que la persona en mención, es
                         calificada como:
                     </flux:text>
-                    <flux:radio.group wire:model="conclution" label="Conclusión" variant="segmented" size="sm">
-                        @foreach (App\Enums\ConclutionType::cases() as $conclution)
-                        <flux:radio value="{{ $conclution->value }}" label="{{ $conclution->label() }}" />
+                    <flux:radio.group wire:model="workAptitude" label="Conclusión" variant="segmented" size="sm">
+                        @foreach (App\Enums\WorkAptitude::cases() as $workAptitude)
+                            <flux:radio value="{{ $workAptitude->value }}" label="{{ $workAptitude->label() }}" />
                         @endforeach
                     </flux:radio.group>
-                    <flux:textarea label="Detalles de la conclusión" wire:model="conclutionDetails"></flux:textarea>
-                </div>
-                <div class="space-y-2">
-                    <flux:text>
-                        Recomendaciones / Observaciones
-                    </flux:text>
-                    @foreach ($recommendations as $index => $recommendation)
-                    <div class="flex gap-2" wire:key="recommendation-{{ $index }}">
-                        <flux:input wire:model="recommendations.{{ $index }}"
-                            placeholder="Escribe una recomendación u observación" />
-                        <flux:button variant="ghost" color="red" icon="trash"
-                            wire:click="removeRecommendation({{ $index }})" />
-                    </div>
-                    @endforeach
-                    <flux:button class="w-full" wire:click="addRecommendation">Agregar una observación</flux:button>
+                    <flux:textarea label="Restricciones" wire:model="restrictions"></flux:textarea>
                 </div>
                 <div class="flex">
                     <flux:spacer />

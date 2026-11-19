@@ -54,8 +54,11 @@ class Employee extends Model
         return $this->hasMany(Document::class);
     }
 
-    public function display_name()
+    public function display_name(bool $lastnamesFirst = false)
     {
+        if ($lastnamesFirst) {
+            return "$this->last_name $this->second_last_name $this->first_name $this->second_first_name";
+        }
         return "$this->first_name $this->second_first_name $this->last_name $this->second_last_name";
     }
 }
