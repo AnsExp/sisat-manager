@@ -42,6 +42,7 @@ new class extends Component
     public function submit()
     {
         $this->validate();
+        // return;
         $document = $this->document;
         $uuid = uniqid();
         $path = 'guidance_planning/mental_diagnosis/'.$uuid.'.'.$document->getClientOriginalExtension();

@@ -29,5 +29,5 @@
     @endforeach
     <flux:button wire:click="$dispatch('load-process',{companyId:{{ $company->id }}})">Agregar procedimiento
     </flux:button>
-    <livewire:pages::companies.sisat.guidance-planning.process-mapping.process-store />
+    <livewire:pages::sisat.guidance-planning.process-mapping.process-store />
 </div>

@@ -5,7 +5,6 @@
 @endphp
 
 <div class="space-y-6">
-
     <flux:table :paginate="$this->data">
         <flux:table.columns>
             <flux:table.column>Nombre</flux:table.column>
@@ -36,6 +35,4 @@
             @endforeach
         </flux:table.rows>
     </flux:table>
-
-    <livewire:pages::companies.sisat.guidance-planning.mental-diagnosis.document-store />
 </div>

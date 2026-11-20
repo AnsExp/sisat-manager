@@ -38,5 +38,6 @@
             </flux:card.body>
         </flux:card>
     </div>
-    <livewire:pages::companies.sisat.guidance-planning.general-diagnosis.employees-table :company="$company" />
+    <livewire:pages::sisat.guidance-planning.general-diagnosis.employees-table :company="$company" />
+    <livewire:pages::sisat.guidance-planning.general-diagnosis.document-store />
 </div>

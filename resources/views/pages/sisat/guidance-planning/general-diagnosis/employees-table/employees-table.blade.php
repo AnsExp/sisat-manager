@@ -34,10 +34,6 @@
                     </flux:table.cell>
                     <flux:table.cell>
                         <div class="flex gap-2 justify-end">
-                            @if ($this->employeeHasDocument($employee->id))
-                                <flux:button wire:click="downloadDocument({{ $employee->id }})" variant="ghost" size="xs"
-                                    icon="arrow-down-tray" />
-                            @endif
                             <flux:button wire:click="$dispatch('document-store',{employeeId:{{ $employee->id }}})"
                                 variant="ghost" size="xs" icon="arrow-up-tray" />
                         </div>
@@ -46,5 +42,5 @@
             @endforeach
         </flux:table.rows>
     </flux:table>
-    <livewire:pages::companies.sisat.guidance-planning.general-diagnosis.document-store />
+
 </div>
