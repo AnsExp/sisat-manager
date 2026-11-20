@@ -4,6 +4,7 @@ namespace App\Modules;
 
 use App\Models\Company;
 use App\Models\SisatActivity;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class ActivityCalculator
@@ -19,6 +20,7 @@ class ActivityCalculator
         $moduleCode = Str::studly($activity->module->slug);
         $activityCode = Str::studly($activity->slug);
         $class = "App\\Modules\\{$moduleCode}\\{$activityCode}";
+        Log::info($class);
         if (! class_exists($class)) {
             return 0.0;
         }

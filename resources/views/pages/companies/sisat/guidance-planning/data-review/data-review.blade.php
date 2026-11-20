@@ -1,6 +1,7 @@
 @php
     /**
      * @var App\Models\Company $company
+     * @var Illuminate\Database\Eloquent\Collection<int,App\Models\IloItem> $items
      */
 @endphp
 
@@ -21,35 +22,9 @@
     </div>
     <flux:separator variant="subtle" />
 
-    <div>
-        <ol class="list-none pl-6 space-y-4">
-            @foreach (config('oit_list') as $oit)
-                <li class="font-semibold">
-                    <span>{{ $oit['code'] }}. {{ $oit['name'] }}</span>
-                    @if (!empty($oit['subitems']))
-                        <ol class="list-none pl-6 mt-2 space-y-3 font-normal">
-                            @foreach ($oit['subitems'] as $subitem)
-                                <li>
-                                    <span>{{ $subitem['code'] }} {{ $subitem['name'] }}</span>
-
-                                    @if (!empty($subitem['subitems']))
-                                        <ol class="list-none pl-6 mt-1.5 space-y-1 text-sm">
-                                            @foreach ($subitem['subitems'] as $child)
-                                                <li>
-                                                    <span class="font-medium">{{ $child['code'] }}</span>
-                                                    {{ $child['name'] }}
-                                                </li>
-                                            @endforeach
-                                        </ol>
-                                    @endif
-                                </li>
-                            @endforeach
-                        </ol>
-                    @endif
-                </li>
-            @endforeach
-        </ol>
+    <div class="space-y-3">
+        @foreach ($items as $item)
+        <livewire:pages::companies.sisat.guidance-planning.data-review.ilo-item :company="$company" :item="$item" />
+        @endforeach
     </div>
-
-    {{-- @json($sample) --}}
 </div>
