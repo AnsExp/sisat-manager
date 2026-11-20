@@ -57,7 +57,7 @@
                                     {{-- Botón enlace con navegación SPA de Livewire --}}
                                     @php
                                         // Construimos el nombre de la ruta dinámicamente
-                                        $routeName = str_replace('_', '-', 'companies.' . $module->slug . '.' . $activity->slug);
+                                        $routeName = str_replace('_', '-', 'sisat.' . $module->slug . '.' . $activity->slug);
 
                                         // Verificamos si la ruta está registrada en el sistema; si no, usamos '#'
                                         $routeUrl = Route::has($routeName) ? route($routeName, $company) : '#';

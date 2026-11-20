@@ -7,15 +7,18 @@ Route::view('/', 'welcome')->name('home');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
 
-    Route::prefix('/companies')->group(function () {
-
+    Route::prefix('/sisat')->group(function () {
         Route::prefix('/{company}/guidance_planning')->group(function () {
-            Route::livewire('/data_review', 'pages::companies.sisat.guidance-planning.data-review')->name('companies.guidance-planning.data-review');
-            Route::livewire('/process_mapping', 'pages::companies.sisat.guidance-planning.process-mapping')->name('companies.guidance-planning.process-mapping');
-            Route::livewire('/mental_diagnosis', 'pages::companies.sisat.guidance-planning.mental-diagnosis')->name('companies.guidance-planning.mental-diagnosis');
-            Route::livewire('/general_diagnosis', 'pages::companies.sisat.guidance-planning.general-diagnosis')->name('companies.guidance-planning.general-diagnosis');
-            Route::livewire('/physical_diagnosis', 'pages::companies.sisat.guidance-planning.physical-diagnosis')->name('companies.guidance-planning.physical-diagnosis');
+            Route::livewire('/data_review', 'pages::sisat.guidance-planning.data-review')->name('sisat.guidance-planning.data-review');
+            Route::livewire('/process_mapping', 'pages::sisat.guidance-planning.process-mapping')->name('sisat.guidance-planning.process-mapping');
+            Route::livewire('/mental_diagnosis', 'pages::sisat.guidance-planning.mental-diagnosis')->name('sisat.guidance-planning.mental-diagnosis');
+            Route::livewire('/general_diagnosis', 'pages::sisat.guidance-planning.general-diagnosis')->name('sisat.guidance-planning.general-diagnosis');
+            Route::livewire('/physical_diagnosis', 'pages::sisat.guidance-planning.physical-diagnosis')->name('sisat.guidance-planning.physical-diagnosis');
+            Route::livewire('/management_planning', 'pages::sisat.guidance-planning.management-planning')->name('sisat.guidance-planning.management-planning');
         });
+    });
+
+    Route::prefix('/companies')->group(function () {
 
         Route::livewire('/', 'pages::companies.index')->name('companies.index');
         Route::livewire('/{company}', 'pages::companies.show')->name('companies.show');
