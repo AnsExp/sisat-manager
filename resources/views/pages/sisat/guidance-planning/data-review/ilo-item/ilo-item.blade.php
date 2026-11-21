@@ -26,7 +26,7 @@
             @if ($open)
                 <flux:card.body class="space-y-3">
                     @foreach ($item->children->sortBy('index') as $child)
-                        <livewire:pages::companies.sisat.guidance-planning.data-review.ilo-item
+                        <livewire:pages::sisat.guidance-planning.data-review.ilo-item
                             :company="$company"
                             :item="$child"
                             :key="'ilo-node-' . $company->id . '-' . $child->id"

@@ -57,6 +57,7 @@ new class extends Component
         ]);
 
         $this->document = null;
+        $this->dispatch('upload-document');
         Flux::modal('upload-certificate')->close();
     }
 };

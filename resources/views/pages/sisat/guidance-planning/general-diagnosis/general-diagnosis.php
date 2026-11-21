@@ -2,18 +2,25 @@
 
 use App\Models\Company;
 use App\Models\SisatActivity;
+use App\Models\SisatModule;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component
 {
-    public Company $company;
-
     public int $employeesDiagnose = 0;
 
-    public function mount(Company $company)
+    public Company $company;
+
+    public SisatModule $module;
+
+    public SisatActivity $activity;
+
+    public function mount(SisatModule $module, SisatActivity $activity, Company $company)
     {
+        $this->module = $module;
         $this->company = $company;
+        $this->activity = $activity;
         $this->calculateEmployeesDiagnose();
     }
 
@@ -25,7 +32,7 @@ new class extends Component
 
     private function calculateEmployeesDiagnose()
     {
-        $this->employeesDiagnose = SisatActivity::findBySlug('general_diagnosis')
+        $this->employeesDiagnose = $this->activity
             ->results()
             ->where('company_id', $this->company->id)
             ->count();

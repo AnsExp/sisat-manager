@@ -5,18 +5,12 @@ use Illuminate\Support\Facades\Route;
 Route::view('/', 'welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+
     Route::view('dashboard', 'dashboard')->name('dashboard');
 
-    Route::prefix('/sisat')->group(function () {
-        Route::prefix('/{company}/guidance_planning')->group(function () {
-            Route::livewire('/data_review', 'pages::sisat.guidance-planning.data-review')->name('sisat.guidance-planning.data-review');
-            Route::livewire('/process_mapping', 'pages::sisat.guidance-planning.process-mapping')->name('sisat.guidance-planning.process-mapping');
-            Route::livewire('/mental_diagnosis', 'pages::sisat.guidance-planning.mental-diagnosis')->name('sisat.guidance-planning.mental-diagnosis');
-            Route::livewire('/general_diagnosis', 'pages::sisat.guidance-planning.general-diagnosis')->name('sisat.guidance-planning.general-diagnosis');
-            Route::livewire('/physical_diagnosis', 'pages::sisat.guidance-planning.physical-diagnosis')->name('sisat.guidance-planning.physical-diagnosis');
-            Route::livewire('/management_planning', 'pages::sisat.guidance-planning.management-planning')->name('sisat.guidance-planning.management-planning');
-        });
-    });
+    Route::livewire('/sisat/{module:slug}/{activity:slug}/{company}', 'pages::sisat.module')
+        // ->withoutScopedBindings()
+        ->name('sisat.activity');
 
     Route::prefix('/companies')->group(function () {
 
@@ -28,8 +22,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::prefix('/employees')->group(function () {
+
         Route::livewire('/{employee}', 'pages::employees.show')->name('employees.show');
+
     });
+
 });
 
 use Barryvdh\DomPDF\Facade\Pdf;

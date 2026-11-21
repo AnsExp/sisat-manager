@@ -54,16 +54,8 @@
                                         </span>
                                     </div>
 
-                                    {{-- Botón enlace con navegación SPA de Livewire --}}
-                                    @php
-                                        // Construimos el nombre de la ruta dinámicamente
-                                        $routeName = str_replace('_', '-', 'sisat.' . $module->slug . '.' . $activity->slug);
-
-                                        // Verificamos si la ruta está registrada en el sistema; si no, usamos '#'
-                                        $routeUrl = Route::has($routeName) ? route($routeName, $company) : '#';
-                                    @endphp
-
-                                    <flux:button href="{{ $routeUrl }}" size="xs" variant="ghost" icon-trailing="chevron-right">
+                                    <flux:button href="{{ route('sisat.activity', [$module, $activity, $company]) }}" size="xs"
+                                        variant="ghost" icon-trailing="chevron-right">
                                         Detalles
                                     </flux:button>
                                 </div>

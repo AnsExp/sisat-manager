@@ -2,19 +2,27 @@
 
 use App\Models\Company;
 use App\Models\SisatActivity;
+use App\Models\SisatModule;
 use App\Models\SisatResult;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component
 {
-    public Company $company;
-
     public $processes;
 
-    public function mount(Company $company)
+    public Company $company;
+
+    public SisatModule $module;
+
+    public SisatActivity $activity;
+
+    public function mount(SisatModule $module, SisatActivity $activity, Company $company)
     {
+        $this->module = $module;
         $this->company = $company;
+        $this->activity = $activity;
+
         $this->processes = SisatActivity::findBySlug('process_mapping')
             ->results()
             ->where('company_id', $company->id)

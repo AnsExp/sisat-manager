@@ -29,7 +29,8 @@ new class extends Component
     }
 
     #[On('upload-document')]
-    public function uploadDocument() {}
+    public function uploadDocument() {
+    }
 
     #[Computed]
     public function data()

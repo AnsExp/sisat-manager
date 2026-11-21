@@ -5,21 +5,7 @@
 @endphp
 
 <div class="space-y-6">
-    <div class="relative w-full">
-        <flux:heading size="xl" level="1">{{ $company->name }}
-        </flux:heading>
-        <flux:subheading size="lg" class="flex flex-row gap-3">
-            <flux:breadcrumbs>
-                <flux:breadcrumbs.item>
-                    1. Orientación y Planificación
-                </flux:breadcrumbs.item>
-                <flux:breadcrumbs.item>
-                    Mapeo de procesos de la actividad laboral, métodos de trabajo (procedimientos)
-                </flux:breadcrumbs.item>
-            </flux:breadcrumbs>
-        </flux:subheading>
-    </div>
-    <flux:separator variant="subtle" />
+    <x-sisat-header :company="$company" :module="$module" :activity="$activity" />
     @foreach ($processes as $index => $process)
         <flux:field variant="inline">
             <flux:checkbox :checked="(bool)$process->results['checked']"
