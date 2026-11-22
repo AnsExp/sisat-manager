@@ -29,8 +29,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 
-use Barryvdh\DomPDF\Facade\Pdf;
-
-Route::get('/test', fn () => Pdf::loadView('test')->stream());
+Route::view('/test', 'test');
 
 require __DIR__.'/settings.php';
