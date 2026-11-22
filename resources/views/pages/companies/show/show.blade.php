@@ -25,45 +25,7 @@
     <flux:heading size="lg" level="2">Objetivos a cumplir</flux:heading>
     <div class="space-y-2">
         @foreach ($modules as $module)
-            <div class="rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
-                <div class="border-b border-zinc-200 px-5 py-3.5 dark:border-zinc-700">
-                    <flux:heading size="sm">{{ $module->name }}</flux:heading>
-                </div>
-
-                <div class="divide-y divide-zinc-100 dark:divide-zinc-800">
-                    @foreach ($module->activities as $activity)
-                        @if(App\Modules\ModuleChecker::checkActivity($company, $activity))
-                            @php
-                                $progress = App\Modules\ActivityCalculator::calculate($company, $activity) * 100;
-                            @endphp
-
-                            <div class="flex flex-col justify-between gap-4 px-5 py-3.5 sm:flex-row sm:items-center">
-                                <flux:text class="font-medium text-zinc-800 dark:text-zinc-200">
-                                    {{ $activity->name }}
-                                </flux:text>
-
-                                <div class="flex items-center gap-4">
-                                    {{-- Barra de progreso --}}
-                                    <div class="flex w-40 items-center gap-2.5">
-                                        <div class="h-2 flex-1 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-700">
-                                            <div class="h-full rounded-full bg-zinc-900 dark:bg-white"
-                                                style="width: {{ $progress }}%"></div>
-                                        </div>
-                                        <span class="w-9 text-right font-mono text-xs tabular-nums text-zinc-500">
-                                            {{ number_format($progress, 2) }}%
-                                        </span>
-                                    </div>
-
-                                    <flux:button href="{{ route('sisat.activity', [$module, $activity, $company]) }}" size="xs"
-                                        variant="ghost" icon-trailing="chevron-right">
-                                        Detalles
-                                    </flux:button>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
+            <livewire:sisat-module :company="$company" :module="$module" />
         @endforeach
     </div>
     <div class="flex items-start">
