@@ -19,13 +19,13 @@ class ActivityCalculator
         $activityCode = Str::studly($activity->slug);
         $class = "App\\Modules\\{$moduleCode}\\{$activityCode}";
         if (! class_exists($class)) {
-            return 0.0;
+            return (new DefaultCalculate)->calculate($company, $activity);
         }
         $item = new $class;
         if ($item instanceof ActivityItem) {
             return $item->calculate($company, $activity);
         }
 
-        return 1.0;
+        return 0.0;
     }
 }
