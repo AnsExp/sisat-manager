@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('last_name')->nullable(false);
             $table->string('second_last_name')->nullable(true);
             $table->string('id_card')->nullable(false);
+            $table->date('birthday')->nullable(false);
             $table->string('phone')->nullable(true);
             $table->string('email')->nullable(true);
             $table->string('gender')->nullable(true);

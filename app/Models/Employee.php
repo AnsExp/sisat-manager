@@ -14,6 +14,7 @@ use Illuminate\Support\Carbon;
  * @property string $last_name
  * @property string|null $second_last_name
  * @property string $id_card
+ * @property Carbon $birthday
  * @property string|null $phone
  * @property string|null $email
  * @property Gender|null $gender
@@ -25,13 +26,14 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['first_name', 'second_first_name', 'last_name', 'second_last_name', 'id_card', 'phone', 'email', 'gender', 'company_id', 'workspace_id', 'position_id'])]
+#[Fillable(['first_name', 'second_first_name', 'last_name', 'second_last_name', 'id_card', 'birthday', 'phone', 'email', 'gender', 'company_id', 'workspace_id', 'position_id'])]
 class Employee extends Model
 {
     public function casts()
     {
         return [
             'gender' => Gender::class,
+            'birthday' => 'datetime:Y-m-d',
         ];
     }
 

@@ -104,6 +104,7 @@ class CompanySeeder extends Seeder
                         'gender' => $gender,
                         'email' => fake()->email(),
                         'phone' => fake()->phoneNumber(),
+                        'birthday' => fake()->dateTimeBetween('1980-01-01', '2000-01-01')->format('Y-m-d'),
                         'id_card' => fake()->numerify('##########'),
                         'position_id' => $currentPosition->id,
                         'workspace_id' => $currentPosition->workspace->id,

@@ -118,7 +118,7 @@
                 <th>Cedula / Pasaporte</th>
                 <td>{{ $employee->id_card }}</td>
                 <th>Edad / Sexo</th>
-                <td>{{ $employee->gender->label() }}</td>
+                <td>{{ $employee->birthday->age }} años / {{ $employee->gender->label() }}</td>
             </tr>
             <tr>
                 <th>Puesto de Trabajo / Cargo</th>
