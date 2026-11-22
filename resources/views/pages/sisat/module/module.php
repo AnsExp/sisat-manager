@@ -40,6 +40,7 @@ new class extends Component
             $data['livewire'] = 'pages::sisat.default-module';
         }
 
-        return view('pages.sisat.module.module', $data);
+        return view('pages.sisat.module.module', $data)
+            ->title($this->company->name);
     }
 };
