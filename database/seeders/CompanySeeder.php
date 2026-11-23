@@ -61,6 +61,7 @@ class CompanySeeder extends Seeder
         ],
     ];
 
+private $s = null;
     /**
      * Ejecuta las semillas en la base de datos.
      */

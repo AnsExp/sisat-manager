@@ -33,11 +33,13 @@ new class extends Component
             'module' => $this->module,
             'company' => $this->company,
             'activity' => $this->activity,
-            'livewire' => "pages::sisat.{$moduleSegment}.{$activitySegment}",
+            'livewire' => "pages::sisat.default-module",
         ];
 
-        if (! View::exists("pages.sisat.{$moduleSegment}.{$activitySegment}.{$activitySegment}")) {
-            $data['livewire'] = 'pages::sisat.default-module';
+        if ( View::exists("pages.sisat.{$moduleSegment}.{$activitySegment}.companies.{$this->company->slug}.{$this->company->slug}")) {
+            $data['livewire'] = "pages::sisat.{$moduleSegment}.{$activitySegment}.companies.{$this->company->slug}";
+        } else if ( View::exists("pages.sisat.{$moduleSegment}.{$activitySegment}.{$activitySegment}")) {
+            $data['livewire'] = "pages::sisat.{$moduleSegment}.{$activitySegment}";
         }
 
         return view('pages.sisat.module.module', $data)
