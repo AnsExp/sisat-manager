@@ -35,9 +35,15 @@
             </flux:subheading>
         </div>
         <div class="flex gap-2">
-            <flux:button size="sm" icon="plus">Área</flux:button>
-            <flux:button size="sm" icon="plus">Cargo</flux:button>
-            <flux:button size="sm" icon="plus" variant="primary">Empleado</flux:button>
+            <flux:modal.trigger name="form-workspace">
+                <flux:button size="sm" icon="plus">Área</flux:button>
+            </flux:modal.trigger>
+            <flux:modal.trigger name="form-position">
+                <flux:button size="sm" icon="plus">Cargo</flux:button>
+            </flux:modal.trigger>
+            <flux:modal.trigger name="form-employee">
+                <flux:button size="sm" icon="plus" variant="primary">Empleado</flux:button>
+            </flux:modal.trigger>
         </div>
     </div>
     <flux:card body="inset" variant="outline">
@@ -46,7 +52,7 @@
         </flux:card.body>
     </flux:card>
 
-    <livewire:pages::companies.show.form-workspace />
-    <livewire:pages::companies.show.form-position />
-    <livewire:pages::companies.show.form-employee />
+    <livewire:pages::companies.show.form-workspace :company="$company" />
+    <livewire:pages::companies.show.form-position :company="$company" />
+    <livewire:pages::companies.show.form-employee :company="$company" />
 </div>

@@ -1,21 +1,18 @@
 <?php
 
 use App\Enums\Gender;
+use App\Models\Company;
 use App\Models\Employee;
-use App\Models\Position;
 use App\Models\Workspace;
 use Flux\Flux;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component
 {
-    public string $workspace;
-
-    public string $position;
-
     public string $first_name = '';
 
     public string $second_first_name = '';
@@ -32,29 +29,35 @@ new class extends Component
 
     public string $gender = '';
 
-    public int $company_id;
-
     public int $workspace_id;
 
     public int $position_id;
 
     public string $maxBirthday;
 
-    public function mount()
+    public Company $company;
+
+    public Collection $workspaces;
+
+    public Collection $positions;
+
+    public function mount(Company $company)
     {
+        $this->company = $company;
+        $this->workspaces = $company->workspaces()->orderBy('name')->get();
+        $this->positions = collect();
+
         $maxYear = now()->year - 18;
         $this->maxBirthday = Carbon::create($maxYear, 12, 31)->toDateString();
     }
 
-    #[On('form-employee')]
-    public function formPosition(?int $employee_id, int $company_id, int $workspace_id, int $position_id)
+    public function updatedWorkspaceId($value)
     {
-        $this->company_id = $company_id;
-        $this->workspace_id = $workspace_id;
-        $this->position_id = $position_id;
-        $this->position = Position::find($position_id)->name;
-        $this->workspace = Workspace::find($workspace_id)->name;
-        Flux::modal('form-employee')->show();
+        if ($value) {
+            $this->positions = Workspace::find($value)->positions()->orderBy('name')->get();
+            return;
+        }
+        $this->positions = collect();
     }
 
     protected function rules()
@@ -68,7 +71,6 @@ new class extends Component
             'birthday' => ['required', 'date', "before_or_equal:{$this->maxBirthday}"],
             'email' => ['nullable', 'email', 'max:255'],
             'gender' => ['required', Rule::enum(Gender::class)],
-            'company_id' => ['required', 'exists:companies,id'],
             'workspace_id' => ['required', 'exists:workspaces,id'],
             'position_id' => ['required', 'exists:positions,id'],
         ];
@@ -77,6 +79,7 @@ new class extends Component
     public function submit()
     {
         $validated = $this->validate();
+        $validated['company_id'] = $this->company->id;
         Employee::create($validated);
         Flux::modal('form-employee')->close();
     }

@@ -1,41 +1,43 @@
 <?php
 
+use App\Models\Company;
 use App\Models\Position;
-use App\Models\Workspace;
 use Flux\Flux;
-use Livewire\Attributes\On;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
-new class extends Component {
-
+new class extends Component
+{
     public string $name = '';
-    public int $companyId;
-    public int $workspaceId;
-    public string $workspaceName;
-    public int|null $positionId;
 
-    #[On('form-position')]
-    public function formPosition(int $companyId, int $workspaceId, int|null $positionId = null)
+    public int $workspace_id = 0;
+
+    public Company $company;
+
+    public Collection $workspaces;
+
+    public function mount(Company $company)
     {
-        $this->companyId = $companyId;
-        $this->workspaceId = $workspaceId;
-        $this->positionId = $positionId;
-        $this->workspaceName = Workspace::query()->select('name')->find($workspaceId)->name;
-        if ($positionId) {
-            $this->name = Position::find($positionId)?->name ?? '';
-        }
-        Flux::modal('form-position')->show();
+        $this->company = $company;
+        $this->workspaces = $this->company->workspaces()->orderBy('name')->get();
+    }
+
+    protected function rules()
+    {
+        return [
+            'name' => ['required', 'string', 'min:3'],
+            'workspace_id' => ['required', 'exists:workspaces,id'],
+        ];
     }
 
     public function submit()
     {
-        Position::updateOrCreate([
-            'id' => $this->positionId ?? 0,
-        ], [
+        $this->validate();
+        Position::create([
             'name' => $this->name,
-            'workspace_id' => $this->workspaceId,
+            'workspace_id' => $this->workspace_id,
         ]);
-        $this->name = '';
+        $this->reset();
         Flux::modal('form-position')->close();
         $this->dispatch('reload-workspaces');
     }

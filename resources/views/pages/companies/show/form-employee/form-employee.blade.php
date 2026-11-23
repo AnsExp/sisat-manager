@@ -9,8 +9,18 @@
                 <flux:heading level="3">Información profesional</flux:heading>
                 <flux:separator variant="subtle" />
                 <div class="grid grid-cols-2 gap-2">
-                    <flux:input label="Área" wire:model="workspace" variant="filled" readonly disabled />
-                    <flux:input label="Cargo" wire:model="position" variant="filled" readonly disabled />
+                    <flux:select label="Area de trabajo" wire:model.lazy="workspace_id">
+                        <flux:select.option value="">Area de trabajo</flux:select.option>
+                        @foreach ($workspaces as $workspace)
+                            <flux:select.option value="{{ $workspace->id }}">{{ $workspace->name }}</flux:select.option>
+                        @endforeach
+                    </flux:select>
+                    <flux:select label="Cargo" wire:model="position_id">
+                        <flux:select.option value="">Cargo</flux:select.option>
+                        @foreach ($positions as $position)
+                            <flux:select.option value="{{ $position->id }}">{{ $position->name }}</flux:select.option>
+                        @endforeach
+                    </flux:select>
                 </div>
                 <flux:heading level="3">Información personal</flux:heading>
                 <flux:separator variant="subtle" />

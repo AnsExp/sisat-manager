@@ -7,4 +7,9 @@
 1d certificado de salud mental
     - evaluacion del psicologo, igualmente se pondera
 1e numero de enferemedades contempladas por la gestion de riesgo del trabajo / enfermedades encontradas
-1f realizar examenes generales y especificos, subir evidencia de actividades
+
+mapeo de proceso, subir una matriz de proceso e indicar si se cumple
+
+## Modulo 2
+
+1. 

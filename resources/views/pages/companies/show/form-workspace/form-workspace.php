@@ -1,36 +1,36 @@
 <?php
 
+use App\Models\Company;
 use App\Models\Workspace;
 use Flux\Flux;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-new class extends Component {
-
+new class extends Component
+{
     public string $name = '';
-    public int $companyId;
-    public int|null $workspaceId;
 
-    #[On('form-workspace')]
-    public function formWorkspace(int $companyId, int|null $workspaceId = null)
+    public Company $company;
+
+    public function mount(Company $company)
     {
-        $this->companyId = $companyId;
-        $this->workspaceId = $workspaceId;
-        if ($workspaceId) {
-            $this->name = Workspace::find($workspaceId)->name;
-        }
-        Flux::modal('form-workspace')->show();
+        $this->company = $company;
+    }
+
+    protected function rules()
+    {
+        return [
+            'name' => ['required', 'string', 'min:3'],
+        ];
     }
 
     public function submit()
     {
-        Workspace::updateOrCreate([
-            'id' => $this->workspaceId ?? 0
-        ], [
+        Workspace::create([
             'name' => $this->name,
-            'company_id' => $this->companyId,
+            'company_id' => $this->company->id,
         ]);
-        $this->name = '';
+        $this->reset();
         Flux::modal('form-workspace')->close();
         $this->dispatch('reload-workspaces');
     }
