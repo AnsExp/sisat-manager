@@ -16,8 +16,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::livewire('/', 'pages::companies.index')->name('companies.index');
         Route::livewire('/{company}', 'pages::companies.show')->name('companies.show');
-        Route::livewire('/{company}/{workspace}', 'pages::companies.show')->name('companies.show.workspace');
-        Route::livewire('/{company}/{workspace}/{position}', 'pages::companies.show')->name('companies.show.workspace.position');
+        // Route::livewire('/{company}/{workspace}', 'pages::companies.show')->name('companies.show.workspace');
+        // Route::livewire('/{company}/{workspace}/{position}', 'pages::companies.show')->name('companies.show.workspace.position');
 
     });
 

@@ -25,91 +25,27 @@
     <flux:heading size="lg" level="2">Objetivos a cumplir</flux:heading>
     <div class="space-y-2">
         @foreach ($modules as $module)
-            <livewire:sisat-module :company="$company" :module="$module" />
+            <livewire:pages::companies.show.sisat-module :company="$company" :module="$module" />
         @endforeach
     </div>
-    <div class="flex items-start">
-
-        <div class="w-1/4">
-            <livewire:pages::companies.show.workspaces-panel :company="$company" :workspace="$workspace"
-                :position="$position" />
+    <div class="flex justify-between items-center">
+        <div>
+            <flux:heading size="lg" level="2">Estructura Organizacional y Personal</flux:heading>
+            <flux:subheading>Gestiona las áreas de trabajo, cargos y nómina asignada para evaluaciones.
+            </flux:subheading>
         </div>
-
-        <div class="w-3/4 px-4 space-y-4">
-
-            <flux:breadcrumbs>
-                <flux:breadcrumbs.item>
-                    {{ $company->name }}
-                </flux:breadcrumbs.item>
-                @if($workspace)
-                    <flux:breadcrumbs.item>
-                        {{ $workspace->name }}
-                    </flux:breadcrumbs.item>
-                    @if($position)
-                        <flux:breadcrumbs.item>
-                            {{ $position->name }}
-                        </flux:breadcrumbs.item>
-                    @endif
-                @endif
-            </flux:breadcrumbs>
-
-            <div class="flex items-center justify-between">
-                @if($workspace && !$position)
-                    <div class="flex gap-2 items-center">
-                        <flux:heading size="lg" level="2">
-                            {{ $workspace->name }}
-                        </flux:heading>
-                        <flux:button size="xs" variant="ghost" icon="pencil"
-                            wire:click="$dispatch('form-workspace',{companyId:{{ $company->id }},workspaceId:{{ $workspace->id }}})" />
-                    </div>
-                    <flux:button size="sm" variant="ghost" color="red">
-                        Eliminar Área
-                    </flux:button>
-                @elseif($position)
-                    <div class="flex gap-2 items-center">
-                        <flux:heading size="lg" level="2">
-                            {{ $position->name }}
-                        </flux:heading>
-                        <flux:button size="xs" variant="ghost" icon="pencil"
-                            wire:click="$dispatch('form-position',{companyId:{{ $company->id }},workspaceId:{{ $workspace->id }},positionId:{{ $position->id }}})" />
-                        <flux:button size="sm"
-                            wire:click="$dispatch('form-employee',{employee_id:null,company_id:{{ $company->id }},workspace_id:{{ $workspace?->id ?? 'null' }},position_id:{{ $position?->id ?? 'null' }}})">
-                            Nuevo empleado
-                        </flux:button>
-                    </div>
-                    <flux:button size="sm" variant="ghost" color="red">
-                        Eliminar Cargo
-                    </flux:button>
-                @endif
-            </div>
-
-            <flux:table :paginate="$this->employees" class="w-full">
-                <flux:table.columns>
-                    <flux:table.column>Nombre</flux:table.column>
-                    <flux:table.column>Cédula</flux:table.column>
-                    <flux:table.column>Área</flux:table.column>
-                    <flux:table.column>Cargo</flux:table.column>
-                    <flux:table.column></flux:table.column>
-                </flux:table.columns>
-
-                <flux:table.rows>
-                    @foreach ($this->employees as $employee)
-                        <flux:table.row>
-                            <flux:table.cell>{{ $employee->first_name . ' ' . $employee->last_name }}</flux:table.cell>
-                            <flux:table.cell>{{ $employee->id_card }}</flux:table.cell>
-                            <flux:table.cell>{{ $employee->workspace->name }}</flux:table.cell>
-                            <flux:table.cell>{{ $employee->position->name }}</flux:table.cell>
-                            <flux:table.cell>
-                                <div class="flex gap-2 justify-end">
-                                    <flux:button href="{{ route('employees.show', $employee) }}" icon="eye" variant="ghost"
-                                        size="xs"></flux:button>
-                            </flux:table.cell>
-                        </flux:table.row>
-                    @endforeach
-                </flux:table.rows>
-            </flux:table>
+        <div class="flex gap-2">
+            <flux:button size="sm" icon="plus">Área</flux:button>
+            <flux:button size="sm" icon="plus">Cargo</flux:button>
+            <flux:button size="sm" icon="plus" variant="primary">Empleado</flux:button>
         </div>
     </div>
+    <flux:card body="inset" variant="outline">
+        <flux:card.body>
+            <livewire:pages::companies.show.company-employees :company="$company" />
+        </flux:card.body>
+    </flux:card>
+
     <livewire:pages::companies.show.form-workspace />
     <livewire:pages::companies.show.form-position />
     <livewire:pages::companies.show.form-employee />
