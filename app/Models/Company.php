@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
  * @property int $ciiu_id
  * @property CIIU $ciiu
  * @property string $name
+ * @property string $slug
  * @property string $ruc
  * @property string $address
  * @property string $email
@@ -20,7 +21,7 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'ciiu_id', 'ruc', 'address', 'email'])]
+#[Fillable(['name', 'slug', 'ciiu_id', 'ruc', 'address', 'email'])]
 class Company extends Model
 {
     public function workspaces()

@@ -10,7 +10,6 @@ use Livewire\Component;
 
 new class extends Component
 {
-    public Collection $ciius;
 
     public ?CIIU $ciiuSelected = null;
 
@@ -26,10 +25,6 @@ new class extends Component
 
     public string $address = '';
 
-    public function mount()
-    {
-        $this->ciius = CIIU::all();
-    }
 
     protected function rules()
     {

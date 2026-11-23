@@ -10,6 +10,7 @@ use App\Models\Employee;
 use App\Models\Position;
 use App\Models\Workspace;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class CompanySeeder extends Seeder
 {
@@ -70,9 +71,13 @@ class CompanySeeder extends Seeder
         foreach (RiskLevel::cases() as $riskLevel) {
             foreach ([rand(1, 24), rand(25, 49), rand(50, 99), rand(100, 199), rand(200, 350)] as $employeesCount) {
                 $ciiuId = CIIU::where('level', $riskLevel->value)->inRandomOrder()->value('id');
+
+                $name=fake()->company();
+
                 $company = Company::create(
                     [
-                        'name' => fake()->company(),
+                        'name' => $name,
+                        'slug' => Str::slug( $name),
                         'ruc' => fake()->numerify('###########'),
                         'address' => fake()->address(),
                         'email' => fake()->companyEmail(),
