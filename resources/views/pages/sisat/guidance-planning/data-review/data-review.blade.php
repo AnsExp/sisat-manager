@@ -7,9 +7,16 @@
 
 <div class="space-y-6">
     <x-sisat-header :company="$company" :module="$module" :activity="$activity" />
-    <div class="space-y-3">
-        @foreach ($items as $item)
-        <livewire:pages::sisat.guidance-planning.data-review.ilo-item :company="$company" :item="$item" />
-        @endforeach
+    <flux:modal.trigger name="incident-store">
+        <flux:button variant="primary" size="sm">Subir Caso</flux:button>
+    </flux:modal.trigger>
+    <livewire:pages::sisat.guidance-planning.data-review.incident-store :company="$company" :activity="$activity" />
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
+        <livewire:pages::sisat.guidance-planning.data-review.incident-registered :company="$company"
+            :activity="$activity" />
+        <livewire:pages::sisat.guidance-planning.data-review.incident-registered :company="$company"
+            :activity="$activity" />
+        <livewire:pages::sisat.guidance-planning.data-review.incident-registered :company="$company"
+            :activity="$activity" />
     </div>
 </div>
