@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Especificación de Formularios y Fórmulas KPI – SISAT (100 Ítems)</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --muted: #475569;
+            --primary: #0f766e;
+            --primary-light: #f0fdfa;
+            --accent: #1d4ed8;
+            --accent-light: #eff6ff;
+            --warn: #b45309;
+            --warn-light: #fffbeb;
+            --ok: #15803d;
+            --ok-light: #f0fdf4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        header {
+            background: #0f172a;
+            color: #fff;
+            padding: 24px 32px;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        header h1 {
+            margin: 0 0 6px;
+            font-size: 22px;
+        }
+
+        header p {
+            margin: 0;
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+
+        .container {
+            max-width: 1360px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, .05);
+        }
+
+        .toolbar input,
+        .toolbar select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            background: #fff;
+        }
+
+        .toolbar input {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .badge-count {
+            font-weight: 600;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+        }
+
+        section.arch {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        section.arch h2 {
+            margin-top: 0;
+            font-size: 17px;
+            color: #0f172a;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 16px;
+        }
+
+        .pattern-box {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            background: #fcfcfd;
+        }
+
+        .pattern-box h3 {
+            margin: 0 0 6px;
+            font-size: 14px;
+            color: var(--primary);
+        }
+
+        .wireframe {
+            border: 1px dashed #94a3b8;
+            border-radius: 8px;
+            padding: 14px;
+            background: #fff;
+            margin-top: 10px;
+        }
+
+        .wf-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .wf-field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--muted);
+            margin-bottom: 3px;
+        }
+
+        .wf-input {
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+            padding: 6px 9px;
+            font-size: 12px;
+            background: #f8fafc;
+            color: #334155;
+        }
+
+        .wf-result {
+            background: var(--ok-light);
+            border: 1px solid #bbf7d0;
+            color: var(--ok);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .comp-header {
+            background: #1e293b;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 8px;
+            margin: 28px 0 14px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .item-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .item-top {
+            background: #f1f5f9;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .item-title {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .pills {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .pill {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .pill.type-E {
+            background: #eef2ff;
+            color: #3730a3;
+            border-color: #c7d2fe;
+        }
+
+        .pill.type-P {
+            background: #f0fdfa;
+            color: #115e59;
+            border-color: #99f6e4;
+        }
+
+        .pill.type-R {
+            background: #fff7ed;
+            color: #9a3412;
+            border-color: #fed7aa;
+        }
+
+        .item-body {
+            display: grid;
+            grid-template-columns: 1.1fr 1.2fr 1fr;
+            gap: 16px;
+            padding: 16px;
+        }
+
+        @media (max-width: 960px) {
+            .item-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .col-box h4 {
+            margin: 0 0 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            color: var(--muted);
+        }
+
+        .meta-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-size: 12.5px;
+        }
+
+        .meta-list li {
+            margin-bottom: 5px;
+        }
+
+        .formula-box {
+            background: var(--accent-light);
+            border-left: 3px solid var(--accent);
+            padding: 8px 10px;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .calc-example {
+            background: var(--ok-light);
+            border: 1px solid #bbf7d0;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 12.5px;
+        }
+
+        .calc-example strong {
+            color: var(--ok);
+        }
+
+        code.json {
+            display: block;
+            background: #0f172a;
+            color: #e2e8f0;
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            overflow-x: auto;
+            margin-top: 8px;
+            white-space: pre;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>SISAT – Diseño de Formularios de Captura y Aplicación de Fórmulas KPI (100 Ítems)</h1>
+        <p>Basado en Acuerdo Ministerial MSP 00004-2026 (Tabla 1) · Arquitectura de pantallas, campos requeridos,
+            validación y ejemplo numérico por cada indicador.</p>
+    </header>
+
+    <div class="container">
+
+        <section class="arch">
+            <h2>1. Estructura Estándar de Pantalla en el Sistema (Laravel / Livewire + Flux)</h2>
+            <p>Cada formulario de actividad SISAT debe dividir la pantalla en <strong>4 bloques uniformes</strong> para
+                que el usuario ingrese los datos base y el sistema calcule automáticamente el indicador, evalúe la meta
+                y almacene la evidencia PDF + JSONB:</p>
+            <div class="grid-2">
+                <div class="pattern-box">
+                    <h3>Bloque 1: Cabecera de Contexto (Automática)</h3>
+                    <ul class="meta-list">
+                        <li><strong>Empresa &amp; Categoría SISAT:</strong> I, II, III, IV o V (filtra qué ítems aplican
+                            según Tabla 2).</li>
+                        <li><strong>Período de reporte:</strong> Año + Mes / Trimestre / Semestre (según frecuencia del
+                            ítem).</li>
+                        <li><strong>Responsable y Apoyo:</strong> Precargado desde el perfil del usuario autenticado.
+                        </li>
+                    </ul>
+                </div>
+                <div class="pattern-box">
+                    <h3>Bloque 2: Entradas de Datos (Inputs del Formulario)</h3>
+                    <ul class="meta-list">
+                        <li><strong>Patrón A (Porcentaje):</strong> 2 inputs numéricos enteros (<code>numerador</code> y
+                            <code>denominador</code>).</li>
+                        <li><strong>Patrón B (Binario Sí/No):</strong> Switch <code>Sí (1) / No (0)</code> + Fecha de
+                            documento.</li>
+                        <li><strong>Patrón C (Compuesto):</strong> Switch <code>Sí/No</code> + Numerador/Denominador.
+                        </li>
+                        <li><strong>Patrón D/E (Tasas / Tiempos / Conteos):</strong> Inputs específicos (horas-hombre,
+                            días, minutos o conteo).</li>
+                    </ul>
+                </div>
+                <div class="pattern-box">
+                    <h3>Bloque 3: Cálculo en Vivo y Semáforo de Meta</h3>
+                    <div class="wireframe">
+                        <div class="wf-row">
+                            <div class="wf-field"><label>Numerador (Ej: Procesos mapeados)</label>
+                                <div class="wf-input">8</div>
+                            </div>
+                            <div class="wf-field"><label>Denominador (Ej: Total procesos)</label>
+                                <div class="wf-input">8</div>
+                            </div>
+                        </div>
+                        <div class="wf-result">
+                            <span>Resultado calculado: (8 ÷ 8) × 100 = 100.00 %</span>
+                            <span>Meta: 100 % → CUMPLE ✔</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pattern-box">
+                    <h3>Bloque 4: Evidencia Documental y Auditoría</h3>
+                    <ul class="meta-list">
+                        <li><strong>Fuente de verificación:</strong> Subida obligatoria de PDF respaldo
+                            (<code>hash_file('sha256')</code>).</li>
+                        <li><strong>Observaciones / Plan de acción:</strong> Campo de texto obligatorio si el resultado
+                            no alcanza la meta.</li>
+                        <li><strong>Estado de revisión:</strong> Checkbox <code>Cumple</code> + firma SHA-256 en tabla
+                            de historial.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="toolbar">
+            <input type="text" id="searchInput"
+                placeholder="Buscar por N°, actividad, indicador, fórmula o base legal...">
+            <select id="compFilter">
+                <option value="">Todos los componentes (10)</option>
+            </select>
+            <select id="typeFilter">
+                <option value="">Todos los tipos (E / P / R)</option>
+                <option value="E">E – Estructura</option>
+                <option value="P">P – Proceso</option>
+                <option value="R">R – Resultado</option>
+            </select>
+            <span class="badge-count" id="counter">Mostrando 100 de 100 ítems</span>
+        </div>
+
+        <div id="itemsContainer"></div>
+    </div>
+
+    <script>
+        const ITEMS = [
+            // COMPONENTE 1
+            {
+                n: 1, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "a", act: "Mapeo de procesos de la actividad laboral, métodos de trabajo (procedimientos)", ind: "% de procesos mapeados con procedimiento de trabajo vigente", tipo: "E", form: "(N° procesos/áreas mapeados con procedimiento vigente ÷ N° total de procesos/áreas de la actividad laboral) × 100", meta: "100 %", freq: "Anual y ante cambios", src: "Mapa de procesos, procedimientos aprobados, listado maestro de documentos", cat: "II–V", legal: "Art. 15, Tabla 1",
+                fields: [{ l: "N° procesos/áreas mapeados con procedimiento vigente", t: "number", v: "12" }, { l: "N° total de procesos/áreas de la actividad laboral", t: "number", v: "12" }, { l: "Código listado maestro / Mapa de procesos (PDF)", t: "file", v: "mapa_procesos_2026.pdf" }],
+                calc: "(12 ÷ 12) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 2, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "b", act: "Diagnóstico general de salud en el trabajo", ind: "Diagnóstico general de salud elaborado y vigente (≤ 12 meses)", tipo: "E", form: "Sí = 1 / No = 0", meta: "1 (Sí)", freq: "Anual", src: "Informe de diagnóstico general de salud firmado", cat: "II–V", legal: "Art. 15; Art. 28 num. 1",
+                fields: [{ l: "¿Diagnóstico general de salud elaborado?", t: "select (Sí=1 / No=0)", v: "1 (Sí)" }, { l: "Fecha de emisión del informe (validar ≤ 12 meses)", t: "date", v: "2026-02-15" }, { l: "Informe de diagnóstico firmado (PDF)", t: "file", v: "diagnostico_general_2026.pdf" }],
+                calc: "Valor = 1 (Sí) y antigüedad = 9 meses (≤ 12 meses) → Cumple"
+            },
+            {
+                n: 3, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "b", act: "Diagnóstico general de salud en el trabajo", ind: "Cobertura del diagnóstico general", tipo: "P", form: "(N° trabajadores incluidos en el diagnóstico ÷ N° total de trabajadores) × 100", meta: "≥ 95 %", freq: "Anual", src: "Base de datos del diagnóstico, nómina", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° trabajadores incluidos en el diagnóstico", t: "number", v: "146" }, { l: "N° total de trabajadores en nómina", t: "number", v: "150" }, { l: "Corte de nómina y matriz diagnóstico (PDF)", t: "file", v: "cobertura_dx_general.pdf" }],
+                calc: "(146 ÷ 150) × 100 = 97.33 % → Meta ≥ 95 % (Cumple)"
+            },
+            {
+                n: 4, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "c", act: "Diagnóstico de salud física del trabajador", ind: "Cobertura del diagnóstico de salud física", tipo: "P", form: "(N° trabajadores con diagnóstico de salud física ÷ N° total de trabajadores) × 100", meta: "100 %", freq: "Anual", src: "Expedientes de salud, matriz de morbilidad", cat: "I–V", legal: "Art. 15; Art. 32",
+                fields: [{ l: "N° trabajadores con diagnóstico de salud física", t: "number", v: "150" }, { l: "N° total de trabajadores", t: "number", v: "150" }, { l: "Resumen matriz de morbilidad anonimizada (PDF)", t: "file", v: "dx_salud_fisica.pdf" }],
+                calc: "(150 ÷ 150) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 5, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "d", act: "Diagnóstico de salud mental del trabajador", ind: "Cobertura del diagnóstico de salud mental / riesgo psicosocial", tipo: "P", form: "(N° trabajadores evaluados en salud mental ÷ N° total de trabajadores) × 100", meta: "≥ 90 %", freq: "Anual", src: "Informe de tamizaje / evaluación psicosocial", cat: "I–V", legal: "Art. 15; Art. 35",
+                fields: [{ l: "N° trabajadores evaluados en salud mental", t: "number", v: "140" }, { l: "N° total de trabajadores", t: "number", v: "150" }, { l: "Informe tamizaje psicosocial (PDF)", t: "file", v: "tamizaje_psicosocial.pdf" }],
+                calc: "(140 ÷ 150) × 100 = 93.33 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 6, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "d", act: "Diagnóstico de salud mental del trabajador", ind: "% trabajadores con riesgo psicosocial alto con plan de intervención", tipo: "R", form: "(N° trabajadores con riesgo alto y plan de intervención ÷ N° trabajadores con riesgo alto) × 100", meta: "100 %", freq: "Semestral", src: "Planes de intervención, registros de seguimiento", cat: "I–V", legal: "Art. 35 num. 2 y 4",
+                fields: [{ l: "N° trabajadores con riesgo alto y plan de intervención", t: "number", v: "8" }, { l: "N° trabajadores identificados con riesgo alto", t: "number", v: "8" }, { l: "Consolidado de planes de intervención (PDF)", t: "file", v: "planes_riesgo_psicosocial.pdf" }],
+                calc: "(8 ÷ 8) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 7, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "e", act: "Revisión de los datos disponibles de enfermedades profesionales y accidentes", ind: "Casos históricos de AT y EP revisados y analizados", tipo: "P", form: "(N° casos de AT/EP registrados revisados ÷ N° casos de AT/EP registrados en el período) × 100", meta: "100 %", freq: "Anual", src: "Informe de análisis histórico de AT/EP", cat: "II–V", legal: "Art. 15, Tabla 1",
+                fields: [{ l: "N° casos de AT/EP registrados revisados", t: "number", v: "6" }, { l: "N° casos de AT/EP registrados en el período", t: "number", v: "6" }, { l: "Informe análisis histórico AT/EP (PDF)", t: "file", v: "analisis_historico_atep.pdf" }],
+                calc: "(6 ÷ 6) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 8, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "f*", act: "Planificación de la gestión preventiva respecto a los riesgos a la salud asociados al inicio de actividades", ind: "% de cambios con evaluación preventiva previa a su inicio", tipo: "P", form: "(N° cambios/inicios de actividad con evaluación de riesgos para la salud previa ÷ N° total de cambios/inicios de actividad) × 100", meta: "100 %", freq: "Trimestral", src: "Registro de gestión del cambio, evaluaciones previas", cat: "II–V", legal: "Art. 15, Tabla 1",
+                fields: [{ l: "N° cambios/inicios con evaluación preventiva previa", t: "number", v: "4" }, { l: "N° total de cambios/inicios de actividad en el trimestre", t: "number", v: "4" }, { l: "Registro de gestión del cambio (PDF)", t: "file", v: "gestion_cambio_q3.pdf" }],
+                calc: "(4 ÷ 4) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 9, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "Transv.", act: "Plan Anual de Salud en el Trabajo", ind: "Plan Anual de Salud en el Trabajo aprobado en el último trimestre del año previo", tipo: "E", form: "Sí = 1 / No = 0 (fecha de aprobación ≤ 31-dic del año previo)", meta: "1 (Sí)", freq: "Anual", src: "Plan aprobado por el empleador, acta de aprobación", cat: "I–V", legal: "Art. 28",
+                fields: [{ l: "¿Plan Anual aprobado?", t: "select (Sí=1 / No=0)", v: "1 (Sí)" }, { l: "Fecha de aprobación (debe ser ≤ 31-dic año previo)", t: "date", v: "2025-12-18" }, { l: "Acta de aprobación firmada (PDF)", t: "file", v: "plan_anual_2026_aprobado.pdf" }],
+                calc: "Valor = 1 (Sí) y fecha 2025-12-18 ≤ 2025-12-31 → Cumple"
+            },
+            {
+                n: 10, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "Transv.", act: "Plan Anual de Salud en el Trabajo", ind: "% de ejecución del Plan Anual de Salud en el Trabajo", tipo: "P", form: "(N° actividades del plan ejecutadas ÷ N° actividades programadas a la fecha) × 100", meta: "≥ 90 %", freq: "Trimestral (consolidado anual)", src: "Cronograma del plan, evidencias de ejecución", cat: "I–V", legal: "Art. 28; Art. 46",
+                fields: [{ l: "N° actividades del plan ejecutadas", t: "number", v: "19" }, { l: "N° actividades programadas a la fecha", t: "number", v: "20" }, { l: "Cronograma con estado de avance (PDF)", t: "file", v: "ejecucion_plan_q3.pdf" }],
+                calc: "(19 ÷ 20) × 100 = 95.00 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 11, comp: "1. ORIENTACIÓN Y PLANIFICACIÓN", lit: "Transv.", act: "Proceso participativo", ind: "Socialización anual participativa realizada con acta y cronograma de compromisos", tipo: "P", form: "Sí = 1 / No = 0; además (compromisos cumplidos ÷ compromisos acordados) × 100", meta: "1 (Sí); ≥ 90 % compromisos", freq: "Anual", src: "Acta de socialización con cronograma", cat: "I–V", legal: "Art. 27",
+                fields: [{ l: "¿Socialización realizada con acta?", t: "select (Sí=1 / No=0)", v: "1 (Sí)" }, { l: "N° compromisos cumplidos", t: "number", v: "9" }, { l: "N° compromisos acordados", t: "number", v: "10" }, { l: "Acta de socialización y firmas (PDF)", t: "file", v: "acta_socializacion_2026.pdf" }],
+                calc: "Acta = 1 (Sí) y (9 ÷ 10) × 100 = 90 % → Cumple ambos criterios"
+            },
+
+            // COMPONENTE 2.1
+            {
+                n: 12, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.1 Condiciones de trabajo", lit: "a", act: "Línea base de identificación de peligros, evaluación de riesgos y medidas de control", ind: "% de puestos de trabajo con identificación de peligros y evaluación de riesgos vigente", tipo: "E", form: "(N° puestos con matriz IPER vigente ÷ N° total de puestos) × 100", meta: "100 %", freq: "Anual y ante cambios", src: "Matriz IPER / línea base", cat: "I–V", legal: "Art. 15, Tabla 1; Art. 28 num. 2",
+                fields: [{ l: "N° puestos con matriz IPER vigente", t: "number", v: "28" }, { l: "N° total de puestos de trabajo", t: "number", v: "28" }, { l: "Matriz IPER aprobada (PDF)", t: "file", v: "matriz_iper_2026.pdf" }],
+                calc: "(28 ÷ 28) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 13, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.1 Condiciones de trabajo", lit: "a", act: "Línea base de identificación de peligros, evaluación de riesgos y medidas de control", ind: "% de riesgos significativos con medida de control definida", tipo: "P", form: "(N° riesgos moderados/importantes/intolerables con medida definida ÷ N° total de riesgos significativos) × 100", meta: "100 %", freq: "Semestral", src: "Matriz IPER, plan de acción", cat: "I–V", legal: "Art. 15",
+                fields: [{ l: "N° riesgos significativos con medida definida", t: "number", v: "34" }, { l: "N° total de riesgos significativos (Mod/Imp/Intol)", t: "number", v: "34" }, { l: "Plan de acción IPER (PDF)", t: "file", v: "medidas_riesgos_iper.pdf" }],
+                calc: "(34 ÷ 34) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 14, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.1 Condiciones de trabajo", lit: "b", act: "Evaluación y control de la eficacia de los equipos de protección personal y colectiva", ind: "% de EPP y protecciones colectivas evaluadas en su eficacia", tipo: "P", form: "(N° tipos de EPP / protecciones colectivas evaluadas ÷ N° requeridos según matriz de riesgos) × 100", meta: "100 %", freq: "Semestral", src: "Matriz de EPP, informes de evaluación, registros de entrega", cat: "II–V", legal: "Art. 15; Art. 12 num. 6",
+                fields: [{ l: "N° tipos de EPP/protecciones colectivas evaluadas", t: "number", v: "14" }, { l: "N° tipos requeridos según matriz de riesgos", t: "number", v: "14" }, { l: "Informe técnico evaluación EPP (PDF)", t: "file", v: "eval_eficacia_epp.pdf" }],
+                calc: "(14 ÷ 14) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 15, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.1 Condiciones de trabajo", lit: "b", act: "Evaluación y control de la eficacia de los equipos de protección personal y colectiva", ind: "% de trabajadores expuestos con EPP adecuado y vigente", tipo: "R", form: "(N° trabajadores expuestos con EPP adecuado y vigente ÷ N° trabajadores expuestos que lo requieren) × 100", meta: "100 %", freq: "Trimestral", src: "Inspecciones, registros de entrega y reposición", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° trabajadores expuestos con EPP adecuado y vigente", t: "number", v: "85" }, { l: "N° trabajadores expuestos que requieren EPP", t: "number", v: "85" }, { l: "Registro de inspección y entrega EPP (PDF)", t: "file", v: "inspeccion_epp_q3.pdf" }],
+                calc: "(85 ÷ 85) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 16, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.1 Condiciones de trabajo", lit: "c", act: "Evaluación y seguimiento de los sistemas de control diseñados para eliminar o reducir la exposición", ind: "% de verificaciones de sistemas de control ejecutadas", tipo: "P", form: "(N° verificaciones ejecutadas ÷ N° verificaciones programadas) × 100", meta: "100 %", freq: "Trimestral", src: "Cronograma y registros de verificación", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° verificaciones ejecutadas", t: "number", v: "12" }, { l: "N° verificaciones programadas", t: "number", v: "12" }, { l: "Bitácora de verificación de controles (PDF)", t: "file", v: "verificacion_controles_q3.pdf" }],
+                calc: "(12 ÷ 12) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 17, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.1 Condiciones de trabajo", lit: "c", act: "Evaluación y seguimiento de los sistemas de control diseñados para eliminar o reducir la exposición", ind: "% de sistemas de control eficaces", tipo: "R", form: "(N° sistemas de control que mantienen la exposición bajo el nivel de acción / VLP ÷ N° sistemas evaluados) × 100", meta: "≥ 90 %", freq: "Semestral", src: "Informes de evaluación de controles", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° sistemas que mantienen exposición ≤ nivel de acción/VLP", t: "number", v: "9" }, { l: "N° sistemas de control evaluados", t: "number", v: "10" }, { l: "Informe eficacia de controles de ingeniería (PDF)", t: "file", v: "eficacia_sistemas_s1.pdf" }],
+                calc: "(9 ÷ 10) × 100 = 90.00 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 18, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.1 Condiciones de trabajo", lit: "d", act: "Evaluación de higiene del trabajo y seguimiento de las medidas de control implementadas", ind: "% de agentes higiénicos significativos con medición vigente", tipo: "P", form: "(N° agentes físicos/químicos/biológicos con medición cuantitativa vigente ÷ N° agentes que requieren medición) × 100", meta: "100 %", freq: "Anual", src: "Informes de monitoreo de higiene (laboratorio acreditado)", cat: "III–V", legal: "Art. 15; Art. 29 num. 5",
+                fields: [{ l: "N° agentes con medición cuantitativa vigente", t: "number", v: "5" }, { l: "N° agentes que requieren medición", t: "number", v: "5" }, { l: "Informes de laboratorio acreditado (PDF)", t: "file", v: "monitoreo_higiene_2026.pdf" }],
+                calc: "(5 ÷ 5) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 19, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.1 Condiciones de trabajo", lit: "d", act: "Evaluación de higiene del trabajo y seguimiento de las medidas de control implementadas", ind: "% de mediciones dentro del valor límite permisible (VLP)", tipo: "R", form: "(N° puntos/GES con resultado ≤ VLP ÷ N° puntos/GES medidos) × 100", meta: "≥ 95 %", freq: "Anual", src: "Informes de monitoreo", cat: "III–V", legal: "Art. 15; Art. 29 num. 4",
+                fields: [{ l: "N° puntos/GES con resultado ≤ VLP", t: "number", v: "19" }, { l: "N° total de puntos/GES medidos", t: "number", v: "20" }, { l: "Tabla comparativa vs VLP (PDF)", t: "file", v: "resultados_vlp_2026.pdf" }],
+                calc: "(19 ÷ 20) × 100 = 95.00 % → Meta ≥ 95 % (Cumple)"
+            },
+            {
+                n: 20, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.1 Condiciones de trabajo", lit: "e", act: "Inspección y seguimiento de servicios de alimentación, hospedaje e instalaciones sanitarias", ind: "% de inspecciones ejecutadas", tipo: "P", form: "(N° inspecciones ejecutadas ÷ N° inspecciones programadas) × 100", meta: "100 %", freq: "Mensual", src: "Listas de verificación firmadas", cat: "II–V", legal: "Art. 11 num. 10; Art. 15",
+                fields: [{ l: "N° inspecciones ejecutadas en el mes", t: "number", v: "4" }, { l: "N° inspecciones programadas en el mes", t: "number", v: "4" }, { l: "Checklists sanitarios firmados (PDF)", t: "file", v: "inspeccion_sanitaria_oct.pdf" }],
+                calc: "(4 ÷ 4) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 21, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.1 Condiciones de trabajo", lit: "e", act: "Inspección y seguimiento de servicios de alimentación, hospedaje e instalaciones sanitarias", ind: "% de no conformidades cerradas en plazo", tipo: "R", form: "(N° no conformidades cerradas en plazo ÷ N° no conformidades detectadas) × 100", meta: "≥ 90 %", freq: "Trimestral", src: "Registro de hallazgos y acciones", cat: "II–V", legal: "Art. 11 num. 10",
+                fields: [{ l: "N° no conformidades cerradas en plazo", t: "number", v: "9" }, { l: "N° no conformidades detectadas", t: "number", v: "10" }, { l: "Matriz de cierre de hallazgos (PDF)", t: "file", v: "cierre_nc_sanitarias_q3.pdf" }],
+                calc: "(9 ÷ 10) × 100 = 90.00 % → Meta ≥ 90 % (Cumple)"
+            },
+
+            // COMPONENTE 2.2
+            {
+                n: 22, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.2 Condiciones de salud", lit: "a", act: "Matriz de exámenes ocupacionales de acuerdo con los riesgos y puesto de trabajo", ind: "% de puestos / GES con profesiograma (matriz de exámenes) definido", tipo: "E", form: "(N° puestos o GES con matriz de exámenes ÷ N° total de puestos o GES) × 100", meta: "100 %", freq: "Anual y ante cambios", src: "Matriz de exámenes ocupacionales (profesiograma)", cat: "II–V", legal: "Art. 15; Art. 32",
+                fields: [{ l: "N° puestos o GES con profesiograma definido", t: "number", v: "28" }, { l: "N° total de puestos o GES", t: "number", v: "28" }, { l: "Profesiograma aprobado (PDF)", t: "file", v: "profesiograma_2026.pdf" }],
+                calc: "(28 ÷ 28) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 23, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.2 Condiciones de salud", lit: "b", act: "Evaluación médica y psicológica (aptitud laboral, condiciones de salud)", ind: "% de trabajadores con certificado de salud en el trabajo vigente", tipo: "R", form: "(N° trabajadores con certificado de salud vigente ÷ N° total de trabajadores) × 100", meta: "100 %", freq: "Trimestral", src: "Certificados de salud en el trabajo", cat: "I–V", legal: "Art. 32 num. 7",
+                fields: [{ l: "N° trabajadores con certificado de salud vigente", t: "number", v: "150" }, { l: "N° total de trabajadores activos", t: "number", v: "150" }, { l: "Reporte vigencia certificados (PDF)", t: "file", v: "certificados_vigentes_q3.pdf" }],
+                calc: "(150 ÷ 150) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 24, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.2 Condiciones de salud", lit: "b", act: "Evaluación médica y psicológica (aptitud laboral, condiciones de salud)", ind: "% de trabajadores con restricción con seguimiento y adaptación del puesto", tipo: "P", form: "(N° trabajadores “apto con restricción” con seguimiento y adaptación ÷ N° trabajadores con restricción) × 100", meta: "100 %", freq: "Trimestral", src: "Registro de restricciones, informes de adaptación de puesto", cat: "I–V", legal: "Art. 11 num. 9; Art. 32 num. 4",
+                fields: [{ l: "N° trabajadores 'apto con restricción' con seguimiento", t: "number", v: "5" }, { l: "N° total trabajadores con restricción", t: "number", v: "5" }, { l: "Informes de adaptación de puesto (PDF)", t: "file", v: "adaptacion_puestos_q3.pdf" }],
+                calc: "(5 ÷ 5) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 25, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.2 Condiciones de salud", lit: "c", act: "Evaluación médica pre-ocupacional – inicio", ind: "% de ingresos con evaluación pre-ocupacional antes del inicio de labores", tipo: "P", form: "(N° trabajadores nuevos evaluados antes del inicio ÷ N° trabajadores que ingresaron) × 100", meta: "100 %", freq: "Mensual", src: "Expedientes, registro de ingresos de Talento Humano", cat: "I–V", legal: "Art. 32 num. 1",
+                fields: [{ l: "N° trabajadores nuevos evaluados antes del inicio", t: "number", v: "7" }, { l: "N° trabajadores que ingresaron en el mes", t: "number", v: "7" }, { l: "Cruce ingresos TTHH vs certificados inicio (PDF)", t: "file", v: "preocupacionales_oct.pdf" }],
+                calc: "(7 ÷ 7) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 26, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.2 Condiciones de salud", lit: "d", act: "Evaluación médica periódica", ind: "Cobertura de evaluaciones periódicas", tipo: "P", form: "(N° trabajadores con evaluación periódica realizada ÷ N° trabajadores programados en el período) × 100", meta: "≥ 95 % (mínimo anual)", freq: "Trimestral (consolidado anual)", src: "Cronograma de evaluaciones, expedientes", cat: "I–V", legal: "Art. 32 num. 2",
+                fields: [{ l: "N° trabajadores con evaluación periódica realizada", t: "number", v: "38" }, { l: "N° trabajadores programados en el período", t: "number", v: "40" }, { l: "Cronograma ejecutado periódicas (PDF)", t: "file", v: "periodicas_q3.pdf" }],
+                calc: "(38 ÷ 40) × 100 = 95.00 % → Meta ≥ 95 % (Cumple)"
+            },
+            {
+                n: 27, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.2 Condiciones de salud", lit: "e", act: "Evaluación médica de reintegro / especiales", ind: "% de reintegros con evaluación previa a la reincorporación", tipo: "P", form: "(N° trabajadores reintegrados con evaluación de reintegro ÷ N° trabajadores que retornan tras ausencia prolongada por salud) × 100", meta: "100 %", freq: "Mensual", src: "Expedientes, certificados de reposo (Art. 38)", cat: "I–V", legal: "Art. 32 num. 3",
+                fields: [{ l: "N° reintegrados con evaluación previa", t: "number", v: "3" }, { l: "N° trabajadores que retornan tras ausencia prolongada", t: "number", v: "3" }, { l: "Registro de reintegros y certificados (PDF)", t: "file", v: "reintegros_oct.pdf" }],
+                calc: "(3 ÷ 3) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 28, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.2 Condiciones de salud", lit: "f", act: "Evaluación médica de retiro", ind: "% de evaluaciones de retiro realizadas en plazo", tipo: "P", form: "(N° desvinculados con evaluación de retiro ≤ 5 días o evaluación válida ≤ 12 meses ÷ N° trabajadores desvinculados) × 100", meta: "100 %", freq: "Mensual", src: "Expedientes, registro de salidas de Talento Humano", cat: "I–V", legal: "Art. 11 num. 12; Art. 32 num. 6",
+                fields: [{ l: "N° desvinculados con eval. retiro ≤ 5 días (o válida ≤ 12m)", t: "number", v: "4" }, { l: "N° trabajadores desvinculados en el mes", t: "number", v: "4" }, { l: "Reporte salidas TTHH vs certificados retiro (PDF)", t: "file", v: "retiros_oct.pdf" }],
+                calc: "(4 ÷ 4) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+
+            // COMPONENTE 2.3
+            {
+                n: 29, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "a", act: "Análisis de la vigilancia epidemiológica de la salud en el trabajo", ind: "Informes de vigilancia epidemiológica emitidos", tipo: "P", form: "(N° informes emitidos ÷ N° informes programados) × 100", meta: "100 %", freq: "Semestral", src: "Informes de vigilancia epidemiológica", cat: "II–V", legal: "Art. 32",
+                fields: [{ l: "N° informes de vigilancia emitidos", t: "number", v: "1" }, { l: "N° informes programados en el semestre", t: "number", v: "1" }, { l: "Informe vigilancia epidemiológica S1 (PDF)", t: "file", v: "vigilancia_epi_s1.pdf" }],
+                calc: "(1 ÷ 1) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 30, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "a", act: "Análisis de la vigilancia epidemiológica de la salud en el trabajo", ind: "Tasa de morbilidad general", tipo: "R", form: "(N° casos de morbilidad atendidos en el período ÷ N° promedio de trabajadores) × 100", meta: "Tendencia decreciente", freq: "Mensual / Trimestral", src: "Registro de atenciones, perfil epidemiológico", cat: "II–V", legal: "Art. 15; Art. 44",
+                fields: [{ l: "N° casos de morbilidad atendidos en el período", t: "number", v: "24" }, { l: "N° promedio de trabajadores en el período", t: "number", v: "150" }, { l: "Perfil epidemiológico / morbilidad (PDF)", t: "file", v: "morbilidad_q3.pdf" }],
+                calc: "(24 ÷ 150) × 100 = 16.00 % (comparar vs período anterior: 18.5 % → Tendencia decreciente ✔)"
+            },
+            {
+                n: 31, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "b", act: "Identificación del trabajador o grupos de exposición similar (GES)", ind: "% de trabajadores asignados a un GES", tipo: "E", form: "(N° trabajadores asignados a un GES ÷ N° total de trabajadores) × 100", meta: "100 %", freq: "Anual y ante cambios", src: "Matriz de GES", cat: "II–V", legal: "Art. 29 num. 3",
+                fields: [{ l: "N° trabajadores asignados a un GES", t: "number", v: "150" }, { l: "N° total de trabajadores", t: "number", v: "150" }, { l: "Matriz maestra de GES (PDF)", t: "file", v: "matriz_ges_2026.pdf" }],
+                calc: "(150 ÷ 150) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 32, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "c", act: "Análisis de los agentes de exposición (vías de entrada, tipo de exposición, VLP, efectos adversos)", ind: "% de GES con caracterización completa de agentes de exposición", tipo: "E", form: "(N° GES con agentes caracterizados ÷ N° total de GES) × 100", meta: "100 %", freq: "Anual", src: "Fichas de caracterización por GES", cat: "IV–V", legal: "Art. 29 num. 4",
+                fields: [{ l: "N° GES con agentes caracterizados completamente", t: "number", v: "11" }, { l: "N° total de GES definidos", t: "number", v: "11" }, { l: "Fichas toxicológicas/exposición por GES (PDF)", t: "file", v: "caracterizacion_ges_2026.pdf" }],
+                calc: "(11 ÷ 11) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 33, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "d", act: "Evaluación y seguimiento de medidas de promoción de la salud y prevención de enfermedades", ind: "% de actividades de promoción y prevención ejecutadas", tipo: "P", form: "(N° actividades ejecutadas ÷ N° actividades planificadas) × 100", meta: "≥ 90 %", freq: "Trimestral", src: "Plan anual, registros de asistencia", cat: "I–V", legal: "Art. 4; Art. 31",
+                fields: [{ l: "N° actividades de promoción ejecutadas", t: "number", v: "9" }, { l: "N° actividades planificadas en el trimestre", t: "number", v: "10" }, { l: "Evidencias campañas promoción (PDF)", t: "file", v: "promocion_salud_q3.pdf" }],
+                calc: "(9 ÷ 10) × 100 = 90.00 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 34, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "d", act: "Evaluación y seguimiento de medidas de promoción de la salud y prevención de enfermedades", ind: "Cobertura de participación en actividades de promoción", tipo: "R", form: "(N° trabajadores que participaron ÷ N° trabajadores convocados) × 100", meta: "≥ 80 %", freq: "Trimestral", src: "Registros de asistencia", cat: "I–V", legal: "Art. 12 num. 1",
+                fields: [{ l: "N° trabajadores que participaron", t: "number", v: "128" }, { l: "N° trabajadores convocados", t: "number", v: "150" }, { l: "Listados de asistencia firmados (PDF)", t: "file", v: "asistencia_promocion_q3.pdf" }],
+                calc: "(128 ÷ 150) × 100 = 85.33 % → Meta ≥ 80 % (Cumple)"
+            },
+            {
+                n: 35, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "e", act: "Identificación y seguimiento de grupos prioritarios y en condición de vulnerabilidad", ind: "% de trabajadores de grupos prioritarios/vulnerables con plan de seguimiento individual", tipo: "P", form: "(N° trabajadores vulnerables con plan de seguimiento ÷ N° trabajadores vulnerables identificados) × 100", meta: "100 %", freq: "Trimestral", src: "Registro de grupos prioritarios (embarazo, lactancia, discapacidad, enfermedades catastróficas, etc.)", cat: "I–V", legal: "Art. 15; Art. 28 num. 3",
+                fields: [{ l: "N° trabajadores vulnerables con plan individual activo", t: "number", v: "14" }, { l: "N° trabajadores vulnerables identificados", t: "number", v: "14" }, { l: "Matriz anonimizada grupos prioritarios (PDF)", t: "file", v: "grupos_prioritarios_q3.pdf" }],
+                calc: "(14 ÷ 14) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 36, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "f", act: "Programa de monitoreo epidemiológico especializado (PMEE)", ind: "% de problemas de salud prevalentes con PMEE implementado", tipo: "E", form: "(N° PMEE implementados ÷ N° problemas de salud prevalentes identificados) × 100", meta: "100 %", freq: "Anual", src: "Documento de cada PMEE", cat: "IV–V", legal: "Art. 41",
+                fields: [{ l: "N° PMEE implementados (ej. auditivo, osteomuscular)", t: "number", v: "3" }, { l: "N° problemas de salud prevalentes identificados", t: "number", v: "3" }, { l: "Documentos técnicos de los PMEE (PDF)", t: "file", v: "programas_pmee_2026.pdf" }],
+                calc: "(3 ÷ 3) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 37, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "f", act: "Programa de monitoreo epidemiológico especializado (PMEE)", ind: "Cobertura de trabajadores en PMEE", tipo: "P", form: "(N° trabajadores incluidos y evaluados en el PMEE ÷ N° trabajadores que cumplen criterios de inclusión) × 100", meta: "≥ 95 %", freq: "Semestral", src: "Base de datos del PMEE", cat: "IV–V", legal: "Art. 41",
+                fields: [{ l: "N° trabajadores incluidos y evaluados en el PMEE", t: "number", v: "44" }, { l: "N° trabajadores que cumplen criterios de inclusión", t: "number", v: "45" }, { l: "Consolidado evaluaciones PMEE S1 (PDF)", t: "file", v: "cobertura_pmee_s1.pdf" }],
+                calc: "(44 ÷ 45) × 100 = 97.78 % → Meta ≥ 95 % (Cumple)"
+            },
+            {
+                n: 38, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "f", act: "Programa de monitoreo epidemiológico especializado (PMEE)", ind: "Incidencia de casos nuevos en el PMEE", tipo: "R", form: "(N° casos nuevos (manifestaciones tempranas / casos confirmados) ÷ N° trabajadores en el PMEE) × 100", meta: "Tendencia decreciente", freq: "Anual", src: "Informe del PMEE", cat: "IV–V", legal: "Art. 41; Art. 43",
+                fields: [{ l: "N° casos nuevos (manifestaciones tempranas/confirmados)", t: "number", v: "2" }, { l: "N° total de trabajadores en el PMEE", t: "number", v: "45" }, { l: "Informe anual de resultados PMEE (PDF)", t: "file", v: "incidencia_pmee_2026.pdf" }],
+                calc: "(2 ÷ 45) × 100 = 4.44 % (vs 6.80 % año previo → Tendencia decreciente ✔)"
+            },
+            {
+                n: 39, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "g", act: "Programa de reinserción laboral para el trabajador", ind: "% de casos con gestor de casos asignado desde el primer día", tipo: "P", form: "(N° casos de lesión/enfermedad con gestor de casos asignado ÷ N° casos que requieren rehabilitación/reinserción) × 100", meta: "100 %", freq: "Trimestral", src: "Registro del programa “Gestor de casos”", cat: "IV–V", legal: "Art. 37; Art. 40",
+                fields: [{ l: "N° casos con gestor asignado desde el día 1", t: "number", v: "3" }, { l: "N° casos que requieren rehabilitación/reinserción", t: "number", v: "3" }, { l: "Bitácora Gestor de Casos (PDF)", t: "file", v: "gestor_casos_q3.pdf" }],
+                calc: "(3 ÷ 3) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 40, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "g", act: "Programa de reinserción laboral para el trabajador", ind: "% de reinserciones laborales exitosas", tipo: "R", form: "(N° trabajadores reinsertados que se mantienen en el puesto a los 6 meses ÷ N° trabajadores reinsertados) × 100", meta: "≥ 80 %", freq: "Semestral", src: "Seguimiento de casos", cat: "IV–V", legal: "Art. 11 num. 7; Art. 37",
+                fields: [{ l: "N° reinsertados que se mantienen en puesto a 6 meses", t: "number", v: "4" }, { l: "N° total de trabajadores reinsertados", t: "number", v: "4" }, { l: "Actas de seguimiento a 6 meses (PDF)", t: "file", v: "reinsercion_exitosa_s1.pdf" }],
+                calc: "(4 ÷ 4) × 100 = 100 % → Meta ≥ 80 % (Cumple)"
+            },
+            {
+                n: 41, comp: "2. ANÁLISIS Y RECOPILACIÓN DE INFORMACIÓN – 2.3 Identificación y evaluación de riesgos para la salud", lit: "h", act: "Informe epidemiológico de hallazgos y resultados de las evaluaciones al empleador", ind: "Informe epidemiológico entregado al empleador", tipo: "P", form: "(N° informes entregados ÷ N° informes programados) × 100", meta: "100 % (mínimo 1 al año)", freq: "Anual", src: "Informe con constancia de recepción", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° informes epidemiológicos entregados al empleador", t: "number", v: "1" }, { l: "N° informes programados en el año (mín. 1)", t: "number", v: "1" }, { l: "Fe de recepción firmada por Gerencia (PDF)", t: "file", v: "entrega_inf_epidemiologico.pdf" }],
+                calc: "(1 ÷ 1) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+
+            // COMPONENTE 3
+            {
+                n: 42, comp: "3. COMUNICACIÓN Y CAPACITACIÓN EN SST", lit: "a", act: "Comunicación al trabajador sobre posibles efectos en la salud de los riesgos de su puesto", ind: "% de trabajadores informados de los riesgos de su puesto y sus efectos en la salud", tipo: "P", form: "(N° trabajadores informados con registro firmado ÷ N° total de trabajadores) × 100", meta: "100 %", freq: "Anual y al ingreso / cambio de puesto", src: "Registros de comunicación de riesgos firmados", cat: "I–V", legal: "Art. 15; Art. 10 num. 1",
+                fields: [{ l: "N° trabajadores con notificación de riesgos firmada", t: "number", v: "150" }, { l: "N° total de trabajadores", t: "number", v: "150" }, { l: "Matriz de notificaciones firmadas (PDF)", t: "file", v: "notificacion_riesgos_2026.pdf" }],
+                calc: "(150 ÷ 150) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 43, comp: "3. COMUNICACIÓN Y CAPACITACIÓN EN SST", lit: "a", act: "Comunicación al trabajador sobre posibles efectos en la salud de los riesgos de su puesto", ind: "% de trabajadores que recibieron el resultado de sus evaluaciones de salud", tipo: "P", form: "(N° trabajadores con entrega de resultados registrada ÷ N° trabajadores evaluados) × 100", meta: "100 %", freq: "Trimestral", src: "Constancias de entrega de resultados", cat: "I–V", legal: "Art. 10 num. 1",
+                fields: [{ l: "N° trabajadores con constancia de entrega firmada", t: "number", v: "45" }, { l: "N° trabajadores evaluados en el trimestre", t: "number", v: "45" }, { l: "Cargo de entrega de resultados médicos (PDF)", t: "file", v: "entrega_resultados_q3.pdf" }],
+                calc: "(45 ÷ 45) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 44, comp: "3. COMUNICACIÓN Y CAPACITACIÓN EN SST", lit: "b", act: "Capacitación interna o externa en seguridad y salud en el trabajo", ind: "% de cumplimiento del plan de capacitación", tipo: "P", form: "(N° capacitaciones ejecutadas ÷ N° capacitaciones programadas) × 100", meta: "≥ 90 %", freq: "Trimestral", src: "Plan de capacitación, registros de asistencia", cat: "I–V", legal: "Art. 11 num. 6",
+                fields: [{ l: "N° capacitaciones ejecutadas", t: "number", v: "11" }, { l: "N° capacitaciones programadas en el trimestre", t: "number", v: "12" }, { l: "Cronograma de capacitación ejecutado (PDF)", t: "file", v: "plan_capacitacion_q3.pdf" }],
+                calc: "(11 ÷ 12) × 100 = 91.67 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 45, comp: "3. COMUNICACIÓN Y CAPACITACIÓN EN SST", lit: "b", act: "Capacitación interna o externa en seguridad y salud en el trabajo", ind: "Cobertura de capacitación", tipo: "P", form: "(N° trabajadores capacitados ÷ N° trabajadores programados) × 100", meta: "≥ 90 %", freq: "Trimestral", src: "Registros de asistencia", cat: "I–V", legal: "Art. 12 num. 5",
+                fields: [{ l: "N° trabajadores capacitados", t: "number", v: "138" }, { l: "N° trabajadores programados", t: "number", v: "150" }, { l: "Consolidado de asistencia capacitaciones (PDF)", t: "file", v: "cobertura_capacitacion_q3.pdf" }],
+                calc: "(138 ÷ 150) × 100 = 92.00 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 46, comp: "3. COMUNICACIÓN Y CAPACITACIÓN EN SST", lit: "b", act: "Capacitación interna o externa en seguridad y salud en el trabajo", ind: "Eficacia de la capacitación", tipo: "R", form: "(N° trabajadores que aprueban la evaluación ÷ N° trabajadores evaluados) × 100", meta: "≥ 80 %", freq: "Por evento / trimestral", src: "Evaluaciones pre y post", cat: "I–V", legal: "Art. 12 num. 5",
+                fields: [{ l: "N° trabajadores que aprueban evaluación post", t: "number", v: "125" }, { l: "N° trabajadores evaluados", t: "number", v: "138" }, { l: "Consolidado calificaciones pre/post (PDF)", t: "file", v: "eficacia_capacitacion_q3.pdf" }],
+                calc: "(125 ÷ 138) × 100 = 90.58 % → Meta ≥ 80 % (Cumple)"
+            },
+
+            // COMPONENTE 4
+            {
+                n: 47, comp: "4. ACCIONES PREVENTIVAS PARA LA GESTIÓN DE PELIGROS Y RIESGOS", lit: "a", act: "Control de riesgos según jerarquía de controles (eliminación, sustitución, ingeniería, administrativo, sobre el trabajador)", ind: "% de medidas de control implementadas en plazo", tipo: "P", form: "(N° medidas implementadas en plazo ÷ N° medidas planificadas) × 100", meta: "≥ 90 %", freq: "Trimestral", src: "Plan de acción de la matriz IPER", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° medidas implementadas dentro del plazo", t: "number", v: "18" }, { l: "N° medidas planificadas para el trimestre", t: "number", v: "20" }, { l: "Seguimiento plan de acción IPER (PDF)", t: "file", v: "medidas_plazo_q3.pdf" }],
+                calc: "(18 ÷ 20) × 100 = 90.00 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 48, comp: "4. ACCIONES PREVENTIVAS PARA LA GESTIÓN DE PELIGROS Y RIESGOS", lit: "a", act: "Control de riesgos según jerarquía de controles (eliminación, sustitución, ingeniería, administrativo, sobre el trabajador)", ind: "% de medidas en niveles superiores de la jerarquía", tipo: "R", form: "(N° medidas de eliminación + sustitución + ingeniería ÷ N° total de medidas implementadas) × 100", meta: "Tendencia creciente (referencial ≥ 30 %)", freq: "Anual", src: "Plan de acción, matriz IPER", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° medidas de Eliminación", t: "number", v: "2" }, { l: "N° medidas de Sustitución", t: "number", v: "3" }, { l: "N° medidas de Ingeniería", t: "number", v: "7" }, { l: "N° total de medidas implementadas (incl. Admin/EPP)", t: "number", v: "30" }],
+                calc: "((2 + 3 + 7) ÷ 30) × 100 = (12 ÷ 30) × 100 = 40.00 % → Meta ≥ 30 % (Cumple)"
+            },
+            {
+                n: 49, comp: "4. ACCIONES PREVENTIVAS PARA LA GESTIÓN DE PELIGROS Y RIESGOS", lit: "a", act: "Control de riesgos según jerarquía de controles", ind: "% de riesgos intolerables / importantes controlados", tipo: "R", form: "(N° riesgos intolerables o importantes reducidos a nivel tolerable ÷ N° riesgos intolerables o importantes identificados) × 100", meta: "100 %", freq: "Semestral", src: "Reevaluación de la matriz IPER", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° riesgos intolerables/importantes reducidos a tolerable", t: "number", v: "9" }, { l: "N° riesgos intolerables/importantes identificados", t: "number", v: "9" }, { l: "Matriz IPER reevaluada (PDF)", t: "file", v: "reevaluacion_iper_s1.pdf" }],
+                calc: "(9 ÷ 9) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 50, comp: "4. ACCIONES PREVENTIVAS PARA LA GESTIÓN DE PELIGROS Y RIESGOS", lit: "b", act: "Planes de seguridad de acuerdo con los riesgos identificados", ind: "% de riesgos significativos con plan de seguridad vigente", tipo: "E", form: "(N° riesgos significativos con plan/procedimiento seguro vigente ÷ N° riesgos significativos) × 100", meta: "100 %", freq: "Anual", src: "Planes de seguridad, procedimientos, permisos de trabajo", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° riesgos significativos con plan/procedimiento vigente", t: "number", v: "15" }, { l: "N° riesgos significativos identificados", t: "number", v: "15" }, { l: "Índice de planes y permisos de trabajo (PDF)", t: "file", v: "planes_seguridad_2026.pdf" }],
+                calc: "(15 ÷ 15) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+
+            // COMPONENTE 5
+            {
+                n: 51, comp: "5. ACCIDENTES DE TRABAJO", lit: "a", act: "Procedimiento para la investigación, reporte y datos de accidentes e incidentes de trabajo", ind: "Procedimiento de investigación de AT/incidentes aprobado y vigente", tipo: "E", form: "Sí = 1 / No = 0", meta: "1 (Sí)", freq: "Anual", src: "Procedimiento aprobado", cat: "I–V", legal: "Art. 15",
+                fields: [{ l: "¿Procedimiento de investigación de AT/incidentes vigente?", t: "select (Sí=1 / No=0)", v: "1 (Sí)" }, { l: "Fecha última revisión/aprobación", t: "date", v: "2026-01-15" }, { l: "Procedimiento aprobado (PDF)", t: "file", v: "proc_investigacion_at.pdf" }],
+                calc: "Valor = 1 (Sí) → Meta 1 (Sí) (Cumple)"
+            },
+            {
+                n: 52, comp: "5. ACCIDENTES DE TRABAJO", lit: "a", act: "Procedimiento para la investigación, reporte y datos de accidentes e incidentes de trabajo", ind: "% de accidentes e incidentes investigados", tipo: "P", form: "(N° AT e incidentes investigados ÷ N° AT e incidentes ocurridos) × 100", meta: "100 %", freq: "Mensual", src: "Informes de investigación", cat: "I–V", legal: "Art. 15",
+                fields: [{ l: "N° AT e incidentes investigados", t: "number", v: "3" }, { l: "N° AT e incidentes ocurridos en el mes", t: "number", v: "3" }, { l: "Informes de investigación árbol de causas (PDF)", t: "file", v: "investigaciones_at_oct.pdf" }],
+                calc: "(3 ÷ 3) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 53, comp: "5. ACCIDENTES DE TRABAJO", lit: "a", act: "Procedimiento para la investigación, reporte y datos de accidentes e incidentes de trabajo", ind: "% de accidentes reportados en el plazo legal", tipo: "P", form: "(N° AT reportados a la entidad de seguridad social dentro del plazo ÷ N° AT ocurridos) × 100", meta: "100 %", freq: "Mensual", src: "Avisos de accidente con fecha de recepción", cat: "I–V", legal: "Art. 15; normativa de seguridad social",
+                fields: [{ l: "N° AT reportados al IESS/SGRT dentro del plazo legal", t: "number", v: "1" }, { l: "N° AT ocurridos en el mes", t: "number", v: "1" }, { l: "Aviso de accidente de trabajo recibido (PDF)", t: "file", v: "aviso_iess_oct.pdf" }],
+                calc: "(1 ÷ 1) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 54, comp: "5. ACCIDENTES DE TRABAJO", lit: "a", act: "Procedimiento para la investigación, reporte y datos de accidentes e incidentes de trabajo", ind: "Índice de frecuencia (IF)", tipo: "R", form: "(N° de lesiones con baja × 200 000) ÷ N° total de horas-hombre trabajadas", meta: "Tendencia decreciente (meta anual definida por la empresa)", freq: "Mensual (acumulado anual)", src: "Registro de AT, horas-hombre de nómina", cat: "I–V", legal: "Art. 15; Art. 46",
+                fields: [{ l: "N° de lesiones con baja (incapacidad) acumuladas", t: "number", v: "2" }, { l: "N° total de horas-hombre trabajadas acumuladas", t: "number", v: "240000" }, { l: "Reporte horas-hombre nómina (PDF)", t: "file", v: "horas_hombre_oct.pdf" }],
+                calc: "(2 × 200 000) ÷ 240 000 = 400 000 ÷ 240 000 = 1.67"
+            },
+            {
+                n: 55, comp: "5. ACCIDENTES DE TRABAJO", lit: "a", act: "Procedimiento para la investigación, reporte y datos de accidentes e incidentes de trabajo", ind: "Índice de gravedad (IG)", tipo: "R", form: "(N° de días perdidos × 200 000) ÷ N° total de horas-hombre trabajadas", meta: "Tendencia decreciente", freq: "Mensual (acumulado anual)", src: "Registro de AT, certificados de reposo", cat: "I–V", legal: "Art. 15; Art. 46",
+                fields: [{ l: "N° total de días perdidos por AT acumulados", t: "number", v: "18" }, { l: "N° total de horas-hombre trabajadas acumuladas", t: "number", v: "240000" }, { l: "Certificados de reposo médico (PDF)", t: "file", v: "dias_perdidos_oct.pdf" }],
+                calc: "(18 × 200 000) ÷ 240 000 = 3 600 000 ÷ 240 000 = 15.00"
+            },
+            {
+                n: 56, comp: "5. ACCIDENTES DE TRABAJO", lit: "a", act: "Procedimiento para la investigación, reporte y datos de accidentes e incidentes de trabajo", ind: "Tasa de riesgo (TR)", tipo: "R", form: "IG ÷ IF", meta: "Tendencia decreciente", freq: "Anual", src: "Cálculo de IF e IG", cat: "I–V", legal: "Art. 46",
+                fields: [{ l: "Índice de Gravedad (IG) calculado (o autocalculado del ítem 55)", t: "number", v: "15.00" }, { l: "Índice de Frecuencia (IF) calculado (o autocalculado del ítem 54)", t: "number", v: "1.67" }],
+                calc: "15.00 ÷ 1.67 = 8.98 días perdidos promedio por lesión con baja"
+            },
+            {
+                n: 57, comp: "5. ACCIDENTES DE TRABAJO", lit: "a", act: "Procedimiento para la investigación, reporte y datos de accidentes e incidentes de trabajo", ind: "% de acciones correctivas de investigaciones cerradas", tipo: "R", form: "(N° acciones correctivas cerradas en plazo ÷ N° acciones correctivas emitidas) × 100", meta: "≥ 90 %", freq: "Trimestral", src: "Seguimiento de planes de acción", cat: "I–V", legal: "Art. 15",
+                fields: [{ l: "N° acciones correctivas cerradas en plazo", t: "number", v: "10" }, { l: "N° acciones correctivas emitidas en investigaciones", t: "number", v: "11" }, { l: "Matriz seguimiento acciones AT (PDF)", t: "file", v: "acciones_at_q3.pdf" }],
+                calc: "(10 ÷ 11) × 100 = 90.91 % → Meta ≥ 90 % (Cumple)"
+            },
+
+            // COMPONENTE 6
+            {
+                n: 58, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "a", act: "Evaluación de riesgo de accidentes mayores, análisis de vulnerabilidades y amenazas", ind: "Análisis de vulnerabilidad y amenazas elaborado y actualizado", tipo: "E", form: "Sí = 1 / No = 0 (actualizado ≤ 12 meses)", meta: "1 (Sí)", freq: "Anual", src: "Informe de análisis de vulnerabilidad", cat: "III–V", legal: "Art. 15",
+                fields: [{ l: "¿Análisis de vulnerabilidad y amenazas elaborado?", t: "select (Sí=1 / No=0)", v: "1 (Sí)" }, { l: "Fecha de actualización (validar ≤ 12 meses)", t: "date", v: "2026-03-10" }, { l: "Informe análisis de vulnerabilidad (PDF)", t: "file", v: "vulnerabilidad_2026.pdf" }],
+                calc: "Valor = 1 (Sí) y fecha ≤ 12 meses → Cumple"
+            },
+            {
+                n: 59, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "b", act: "Planes de emergencia y contingencia", ind: "% de centros de trabajo / áreas con plan de emergencia vigente", tipo: "E", form: "(N° centros o áreas con plan vigente ÷ N° total de centros o áreas) × 100", meta: "100 %", freq: "Anual", src: "Plan de emergencia aprobado", cat: "I–V", legal: "Art. 15; Art. 28 num. 6",
+                fields: [{ l: "N° centros de trabajo/áreas con plan vigente", t: "number", v: "3" }, { l: "N° total de centros de trabajo/áreas", t: "number", v: "3" }, { l: "Planes de emergencia aprobados (PDF)", t: "file", v: "planes_emergencia_2026.pdf" }],
+                calc: "(3 ÷ 3) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 60, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "c", act: "Plan de acción ante emergencia, atención prehospitalaria y evacuación médica", ind: "Plan de evacuación médica e información médica actualizado y conocido por las brigadas", tipo: "E", form: "Sí = 1 / No = 0; (brigadistas que lo conocen ÷ total de brigadistas) × 100", meta: "1 (Sí); 100 %", freq: "Semestral", src: "Plan de evacuación médica, registro de socialización", cat: "II–V", legal: "Art. 42 num. 2",
+                fields: [{ l: "¿Plan de evacuación médica actualizado?", t: "select (Sí=1 / No=0)", v: "1 (Sí)" }, { l: "N° brigadistas que conocen el plan (con registro)", t: "number", v: "18" }, { l: "N° total de brigadistas", t: "number", v: "18" }, { l: "Plan MEDEVAC y firmas brigada (PDF)", t: "file", v: "plan_medevac_s1.pdf" }],
+                calc: "Plan = 1 (Sí) y (18 ÷ 18) × 100 = 100 % → Cumple ambos criterios"
+            },
+            {
+                n: 61, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "c", act: "Plan de acción ante emergencia, atención prehospitalaria y evacuación médica", ind: "Tiempo promedio de primera atención en emergencias", tipo: "R", form: "Σ (minutos desde el aviso hasta la primera atención) ÷ N° emergencias atendidas", meta: "≤ tiempo objetivo del plan (referencial ≤ 4 min)", freq: "Por evento / semestral", src: "Registro de atenciones de emergencia y simulacros", cat: "II–V", legal: "Art. 33 num. 1; Art. 42",
+                fields: [{ l: "Σ minutos desde el aviso hasta primera atención (todos los eventos)", t: "number", v: "10.5" }, { l: "N° emergencias reales / simulacros evaluados", t: "number", v: "3" }, { l: "Bitácora de tiempos de respuesta (PDF)", t: "file", v: "tiempos_respuesta_s1.pdf" }],
+                calc: "10.5 ÷ 3 = 3.50 minutos → ≤ 4.00 min objetivo (Cumple)"
+            },
+            {
+                n: 62, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "d", act: "Programa de entrenamiento de primera respuesta para todo el personal", ind: "% del personal entrenado en primera respuesta y primeros auxilios psicológicos", tipo: "P", form: "(N° trabajadores entrenados en el año ÷ N° total de trabajadores) × 100", meta: "≥ 90 % (al menos 1 vez al año)", freq: "Anual", src: "Registros de capacitación", cat: "II–V", legal: "Art. 36 num. 3; Art. 42 num. 4",
+                fields: [{ l: "N° trabajadores entrenados en primera respuesta y PAP", t: "number", v: "141" }, { l: "N° total de trabajadores", t: "number", v: "150" }, { l: "Registros entrenamiento primera respuesta (PDF)", t: "file", v: "primera_respuesta_2026.pdf" }],
+                calc: "(141 ÷ 150) × 100 = 94.00 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 63, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "e", act: "Reclutamiento, selección, conformación, entrenamiento y evaluación de brigadistas", ind: "% de brigadistas con entrenamiento y evaluación técnica, médica y psicológica anual", tipo: "P", form: "(N° brigadistas entrenados y evaluados ÷ N° brigadistas conformados) × 100", meta: "100 %", freq: "Anual", src: "Registro de brigadas, evaluaciones", cat: "II–V", legal: "Art. 42 num. 3 y 5",
+                fields: [{ l: "N° brigadistas con eval. técnica, médica y psicológica", t: "number", v: "18" }, { l: "N° brigadistas conformados", t: "number", v: "18" }, { l: "Certificados aptitud y entrenamiento brigadas (PDF)", t: "file", v: "evaluacion_brigadistas_2026.pdf" }],
+                calc: "(18 ÷ 18) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 64, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "e", act: "Reclutamiento, selección, conformación, entrenamiento y evaluación de brigadistas", ind: "% de brigadas conformadas según el plan de emergencia", tipo: "E", form: "(N° brigadas conformadas y completas ÷ N° brigadas requeridas en el plan) × 100", meta: "100 %", freq: "Anual", src: "Actas de conformación de brigadas", cat: "II–V", legal: "Art. 42 num. 5",
+                fields: [{ l: "N° brigadas conformadas y completas", t: "number", v: "4" }, { l: "N° brigadas requeridas en el plan de emergencia", t: "number", v: "4" }, { l: "Actas de conformación de brigadas (PDF)", t: "file", v: "actas_brigadas_2026.pdf" }],
+                calc: "(4 ÷ 4) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 65, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "f", act: "Dotación, inspección y mantenimiento de instalaciones, equipos y vehículos de emergencia", ind: "% de inspecciones de equipos de emergencia ejecutadas", tipo: "P", form: "(N° inspecciones ejecutadas ÷ N° inspecciones programadas) × 100", meta: "100 %", freq: "Mensual", src: "Listas de inspección (botiquines, DEA, camillas, extintores, vehículos)", cat: "II–V", legal: "Art. 11 num. 5; Art. 42 num. 1",
+                fields: [{ l: "N° inspecciones de equipos de emergencia ejecutadas", t: "number", v: "12" }, { l: "N° inspecciones programadas en el mes", t: "number", v: "12" }, { l: "Checklists botiquines, DEA y extintores (PDF)", t: "file", v: "inspeccion_emergencia_oct.pdf" }],
+                calc: "(12 ÷ 12) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 66, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "f", act: "Dotación, inspección y mantenimiento de instalaciones, equipos y vehículos de emergencia", ind: "% de equipos, medicamentos e insumos de emergencia operativos y vigentes", tipo: "R", form: "(N° ítems operativos y dentro de vigencia ÷ N° ítems inventariados) × 100", meta: "100 %", freq: "Mensual", src: "Inventario, kardex de medicamentos (Art. 22)", cat: "II–V", legal: "Art. 22; Art. 42 num. 1",
+                fields: [{ l: "N° ítems operativos y vigentes (sin caducar)", t: "number", v: "64" }, { l: "N° total de ítems inventariados", t: "number", v: "64" }, { l: "Kardex e inventario de emergencia (PDF)", t: "file", v: "kardex_emergencia_oct.pdf" }],
+                calc: "(64 ÷ 64) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 67, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "g", act: "Ejecución de simulacros (mínimo una vez al año)", ind: "N° de simulacros ejecutados en el año", tipo: "P", form: "N° simulacros ejecutados ÷ N° simulacros programados (mínimo 1)", meta: "≥ 1 al año (100 % de lo programado)", freq: "Anual", src: "Informe de simulacro", cat: "II–V", legal: "Art. 15; Art. 42 num. 5",
+                fields: [{ l: "N° simulacros ejecutados en el año", t: "number", v: "2" }, { l: "N° simulacros programados (mínimo 1)", t: "number", v: "2" }, { l: "Informes de evaluación de simulacros (PDF)", t: "file", v: "informe_simulacros_2026.pdf" }],
+                calc: "2 ÷ 2 = 1.00 (100 % de lo programado y ≥ 1 al año → Cumple)"
+            },
+            {
+                n: 68, comp: "6. PREPARACIÓN Y RESPUESTA ANTE EMERGENCIAS", lit: "g", act: "Ejecución de simulacros (mínimo una vez al año)", ind: "% de oportunidades de mejora del simulacro cerradas", tipo: "R", form: "(N° hallazgos del simulacro cerrados ÷ N° hallazgos identificados) × 100", meta: "≥ 90 %", freq: "Semestral", src: "Plan de acción post-simulacro", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° hallazgos del simulacro cerrados", t: "number", v: "9" }, { l: "N° hallazgos identificados en el simulacro", t: "number", v: "10" }, { l: "Plan de acción post-simulacro (PDF)", t: "file", v: "cierre_simulacro_s1.pdf" }],
+                calc: "(9 ÷ 10) × 100 = 90.00 % → Meta ≥ 90 % (Cumple)"
+            },
+
+            // COMPONENTE 7
+            {
+                n: 69, comp: "7. ENFERMEDADES PROFESIONALES Y RELACIONADAS CON EL TRABAJO", lit: "a", act: "Identificación de GES expuestos a agentes etiológicos que pueden causar enfermedades profesionales", ind: "% de GES expuestos a agentes etiológicos identificados y documentados", tipo: "E", form: "(N° GES con exposición a agentes etiológicos documentada ÷ N° total de GES) × 100", meta: "100 %", freq: "Anual", src: "Matriz de GES y agentes", cat: "IV–V", legal: "Art. 15; Art. 29 num. 3",
+                fields: [{ l: "N° GES con exposición etiológica documentada", t: "number", v: "11" }, { l: "N° total de GES", t: "number", v: "11" }, { l: "Matriz GES vs agentes etiológicos (PDF)", t: "file", v: "ges_etiologicos_2026.pdf" }],
+                calc: "(11 ÷ 11) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 70, comp: "7. ENFERMEDADES PROFESIONALES Y RELACIONADAS CON EL TRABAJO", lit: "b", act: "Análisis de hallazgos clínicos asociados con exposiciones específicas", ind: "% de hallazgos clínicos compatibles con exposición laboral analizados", tipo: "P", form: "(N° hallazgos clínicos analizados respecto a la exposición ÷ N° hallazgos clínicos compatibles detectados) × 100", meta: "100 %", freq: "Semestral", src: "Informes de análisis clínico-ocupacional", cat: "III–V", legal: "Art. 41; Art. 43",
+                fields: [{ l: "N° hallazgos clínicos analizados respecto a exposición", t: "number", v: "6" }, { l: "N° hallazgos clínicos compatibles detectados", t: "number", v: "6" }, { l: "Informes de análisis clínico-ocupacional (PDF)", t: "file", v: "analisis_clinico_s1.pdf" }],
+                calc: "(6 ÷ 6) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 71, comp: "7. ENFERMEDADES PROFESIONALES Y RELACIONADAS CON EL TRABAJO", lit: "b", act: "Análisis de hallazgos clínicos asociados con exposiciones específicas", ind: "Prevalencia de manifestaciones tempranas por GES", tipo: "R", form: "(N° trabajadores del GES con manifestaciones tempranas ÷ N° trabajadores del GES) × 100", meta: "Tendencia decreciente", freq: "Anual", src: "Resultados de evaluaciones periódicas y PMEE", cat: "III–V", legal: "Art. 3 num. 20; Art. 43",
+                fields: [{ l: "GES seleccionado", t: "select", v: "GES-03 Ruido Industrial" }, { l: "N° trabajadores del GES con manifestaciones tempranas", t: "number", v: "2" }, { l: "N° total de trabajadores en ese GES", t: "number", v: "40" }],
+                calc: "(2 ÷ 40) × 100 = 5.00 % en GES-03 (vs 7.50 % año previo → Tendencia decreciente ✔)"
+            },
+            {
+                n: 72, comp: "7. ENFERMEDADES PROFESIONALES Y RELACIONADAS CON EL TRABAJO", lit: "c", act: "Exclusión de factores no ocupacionales como posibles causas de enfermedades profesionales", ind: "% de casos sospechosos con análisis de factores extralaborales documentado", tipo: "P", form: "(N° casos sospechosos con análisis extralaboral documentado ÷ N° casos sospechosos de EP) × 100", meta: "100 %", freq: "Por caso / semestral", src: "Expediente, informe de causalidad", cat: "III–V", legal: "Art. 34; Art. 41",
+                fields: [{ l: "N° casos sospechosos con análisis extralaboral documentado", t: "number", v: "2" }, { l: "N° casos sospechosos de EP detectados", t: "number", v: "2" }, { l: "Informes de causalidad / factores extralaborales (PDF)", t: "file", v: "causalidad_ep_s1.pdf" }],
+                calc: "(2 ÷ 2) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 73, comp: "7. ENFERMEDADES PROFESIONALES Y RELACIONADAS CON EL TRABAJO", lit: "d", act: "Procedimiento para la investigación, reporte y datos de posibles enfermedades profesionales", ind: "% de presuntas EP investigadas y reportadas", tipo: "P", form: "(N° presuntas EP investigadas y reportadas en plazo ÷ N° presuntas EP detectadas) × 100", meta: "100 %", freq: "Trimestral", src: "Informes de investigación, avisos de EP", cat: "I–V", legal: "Art. 15; Art. 44 num. 3",
+                fields: [{ l: "N° presuntas EP investigadas y reportadas en plazo", t: "number", v: "1" }, { l: "N° presuntas EP detectadas", t: "number", v: "1" }, { l: "Aviso de enfermedad profesional e investigación (PDF)", t: "file", v: "reporte_ep_q3.pdf" }],
+                calc: "(1 ÷ 1) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 74, comp: "7. ENFERMEDADES PROFESIONALES Y RELACIONADAS CON EL TRABAJO", lit: "d", act: "Procedimiento para la investigación, reporte y datos de posibles enfermedades profesionales", ind: "Tasa de incidencia de enfermedades profesionales", tipo: "R", form: "(N° casos nuevos de EP calificadas en el año ÷ N° promedio de trabajadores) × 1 000", meta: "Tendencia decreciente", freq: "Anual", src: "Registro de EP calificadas", cat: "I–V", legal: "Art. 46",
+                fields: [{ l: "N° casos nuevos de EP calificadas en el año", t: "number", v: "1" }, { l: "N° promedio de trabajadores en el año", t: "number", v: "250" }, { l: "Dictámenes de calificación EP (PDF)", t: "file", v: "ep_calificadas_2026.pdf" }],
+                calc: "(1 ÷ 250) × 1 000 = 4.00 por cada 1 000 trabajadores"
+            },
+
+            // COMPONENTE 8
+            {
+                n: 75, comp: "8. CUIDADO DE LA SALUD GENERAL", lit: "a", act: "Programa de inmunizaciones en coordinación con la Autoridad Sanitaria Nacional", ind: "Cobertura de vacunación según riesgo laboral", tipo: "R", form: "(N° trabajadores expuestos con esquema completo ÷ N° trabajadores expuestos que lo requieren) × 100", meta: "≥ 95 %", freq: "Semestral", src: "Carné / registro de vacunación", cat: "I–V", legal: "Art. 33 num. 2",
+                fields: [{ l: "N° trabajadores expuestos con esquema completo", t: "number", v: "58" }, { l: "N° trabajadores expuestos que requieren vacuna", t: "number", v: "60" }, { l: "Matriz nominal de inmunizaciones (PDF)", t: "file", v: "vacunacion_s1.pdf" }],
+                calc: "(58 ÷ 60) × 100 = 96.67 % → Meta ≥ 95 % (Cumple)"
+            },
+            {
+                n: 76, comp: "8. CUIDADO DE LA SALUD GENERAL", lit: "b", act: "Programas de salud pública vigentes aplicables al lugar de trabajo", ind: "% de programas de salud pública aplicables implementados", tipo: "P", form: "(N° programas de salud pública implementados ÷ N° programas aplicables) × 100", meta: "100 %", freq: "Anual", src: "Documento de programas, registros de ejecución", cat: "II–V", legal: "Art. 33 num. 3",
+                fields: [{ l: "N° programas de salud pública implementados", t: "number", v: "4" }, { l: "N° programas de salud pública aplicables", t: "number", v: "4" }, { l: "Documentos y evidencias programas MSP (PDF)", t: "file", v: "programas_salud_publica.pdf" }],
+                calc: "(4 ÷ 4) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 77, comp: "8. CUIDADO DE LA SALUD GENERAL", lit: "b", act: "Programas de salud pública vigentes aplicables al lugar de trabajo", ind: "Cobertura de tamizajes de salud pública (p. ej. enfermedades crónicas no transmisibles)", tipo: "R", form: "(N° trabajadores tamizados ÷ N° trabajadores elegibles) × 100", meta: "≥ 80 %", freq: "Anual", src: "Registros de tamizaje", cat: "II–V", legal: "Art. 33 num. 3",
+                fields: [{ l: "N° trabajadores tamizados", t: "number", v: "132" }, { l: "N° trabajadores elegibles", t: "number", v: "150" }, { l: "Consolidado tamizaje ECNT (PDF)", t: "file", v: "tamizaje_ecnt_2026.pdf" }],
+                calc: "(132 ÷ 150) × 100 = 88.00 % → Meta ≥ 80 % (Cumple)"
+            },
+            {
+                n: 78, comp: "8. CUIDADO DE LA SALUD GENERAL", lit: "c", act: "Programa de atención primaria en salud según necesidades del lugar de trabajo", ind: "% de casos referidos con contrarreferencia / seguimiento", tipo: "P", form: "(N° casos referidos con seguimiento documentado ÷ N° casos referidos) × 100", meta: "≥ 90 %", freq: "Trimestral", src: "Registro de referencias y contrarreferencias", cat: "III–V", legal: "Art. 6; Art. 33 num. 1",
+                fields: [{ l: "N° casos referidos con contrarreferencia/seguimiento", t: "number", v: "19" }, { l: "N° total de casos referidos en el trimestre", t: "number", v: "20" }, { l: "Bitácora referencia y contrarreferencia (PDF)", t: "file", v: "referencias_q3.pdf" }],
+                calc: "(19 ÷ 20) × 100 = 95.00 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 79, comp: "8. CUIDADO DE LA SALUD GENERAL", lit: "c", act: "Programa de atención primaria en salud según necesidades del lugar de trabajo", ind: "Tasa de ausentismo por causa médica", tipo: "R", form: "(N° días perdidos por causa médica ÷ N° días programados de trabajo) × 100", meta: "Tendencia decreciente", freq: "Mensual", src: "Certificados de reposo (Art. 38), nómina", cat: "III–V", legal: "Art. 15 (10.d); Art. 38",
+                fields: [{ l: "N° días perdidos por causa médica en el mes", t: "number", v: "42" }, { l: "N° días programados de trabajo (plantilla × días laborables)", t: "number", v: "3300" }, { l: "Consolidado certificados médicos y nómina (PDF)", t: "file", v: "ausentismo_oct.pdf" }],
+                calc: "(42 ÷ 3 300) × 100 = 1.27 % (vs 1.54 % mes previo → Tendencia decreciente ✔)"
+            },
+            {
+                n: 80, comp: "8. CUIDADO DE LA SALUD GENERAL", lit: "d", act: "Programa para el cuidado de la salud mental en el trabajo", ind: "Programa de salud mental implementado", tipo: "E", form: "Sí = 1 / No = 0", meta: "1 (Sí)", freq: "Anual", src: "Documento del programa", cat: "I, III–V", legal: "Art. 35",
+                fields: [{ l: "¿Programa para el cuidado de la salud mental implementado?", t: "select (Sí=1 / No=0)", v: "1 (Sí)" }, { l: "Fecha aprobación del programa", t: "date", v: "2026-01-20" }, { l: "Documento del programa de salud mental (PDF)", t: "file", v: "programa_salud_mental.pdf" }],
+                calc: "Valor = 1 (Sí) → Meta 1 (Sí) (Cumple)"
+            },
+            {
+                n: 81, comp: "8. CUIDADO DE LA SALUD GENERAL", lit: "d", act: "Programa para el cuidado de la salud mental en el trabajo", ind: "% de casos de salud mental detectados con seguimiento", tipo: "P", form: "(N° casos detectados con atención y seguimiento ÷ N° casos detectados) × 100", meta: "100 %", freq: "Trimestral", src: "Registros de atención psicológica", cat: "I, III–V", legal: "Art. 35 num. 4",
+                fields: [{ l: "N° casos detectados con atención psicológica y seguimiento", t: "number", v: "7" }, { l: "N° casos de salud mental detectados", t: "number", v: "7" }, { l: "Resumen estadístico atención psicológica (PDF)", t: "file", v: "seguimiento_psico_q3.pdf" }],
+                calc: "(7 ÷ 7) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 82, comp: "8. CUIDADO DE LA SALUD GENERAL", lit: "d", act: "Programa para el cuidado de la salud mental en el trabajo", ind: "Cobertura de actividades de promoción de la salud mental", tipo: "R", form: "(N° trabajadores participantes ÷ N° total de trabajadores) × 100", meta: "≥ 80 %", freq: "Semestral", src: "Registros de asistencia", cat: "I, III–V", legal: "Art. 35 num. 3 y 5",
+                fields: [{ l: "N° trabajadores participantes en talleres salud mental", t: "number", v: "126" }, { l: "N° total de trabajadores", t: "number", v: "150" }, { l: "Registros asistencia talleres salud mental (PDF)", t: "file", v: "promocion_mental_s1.pdf" }],
+                calc: "(126 ÷ 150) × 100 = 84.00 % → Meta ≥ 80 % (Cumple)"
+            },
+
+            // COMPONENTE 9
+            {
+                n: 83, comp: "9. MANTENIMIENTO DE REGISTROS", lit: "a", act: "Políticas, programas y lineamientos de salud en el trabajo", ind: "% de políticas, programas y lineamientos documentados y vigentes", tipo: "E", form: "(N° documentos vigentes y aprobados ÷ N° documentos requeridos) × 100", meta: "100 %", freq: "Anual", src: "Listado maestro de documentos", cat: "III–V", legal: "Art. 11 num. 1",
+                fields: [{ l: "N° documentos vigentes y aprobados", t: "number", v: "16" }, { l: "N° documentos requeridos según normativa", t: "number", v: "16" }, { l: "Listado maestro de documentos SST/SISAT (PDF)", t: "file", v: "listado_maestro_2026.pdf" }],
+                calc: "(16 ÷ 16) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 84, comp: "9. MANTENIMIENTO DE REGISTROS", lit: "b", act: "Registros de atenciones de salud", ind: "% de atenciones registradas correctamente en el expediente", tipo: "P", form: "(N° atenciones con registro completo ÷ N° atenciones revisadas en muestra) × 100", meta: "≥ 95 %", freq: "Trimestral (auditoría por muestreo)", src: "Expedientes, registro diario de atenciones", cat: "I–V", legal: "Art. 39; Art. 44 num. 1",
+                fields: [{ l: "N° atenciones con registro completo en muestra", t: "number", v: "29" }, { l: "N° atenciones revisadas en muestra", t: "number", v: "30" }, { l: "Acta de auditoría de calidad de registros (PDF)", t: "file", v: "auditoria_atenciones_q3.pdf" }],
+                calc: "(29 ÷ 30) × 100 = 96.67 % → Meta ≥ 95 % (Cumple)"
+            },
+            {
+                n: 85, comp: "9. MANTENIMIENTO DE REGISTROS", lit: "c", act: "Registros de exposiciones ocupacionales detectadas, medidas y evaluadas", ind: "% de GES / puestos con registro de exposición actualizado", tipo: "P", form: "(N° GES con registro de exposición actualizado ÷ N° total de GES) × 100", meta: "100 %", freq: "Anual", src: "Registro de exposiciones, informes de monitoreo", cat: "II–V", legal: "Art. 15",
+                fields: [{ l: "N° GES con registro de exposición actualizado", t: "number", v: "11" }, { l: "N° total de GES", t: "number", v: "11" }, { l: "Matriz histórica de exposiciones por GES (PDF)", t: "file", v: "registro_exposiciones_2026.pdf" }],
+                calc: "(11 ÷ 11) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 86, comp: "9. MANTENIMIENTO DE REGISTROS", lit: "d", act: "Registro de presuntas enfermedades profesionales y EP calificadas", ind: "% de presuntas EP y EP calificadas registradas", tipo: "P", form: "(N° casos registrados ÷ N° casos identificados) × 100", meta: "100 %", freq: "Trimestral", src: "Registro de EP", cat: "I–V", legal: "Art. 15",
+                fields: [{ l: "N° casos de presuntas EP y EP calificadas registrados", t: "number", v: "2" }, { l: "N° casos identificados en el trimestre", t: "number", v: "2" }, { l: "Libro/Registro consolidado de EP (PDF)", t: "file", v: "registro_ep_q3.pdf" }],
+                calc: "(2 ÷ 2) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 87, comp: "9. MANTENIMIENTO DE REGISTROS", lit: "e", act: "Registro de presuntos accidentes de trabajo y AT calificados", ind: "% de presuntos AT y AT calificados registrados", tipo: "P", form: "(N° casos registrados ÷ N° casos ocurridos) × 100", meta: "100 %", freq: "Mensual", src: "Registro de AT", cat: "I–V", legal: "Art. 15",
+                fields: [{ l: "N° casos de presuntos AT y AT calificados registrados", t: "number", v: "1" }, { l: "N° casos ocurridos en el mes", t: "number", v: "1" }, { l: "Registro oficial de accidentalidad (PDF)", t: "file", v: "registro_at_oct.pdf" }],
+                calc: "(1 ÷ 1) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 88, comp: "9. MANTENIMIENTO DE REGISTROS", lit: "f", act: "Mantener actualizado el expediente de salud", ind: "% de expedientes de salud completos y actualizados", tipo: "P", form: "(N° expedientes completos y actualizados ÷ N° expedientes revisados) × 100", meta: "≥ 95 %", freq: "Semestral (auditoría por muestreo)", src: "Expedientes físicos/digitales", cat: "I–V", legal: "Art. 39; Art. 44 num. 2",
+                fields: [{ l: "N° expedientes completos y actualizados", t: "number", v: "39" }, { l: "N° expedientes auditados", t: "number", v: "40" }, { l: "Informe auditoría de expedientes (PDF)", t: "file", v: "auditoria_expedientes_s1.pdf" }],
+                calc: "(39 ÷ 40) × 100 = 97.50 % → Meta ≥ 95 % (Cumple)"
+            },
+            {
+                n: 89, comp: "9. MANTENIMIENTO DE REGISTROS", lit: "f", act: "Mantener actualizado el expediente de salud", ind: "N° de incidentes de acceso no autorizado a información de salud", tipo: "R", form: "Conteo de incidentes de confidencialidad en el período", meta: "0", freq: "Semestral", src: "Registro de accesos, bitácora de custodia", cat: "I–V", legal: "Art. 44; Art. 45",
+                fields: [{ l: "N° incidentes de acceso no autorizado detectados", t: "number", v: "0" }, { l: "Log/bitácora de auditoría de custodia y accesos (PDF)", t: "file", v: "bitacora_confidencialidad_s1.pdf" }],
+                calc: "Conteo = 0 incidentes → Meta = 0 (Cumple)"
+            },
+            {
+                n: 90, comp: "9. MANTENIMIENTO DE REGISTROS", lit: "g", act: "Evidencia del cumplimiento de políticas, programas y lineamientos", ind: "% de requisitos con evidencia de cumplimiento disponible", tipo: "P", form: "(N° requisitos con evidencia disponible ÷ N° requisitos aplicables) × 100", meta: "100 %", freq: "Semestral", src: "Carpeta de evidencias", cat: "III–V", legal: "Art. 46 num. 2",
+                fields: [{ l: "N° requisitos con evidencia disponible en repositorio", t: "number", v: "42" }, { l: "N° requisitos aplicables", t: "number", v: "42" }, { l: "Índice de carpeta de evidencias (PDF)", t: "file", v: "indice_evidencias_s1.pdf" }],
+                calc: "(42 ÷ 42) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 91, comp: "9. MANTENIMIENTO DE REGISTROS", lit: "h", act: "Demás registros de SST solicitados por los entes de control", ind: "% de requerimientos de entes de control atendidos en plazo", tipo: "P", form: "(N° requerimientos atendidos en plazo ÷ N° requerimientos recibidos) × 100", meta: "100 %", freq: "Por evento / anual", src: "Oficios de respuesta", cat: "III–V", legal: "Art. 44 num. 3 y 4; Art. 47",
+                fields: [{ l: "N° requerimientos atendidos dentro del plazo", t: "number", v: "2" }, { l: "N° requerimientos recibidos de entes de control", t: "number", v: "2" }, { l: "Oficios de respuesta y fe de presentación (PDF)", t: "file", v: "oficios_entes_control.pdf" }],
+                calc: "(2 ÷ 2) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 92, comp: "9. MANTENIMIENTO DE REGISTROS", lit: "Transv.", act: "Reporte a la Autoridad Sanitaria Nacional", ind: "Reporte anual de datos estadísticos anonimizados y de indicadores entregado a la ASN", tipo: "P", form: "Sí = 1 / No = 0 (entregado en la herramienta y plazo definidos por la ASN)", meta: "1 (Sí)", freq: "Anual", src: "Constancia de carga / envío", cat: "I–V", legal: "Art. 44 num. 3; Art. 46 num. 1",
+                fields: [{ l: "¿Reporte anual entregado en plataforma ASN en plazo?", t: "select (Sí=1 / No=0)", v: "1 (Sí)" }, { l: "Fecha de envío / carga", t: "date", v: "2026-01-28" }, { l: "Constancia oficial de envío ASN (PDF)", t: "file", v: "constancia_asn_2026.pdf" }],
+                calc: "Valor = 1 (Sí) → Meta 1 (Sí) (Cumple)"
+            },
+
+            // COMPONENTE 10
+            {
+                n: 93, comp: "10. SEGUIMIENTO Y EVALUACIÓN", lit: "a", act: "Programa de mejoramiento continuo de la calidad de los SISAT", ind: "% de acciones de mejora cerradas en plazo", tipo: "P", form: "(N° acciones de mejora cerradas en plazo ÷ N° acciones de mejora planificadas) × 100", meta: "≥ 90 %", freq: "Trimestral", src: "Plan de mejora continua", cat: "III–V", legal: "Art. 46 num. 1",
+                fields: [{ l: "N° acciones de mejora cerradas en plazo", t: "number", v: "9" }, { l: "N° acciones de mejora planificadas en el trimestre", t: "number", v: "10" }, { l: "Tablero plan de mejora continua (PDF)", t: "file", v: "mejora_continua_q3.pdf" }],
+                calc: "(9 ÷ 10) × 100 = 90.00 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 94, comp: "10. SEGUIMIENTO Y EVALUACIÓN", lit: "b", act: "Análisis de datos de las condiciones de trabajo y salud en el trabajo", ind: "Informe integrado anual de condiciones de trabajo y salud elaborado", tipo: "P", form: "Sí = 1 / No = 0", meta: "1 (Sí)", freq: "Anual", src: "Informe integrado", cat: "V", legal: "Art. 5; Art. 15",
+                fields: [{ l: "¿Informe integrado anual elaborado y aprobado?", t: "select (Sí=1 / No=0)", v: "1 (Sí)" }, { l: "Fecha de emisión", t: "date", v: "2026-11-15" }, { l: "Informe integrado condiciones trabajo y salud (PDF)", t: "file", v: "informe_integrado_2026.pdf" }],
+                calc: "Valor = 1 (Sí) → Meta 1 (Sí) (Cumple)"
+            },
+            {
+                n: 95, comp: "10. SEGUIMIENTO Y EVALUACIÓN", lit: "c", act: "Investigación epidemiológica ocupacional", ind: "% de estudios / investigaciones epidemiológicas ejecutados", tipo: "P", form: "(N° estudios ejecutados ÷ N° estudios planificados) × 100", meta: "100 %", freq: "Anual", src: "Protocolos e informes de investigación", cat: "V", legal: "Art. 43",
+                fields: [{ l: "N° estudios/investigaciones ejecutados", t: "number", v: "2" }, { l: "N° estudios/investigaciones planificados", t: "number", v: "2" }, { l: "Protocolos e informes finales de estudio (PDF)", t: "file", v: "investigacion_epi_2026.pdf" }],
+                calc: "(2 ÷ 2) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 96, comp: "10. SEGUIMIENTO Y EVALUACIÓN", lit: "d", act: "Análisis de tendencias e indicadores de SST (exposición, morbilidad, AT, EP, ausentismo)", ind: "Informe de tendencias de indicadores elaborado", tipo: "P", form: "(N° informes de tendencias elaborados ÷ N° programados) × 100", meta: "100 % (mínimo semestral)", freq: "Semestral", src: "Tablero / informe de indicadores", cat: "IV–V", legal: "Art. 15; Art. 46 num. 3",
+                fields: [{ l: "N° informes de tendencias elaborados", t: "number", v: "2" }, { l: "N° informes programados (mín. 2 al año)", t: "number", v: "2" }, { l: "Informe semestral de tendencias SST (PDF)", t: "file", v: "tendencias_sst_2026.pdf" }],
+                calc: "(2 ÷ 2) × 100 = 100 % → Meta 100 % (Cumple)"
+            },
+            {
+                n: 97, comp: "10. SEGUIMIENTO Y EVALUACIÓN", lit: "d", act: "Análisis de tendencias e indicadores de SST", ind: "% de indicadores clave que cumplen su meta", tipo: "R", form: "(N° indicadores que alcanzan la meta ÷ N° indicadores medidos) × 100", meta: "≥ 85 %", freq: "Semestral", src: "Tablero de indicadores", cat: "IV–V", legal: "Art. 46 num. 3",
+                fields: [{ l: "N° indicadores clave que alcanzan su meta", t: "number", v: "88" }, { l: "N° indicadores clave medidos aplicables", t: "number", v: "96" }, { l: "Tablero consolidado KPI SISAT (PDF)", t: "file", v: "tablero_kpi_s2.pdf" }],
+                calc: "(88 ÷ 96) × 100 = 91.67 % → Meta ≥ 85 % (Cumple)"
+            },
+            {
+                n: 98, comp: "10. SEGUIMIENTO Y EVALUACIÓN", lit: "e", act: "Análisis del cumplimiento (auditoría interna) de la gestión de los SISAT por categoría", ind: "Auditoría interna anual realizada", tipo: "P", form: "Sí = 1 / No = 0", meta: "1 (Sí)", freq: "Anual", src: "Informe de auditoría interna", cat: "II–V", legal: "Art. 46 num. 2",
+                fields: [{ l: "¿Auditoría interna anual SISAT realizada?", t: "select (Sí=1 / No=0)", v: "1 (Sí)" }, { l: "Fecha de cierre de auditoría", t: "date", v: "2026-10-30" }, { l: "Informe final de auditoría interna (PDF)", t: "file", v: "auditoria_interna_sisat_2026.pdf" }],
+                calc: "Valor = 1 (Sí) → Meta 1 (Sí) (Cumple)"
+            },
+            {
+                n: 99, comp: "10. SEGUIMIENTO Y EVALUACIÓN", lit: "e", act: "Análisis del cumplimiento (auditoría interna) de la gestión de los SISAT por categoría", ind: "% de cumplimiento de los componentes SISAT de la categoría", tipo: "R", form: "(N° literales de la Tabla 2 cumplidos ÷ N° literales aplicables a la categoría) × 100", meta: "≥ 90 %", freq: "Anual", src: "Lista de verificación de auditoría", cat: "II–V", legal: "Art. 16, Tabla 2; Art. 46",
+                fields: [{ l: "Categoría SISAT de la empresa", t: "select", v: "Categoría IV (100–199 trab.)" }, { l: "N° literales de Tabla 2 cumplidos", t: "number", v: "37" }, { l: "N° literales aplicables a la categoría", t: "number", v: "39" }, { l: "Checklist auditoría Tabla 2 (PDF)", t: "file", v: "checklist_tabla2_2026.pdf" }],
+                calc: "(37 ÷ 39) × 100 = 94.87 % → Meta ≥ 90 % (Cumple)"
+            },
+            {
+                n: 100, comp: "10. SEGUIMIENTO Y EVALUACIÓN", lit: "f", act: "Identificación de necesidades para modificar o desarrollar nuevos servicios de salud en el trabajo", ind: "Propuestas de mejora presentadas e implementadas", tipo: "R", form: "(N° propuestas implementadas ÷ N° necesidades identificadas) × 100", meta: "≥ 70 %", freq: "Anual", src: "Informe anual con propuestas de mejora", cat: "III–V", legal: "Art. 46 num. 1 y 3",
+                fields: [{ l: "N° propuestas de mejora implementadas", t: "number", v: "4" }, { l: "N° necesidades de nuevos/modificados servicios identificadas", t: "number", v: "5" }, { l: "Informe anual de propuestas e implementación (PDF)", t: "file", v: "propuestas_servicios_2026.pdf" }],
+                calc: "(4 ÷ 5) × 100 = 80.00 % → Meta ≥ 70 % (Cumple)"
+            }
+        ];
+
+        const compSelect = document.getElementById('compFilter');
+        const uniqueComps = [...new Set(ITEMS.map(i => i.comp))];
+        uniqueComps.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.textContent = c;
+            compSelect.appendChild(opt);
+        });
+
+        function buildJsonExample(item) {
+            const payload = {
+                kpi_number: item.n,
+                literal: item.lit,
+                type: item.tipo,
+                inputs: {},
+                calculated_result: item.calc,
+                evidence_file: item.fields[item.fields.length - 1]?.v || "evidencia.pdf"
+            };
+            item.fields.forEach((f, idx) => {
+                if (!f.t.includes('file')) {
+                    payload.inputs[`field_${idx + 1}`] = f.v;
+                }
+            });
+            return JSON.stringify(payload, null, 2);
+        }
+
+        function renderItems() {
+            const q = document.getElementById('searchInput').value.toLowerCase().trim();
+            const comp = compSelect.value;
+            const tipo = document.getElementById('typeFilter').value;
+            const container = document.getElementById('itemsContainer');
+
+            const filtered = ITEMS.filter(it => {
+                if (comp && it.comp !== comp) return false;
+                if (tipo && it.tipo !== tipo) return false;
+                if (!q) return true;
+                const hay = `${it.n} ${it.comp} ${it.lit} ${it.act} ${it.ind} ${it.form} ${it.legal} ${it.src}`.toLowerCase();
+                return hay.includes(q);
+            });
+
+            document.getElementById('counter').textContent = `Mostrando ${filtered.length} de ${ITEMS.length} ítems`;
+
+            let html = '';
+            let lastComp = '';
+
+            filtered.forEach(it => {
+                if (it.comp !== lastComp) {
+                    lastComp = it.comp;
+                    html += `<div class="comp-header">${it.comp}</div>`;
+                }
+
+                const fieldsHtml = it.fields.map(f => `
+      <div class="wf-field" style="margin-bottom:7px;">
+        <label>${f.l} <span style="font-weight:400;color:#64748b;">[${f.t}]</span></label>
+        <div class="wf-input">${f.v}</div>
+      </div>
+    `).join('');
+
+                html += `
+      <article class="item-card">
+        <div class="item-top">
+          <div class="item-title">#${it.n} · Lit. (${it.lit}) — ${it.ind}</div>
+          <div class="pills">
+            <span class="pill type-${it.tipo}">Tipo: ${it.tipo}</span>
+            <span class="pill">Meta: ${it.meta}</span>
+            <span class="pill">Frecuencia: ${it.freq}</span>
+            <span class="pill">Cat. Tabla 2: ${it.cat}</span>
+            <span class="pill">${it.legal}</span>
+          </div>
+        </div>
+        <div class="item-body">
+          <div class="col-box">
+            <h4>Contexto Normativo (Tabla 1)</h4>
+            <ul class="meta-list">
+              <li><strong>Actividad:</strong> ${it.act}</li>
+              <li><strong>Fuente de verificación:</strong> ${it.src}</li>
+              <li><strong>Fórmula oficial:</strong></li>
+            </ul>
+            <div class="formula-box">${it.form}</div>
+          </div>
+
+          <div class="col-box">
+            <h4>Ejemplo de Pantalla / Campos del Formulario</h4>
+            <div class="wireframe" style="margin-top:0;">
+              ${fieldsHtml}
+            </div>
+          </div>
+
+          <div class="col-box">
+            <h4>Aplicación de la Fórmula y Payload JSONB</h4>
+            <div class="calc-example">
+              <strong>Cálculo en vivo:</strong><br>
+              ${it.calc}
+            </div>
+            <code class="json">${buildJsonExample(it)}</code>
+          </div>
+        </div>
+      </article>
+    `;
+            });
+
+            container.innerHTML = html || '<p>No se encontraron ítems con los filtros seleccionados.</p>';
+        }
+
+        document.getElementById('searchInput').addEventListener('input', renderItems);
+        compSelect.addEventListener('change', renderItems);
+        document.getElementById('typeFilter').addEventListener('change', renderItems);
+        renderItems();
+    </script>
+</body>
+
+</html>

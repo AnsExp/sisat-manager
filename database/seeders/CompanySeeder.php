@@ -61,7 +61,6 @@ class CompanySeeder extends Seeder
         ],
     ];
 
-private $s = null;
     /**
      * Ejecuta las semillas en la base de datos.
      */
@@ -73,12 +72,12 @@ private $s = null;
             foreach ([rand(1, 24), rand(25, 49), rand(50, 99), rand(100, 199), rand(200, 350)] as $employeesCount) {
                 $ciiuId = CIIU::where('level', $riskLevel->value)->inRandomOrder()->value('id');
 
-                $name=fake()->company();
+                $name = fake()->company();
 
                 $company = Company::create(
                     [
                         'name' => $name,
-                        'slug' => Str::slug( $name),
+                        'slug' => Str::slug($name),
                         'ruc' => fake()->numerify('###########'),
                         'address' => fake()->address(),
                         'email' => fake()->companyEmail(),
