@@ -12,26 +12,27 @@
 
     <flux:table.cell>
         <div class="flex gap-2 items-center">
-            @if ($sha !== '')
-                <p class="font-mono" title="{{ $sha }}">
+            @if ($result->results['map']['sha256'])
+                <p class="font-mono" title="{{ $result->results['map']['sha256'] }}">
                     {{ \Illuminate\Support\Str::limit($sha, 16, '…') }}
                 </p>
-                <flux:button type="button" class="button-copy-sign" data-sign="{{ $sha }}" variant="ghost" size="sm">
+                <flux:button type="button" class="button-copy-sign" data-sign="{{ $result->results['map']['sha256'] }}"
+                    variant="ghost" size="sm">
                     <flux:icon.clipboard class="size-4" />
                 </flux:button>
             @else
-                <span class="text-zinc-400">—</span>
+                <flux:button type="button" wire:click="uploadMap" size="xs" icon="arrow-up-tray">
+                    Subir mapa
+                </flux:button>
             @endif
         </div>
     </flux:table.cell>
 
     <flux:table.cell>
-        <flux:checkbox wire:model.lazy="isChecked" />
-    </flux:table.cell>
-
-    <flux:table.cell>
         <div class="flex gap-2 justify-end">
-            <flux:button wire:click="download" variant="ghost" size="xs" icon="arrow-down-tray" />
+            @if ($result->results['map']['path'])
+                <flux:button wire:click="download" variant="ghost" size="xs" icon="arrow-down-tray" />
+            @endif
             <flux:button wire:click="destroy" variant="ghost" size="xs" color="red" icon="trash" />
         </div>
     </flux:table.cell>

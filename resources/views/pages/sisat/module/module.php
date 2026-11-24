@@ -13,7 +13,7 @@ new class extends Component
 
     private SisatActivity $activity;
 
-    public function mount(SisatModule $module, SisatActivity $activity, Company $company)
+    public function mount(Company $company, SisatModule $module, SisatActivity $activity)
     {
         $this->module = $module;
         $this->company = $company;
@@ -33,12 +33,12 @@ new class extends Component
             'module' => $this->module,
             'company' => $this->company,
             'activity' => $this->activity,
-            'livewire' => "pages::sisat.default-module",
+            'livewire' => 'pages::sisat.default-module',
         ];
 
-        if ( View::exists("pages.sisat.{$moduleSegment}.{$activitySegment}.companies.{$this->company->slug}.{$this->company->slug}")) {
+        if (View::exists("pages.sisat.{$moduleSegment}.{$activitySegment}.companies.{$this->company->slug}.{$this->company->slug}")) {
             $data['livewire'] = "pages::sisat.{$moduleSegment}.{$activitySegment}.companies.{$this->company->slug}";
-        } else if ( View::exists("pages.sisat.{$moduleSegment}.{$activitySegment}.{$activitySegment}")) {
+        } elseif (View::exists("pages.sisat.{$moduleSegment}.{$activitySegment}.{$activitySegment}")) {
             $data['livewire'] = "pages::sisat.{$moduleSegment}.{$activitySegment}";
         }
 

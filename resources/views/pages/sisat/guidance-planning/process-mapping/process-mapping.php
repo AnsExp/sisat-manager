@@ -4,6 +4,7 @@ use App\Models\Company;
 use App\Models\SisatActivity;
 use App\Models\SisatModule;
 use App\Models\SisatResult;
+use App\Modules\ActivityCalculator;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -17,23 +18,24 @@ new class extends Component
 
     public SisatActivity $activity;
 
+    public float $percentageCompleted = 0.0;
+
     public function mount(SisatModule $module, SisatActivity $activity, Company $company)
     {
         $this->module = $module;
         $this->company = $company;
         $this->activity = $activity;
 
-        $this->processes = SisatActivity::findBySlug('process_mapping')
-            ->results()
-            ->where('company_id', $company->id)
-            ->orderBy('results->label')
-            ->get();
+        $this->processUpdate();
+
+        $this->percentageCompleted = ActivityCalculator::calculate($company, $activity);
+
     }
 
     #[On('processes-update')]
     public function processUpdate()
     {
-        $this->processes = SisatActivity::findBySlug('process_mapping')
+        $this->processes = $this->activity
             ->results()
             ->where('company_id', $this->company->id)
             ->orderBy('results->label')

@@ -34,7 +34,7 @@
                                     </span>
                                 </div>
 
-                                <flux:button href="{{ route('sisat.activity', [$module, $activity, $company]) }}" size="xs"
+                                <flux:button href="{{ route('sisat.activity', [$company, $module, $activity]) }}" size="xs"
                                     variant="ghost" icon-trailing="chevron-right">
                                     Detalles
                                 </flux:button>

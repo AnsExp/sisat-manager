@@ -17,7 +17,7 @@ class ProcessMapping implements ActivityItem
         }
         $checked = 0;
         foreach ($results as $result) {
-            if ($result->results['checked']) {
+            if ($result->results['map']['path'] !== null) {
                 $checked++;
             }
         }

@@ -6,15 +6,9 @@ use Flux\Flux;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use Livewire\WithFileUploads;
 
 new class extends Component
 {
-    use WithFileUploads;
-
-    public ?TemporaryUploadedFile $document = null;
-
     public Company $company;
 
     public SisatActivity $activity;
@@ -31,7 +25,6 @@ new class extends Component
     {
         return [
             'name' => ['required', 'string', 'min:3'],
-            'document' => ['required', 'file', 'mimetypes:application/pdf', 'max:5120'],
         ];
     }
 
@@ -40,25 +33,17 @@ new class extends Component
         $this->validate();
 
         DB::transaction(function () {
-            $path = sprintf(
-                '/%s/%s/%s.%s',
-                $this->activity->module->slug,
-                $this->activity->slug,
-                uniqid(),
-                $this->document->getClientOriginalExtension(),
-            );
-            $storage = Storage::disk('local');
-            $storage->put($path, $this->document->getContent());
             $this->activity->results()->create([
                 'company_id' => $this->company->id,
                 'results' => [
-                    'path' => $path,
-                    'sha256' => hash('SHA256', $this->document->getContent()),
+                    'map' => [
+                        'path' => null,
+                        'sha256' => null,
+                    ],
                     'name' => $this->name,
-                    'checked' => false,
                 ],
             ]);
-            Flux::toast('Se subio un archivo.');
+            Flux::toast('Se guardo un nuevo proceso.');
             $this->dispatch('processes-update');
             Flux::modal('process-store')->close();
         });

@@ -8,8 +8,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::view('dashboard', 'dashboard')->name('dashboard');
 
-    Route::livewire('/sisat/{module:slug}/{activity:slug}/{company}', 'pages::sisat.module')
-        // ->withoutScopedBindings()
+    Route::livewire('/sisat/{company:slug}/{module:slug}/{activity:slug}', 'pages::sisat.module')
+        ->withoutScopedBindings()
         ->name('sisat.activity');
 
     Route::prefix('/companies')->group(function () {

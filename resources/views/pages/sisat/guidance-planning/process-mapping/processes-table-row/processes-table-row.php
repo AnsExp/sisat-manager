@@ -2,37 +2,34 @@
 
 use App\Models\SisatResult;
 use Flux\Flux;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 new class extends Component
 {
     public SisatResult $result;
 
-    public string $sha;
-
-    public bool $isChecked;
+    public ?string $sha = null;
 
     public function mount(SisatResult $result)
     {
         $this->result = $result;
-        $this->sha = $result->results['sha256'];
-        $this->isChecked = (bool) $result->results['checked'];
+        $this->sha = $result->results['map']['sha256'];
     }
 
-    public function updatedIsChecked(bool $value)
+    public function uploadMap()
     {
-        $results = $this->result->results;
-        $results['checked'] = (bool) $value;
-        $this->result->results = $results;
-        $this->result->save();
+        $this->dispatch('document-store', idResult: $this->result->id);
     }
 
     public function download()
     {
-        $path = $this->result->results['path'];
+        $path = $this->result->results['map']['path'] ?? null;
         $storage = Storage::disk('local');
 
-        if (! $storage->exists($path)) {
+        if (! $path || ! $storage->exists($path)) {
             Flux::toast('No se encontró el archivo dentro del sistema.');
 
             return;
@@ -44,7 +41,7 @@ new class extends Component
             function () use ($storage, $path) {
                 echo $storage->get($path);
             },
-            'document.pdf'
+            Str::slug($this->result->results['name'] ?? 'mapa-de-proceso').'.pdf'
         );
     }
 
