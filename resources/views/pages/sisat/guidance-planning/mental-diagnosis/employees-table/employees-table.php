@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Company;
-use App\Models\Employee;
-use Flux\Flux;
+use App\Models\SisatActivity;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -13,8 +13,6 @@ new class extends Component
     use WithPagination;
 
     public Company $company;
-
-    public Employee $currentEmployee;
 
     public string $filter = 'all';
 
@@ -34,19 +32,42 @@ new class extends Component
     #[Computed]
     public function data()
     {
-        return $this->company
+        $query = $this->company
             ->employees()
-            ->orderBy('first_name')
-            ->paginate(10);
+            ->orderBy('first_name');
+
+        if ($this->filter === 'all') {
+            return $query->paginate(10);
+        }
+
+        $results = SisatActivity::findBySlug('general_diagnosis')
+            ?->results()
+            ->where('company_id', $this->company->id);
+
+        $diagnosedEmployeeIds = $results
+            ? $results->get()->pluck('results.employee.id')->filter()->unique()
+            : collect();
+
+        if ($this->filter === 'diagnosis') {
+            $query->whereIn('id', $diagnosedEmployeeIds);
+        } elseif ($this->filter === 'without_diagnosis' || $this->filter === 'whitout_diagnosis') {
+            $query->whereNotIn('id', $diagnosedEmployeeIds);
+        }
+
+        return $query->paginate(10);
     }
 
-    public function modalGenerate(int $employeeId) {
-        $this->currentEmployee = Employee::find($employeeId);
-        Flux::modal('generate-occupational-certificate')->show();
+    public function employeeHasDocument(int $employeeId)
+    {
+        return SisatActivity::findBySlug('general_diagnosis')
+            ->results()
+            ->where('company_id', $this->company->id)
+            ->where('results->employee->id', $employeeId)
+            ->exists();
     }
 
-    public function modalUpdate(int $employeeId) {
-        $this->currentEmployee = Employee::find($employeeId);
-        Flux::modal('upload-certificate')->show();
+    public function downloadDocument(int $employeeId)
+    {
+        Log::info($employeeId);
     }
 };

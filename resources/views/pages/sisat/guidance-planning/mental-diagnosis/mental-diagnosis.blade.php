@@ -15,7 +15,15 @@
                 </flux:subheading>
             </flux:card.body>
         </flux:card>
+        <flux:card>
+            <flux:card.body>
+                <flux:subheading>
+                    Trabajadores diagnosticados:
+                    <p class="text-3xl font-black">{{ $employeesDiagnose }}</p>
+                </flux:subheading>
+            </flux:card.body>
+        </flux:card>
     </div>
     <livewire:pages::sisat.guidance-planning.mental-diagnosis.employees-table :company="$company" />
-    <livewire:pages::sisat.guidance-planning.mental-diagnosis.document-store />
+    <livewire:pages::sisat.guidance-planning.mental-diagnosis.document-store :activity="$activity" />
 </div>

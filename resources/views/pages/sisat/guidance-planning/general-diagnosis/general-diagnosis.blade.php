@@ -25,5 +25,5 @@
         </flux:card>
     </div>
     <livewire:pages::sisat.guidance-planning.general-diagnosis.employees-table :company="$company" />
-    <livewire:pages::sisat.guidance-planning.general-diagnosis.document-store />
+    <livewire:pages::sisat.guidance-planning.general-diagnosis.document-store :activity="$activity" />
 </div>

@@ -1,0 +1,46 @@
+@php
+    /**
+     * @var App\Models\Company $company
+     */
+@endphp
+
+<div class="space-y-6">
+
+    <flux:radio.group wire:model.live="filter" variant="pills">
+        <flux:radio value="all" label="Todos" />
+        <flux:radio value="diagnosis" label="Diagnosticados" />
+        <flux:radio value="without_diagnosis" label="Sin diagnosticar" />
+    </flux:radio.group>
+
+    <flux:table :paginate="$this->data">
+        <flux:table.columns>
+            <flux:table.column>Nombre</flux:table.column>
+            <flux:table.column>Area</flux:table.column>
+            <flux:table.column>Cargo</flux:table.column>
+            <flux:table.column>Diagnostico</flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
+            @foreach ($this->data as $employee)
+                <flux:table.row>
+                    <flux:table.cell>
+                        {{ $employee->first_name }}
+                        {{ $employee->last_name }}
+                    </flux:table.cell>
+                    <flux:table.cell>
+                        {{ $employee->workspace->name }}
+                    </flux:table.cell>
+                    <flux:table.cell>
+                        {{ $employee->position->name }}
+                    </flux:table.cell>
+                    <flux:table.cell>
+                        <div class="flex gap-2 justify-end">
+                            <flux:button wire:click="$dispatch('document-store',{employeeId:{{ $employee->id }}})"
+                                variant="ghost" size="xs" icon="arrow-up-tray" />
+                        </div>
+                    </flux:table.cell>
+                </flux:table.row>
+            @endforeach
+        </flux:table.rows>
+    </flux:table>
+
+</div>

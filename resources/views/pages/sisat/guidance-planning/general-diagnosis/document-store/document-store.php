@@ -3,7 +3,6 @@
 use App\Models\Employee;
 use App\Models\SisatActivity;
 use Flux\Flux;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -17,6 +16,13 @@ new class extends Component
     public Employee $employee;
 
     public ?TemporaryUploadedFile $document = null;
+
+    public SisatActivity $activity;
+
+    public function mount(SisatActivity $activity)
+    {
+        $this->activity = $activity;
+    }
 
     #[On('document-store')]
     public function documentStore(int $employeeId)
@@ -35,13 +41,17 @@ new class extends Component
     public function submit()
     {
         $this->validate();
-        $document = $this->document;
-        $uuid = uniqid();
-        $path = 'guidance_planning/general_diagnosis/'.$uuid.'.'.$document->getClientOriginalExtension();
+        $path = sprintf(
+            '/%s/%s/%s.%s',
+            $this->activity->module->slug,
+            $this->activity->slug,
+            uniqid(),
+            $this->document->extension(),
+        );
         $storage = Storage::disk('local');
-        $storage->put($path, $document->getContent());
+        $storage->put($path, $this->document->getContent());
         $this->document = null;
-        SisatActivity::findBySlug('general_diagnosis')->results()->create([
+        $this->activity->results()->create([
             'company_id' => $this->employee->company_id,
             'results' => [
                 'employee' => [

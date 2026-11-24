@@ -2,7 +2,6 @@
 
 use App\Models\SisatResult;
 use Flux\Flux;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Livewire\Component;
