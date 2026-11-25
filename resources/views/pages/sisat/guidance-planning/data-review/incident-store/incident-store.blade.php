@@ -11,13 +11,13 @@
             <flux:heading>Nuevo caso</flux:heading>
             <flux:separator />
             <flux:select label="Tipo de incidente" wire:model="workIncident">
-                <flux:select.option>Seleccione una opcion...</flux:select.option>
+                <flux:select.option value="">Seleccione una opcion...</flux:select.option>
                 @foreach (App\Enums\WorkIncidentType::cases() as $workIncident)
                     <flux:select.option value="{{ $workIncident->value }}">{{ $workIncident->label() }}</flux:select.option>
                 @endforeach
             </flux:select>
             <flux:select label="Trabajador" wire:model="employeeId">
-                <flux:select.option>Seleccione una opcion...</flux:select.option>
+                <flux:select.option value="">Seleccione una opcion...</flux:select.option>
                 @foreach ($company->employees()->orderBy('first_name')->get() as $employee)
                     <flux:select.option value="{{ $employee->id }}">{{ $employee->display_name() }}</flux:select.option>
                 @endforeach

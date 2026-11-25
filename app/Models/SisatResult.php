@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 /**
  * @property int $id
@@ -33,6 +35,24 @@ class SisatResult extends Model
 
     public function activity()
     {
-        return $this->belongsTo(SisatActivity::class);
+        return $this->belongsTo(SisatActivity::class, 'sisat_activity_id');
+    }
+
+    /**
+     * Datos guardados de una etapa del flujo (results.stages.{stage}), o null si no la alcanzó.
+     */
+    public function stage(string $stage): ?array
+    {
+        return $this->results['stages'][$stage] ?? null;
+    }
+
+    /**
+     * Momento en que el registro alcanzó la etapa indicada.
+     */
+    public function stageAt(string $stage): ?CarbonInterface
+    {
+        $at = $this->stage($stage)['at'] ?? null;
+
+        return $at ? Date::parse($at) : null;
     }
 }
