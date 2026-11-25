@@ -21,9 +21,9 @@
         <div class="flex flex-wrap gap-6 text-sm">
             @foreach (WorkIncidentStatus::cases() as $stage)
                 <div>
-                    <span class="text-zinc-500 dark:text-zinc-400">{{ $stage->label() }}s</span>
+                    <span class="text-zinc-500 dark:text-zinc-400">{{ $stage->pluralLabel() }}</span>
                     <span class="font-semibold">{{ $totals[$stage->value] }}</span>
-                    @if ($stage !== WorkIncidentStatus::REGISTERED && $registered > 0)
+                    @if (! $stage->isFirst() && $registered > 0)
                         <span class="text-xs text-zinc-500">({{ round($totals[$stage->value] / $registered * 100) }} %)</span>
                     @endif
                 </div>
