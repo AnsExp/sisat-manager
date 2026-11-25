@@ -1,7 +1,7 @@
 @php
     /**
      * @var App\Models\Company $company
-     * @var Illuminate\Database\Eloquent\Collection<int,App\Models\SisatModule> $modules
+     * @var Illuminate\Support\Collection<int,App\Models\SisatModule> $modules
      */
 @endphp
 
@@ -51,7 +51,6 @@
             <livewire:pages::companies.show.company-employees :company="$company" />
         </flux:card.body>
     </flux:card>
-
     <livewire:pages::companies.show.form-workspace :company="$company" />
     <livewire:pages::companies.show.form-position :company="$company" />
     <livewire:pages::companies.show.form-employee :company="$company" />

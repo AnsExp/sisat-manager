@@ -2,7 +2,7 @@
 
 use App\Models\Company;
 use App\Models\SisatModule;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 new class extends Component

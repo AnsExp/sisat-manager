@@ -1,19 +1,20 @@
 @php
     /**
-     * @var Illuminate\Support\Collection $activities
+     * @var App\Models\Company $company
+     * @var App\Models\SisatModule $module
      */
 @endphp
 
 <div>
-    @if (!$activities->isEmpty())
-        <flux:card body="inset" variant="outline">
-            <flux:card.header wire:click="toggle">
+    @if ($module->activities)
+        <flux:card body="inset" variant="outline" x-data="{ open: @entangle('open') }">
+            <flux:card.header class="cursor-pointer select-none" wire:click="toggle">
                 <flux:heading size="sm">{{ $module->name }}</flux:heading>
             </flux:card.header>
 
-            @if ($open)
+            <div x-show="open" x-collapse.duration.350ms>
                 <flux:card.body>
-                    @foreach ($activities as $activity)
+                    @foreach ($module->activities as $activity)
                         @php
                             $progress = App\Modules\ActivityCalculator::calculate($company, $activity) * 100;
                         @endphp
@@ -23,10 +24,10 @@
                             </flux:text>
 
                             <div class="flex items-center gap-4">
-                                {{-- Barra de progreso --}}
                                 <div class="flex w-40 items-center gap-2.5">
                                     <div class="h-2 flex-1 overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-700">
-                                        <div class="h-full rounded-full bg-zinc-900 dark:bg-white" style="width: {{ $progress }}%">
+                                        <div class="h-full rounded-full bg-zinc-900 dark:bg-white"
+                                            style="width: {{ $progress }}%">
                                         </div>
                                     </div>
                                     <span class="w-9 text-right font-mono text-xs tabular-nums text-zinc-500">
@@ -42,7 +43,7 @@
                         </div>
                     @endforeach
                 </flux:card.body>
-            @endif
+            </div>
         </flux:card>
     @endif
 </div>

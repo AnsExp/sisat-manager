@@ -2,8 +2,7 @@
 
 use App\Models\Company;
 use App\Models\SisatModule;
-use App\Modules\ModuleChecker;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 new class extends Component
@@ -12,25 +11,12 @@ new class extends Component
 
     public SisatModule $module;
 
-    public Collection $activities;
-
     public bool $open = false;
 
     public function mount(Company $company, SisatModule $module)
     {
         $this->company = $company;
         $this->module = $module;
-        $this->initActivities();
-    }
-
-    private function initActivities()
-    {
-        $this->activities = collect();
-        foreach ($this->module->activities as $activity) {
-            if (ModuleChecker::checkActivity($this->company, $activity)) {
-                $this->activities->push($activity);
-            }
-        }
     }
 
     public function toggle()
