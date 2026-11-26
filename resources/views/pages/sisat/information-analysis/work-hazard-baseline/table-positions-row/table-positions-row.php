@@ -90,7 +90,7 @@ new class extends Component
         ]);
 
         $results = $result->results;
-        $results['stages'][$step->value] = ['at' => now()->toIso8601String(), 'user_id' => auth()->id()];
+        $results['stages'][$step->value] = ['at' => now()->format('Y-m-dTH:m:s'), 'user_id' => auth()->id()];
         $results['status'] = $step->value;
         $result->results = $results;
         $result->save();
