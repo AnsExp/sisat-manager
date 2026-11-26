@@ -1,14 +1,8 @@
 @use('App\Enums\PpeEfficiencyEvaluationStep')
 
-@php
-    /**
-     * @var App\Models\Position $position
-     */
-@endphp
-
 <flux:table.row>
     <flux:table.cell>
-        {{ $position->name }}
+        {{ $item->results['item']['name'] }}
     </flux:table.cell>
 
     @foreach (PpeEfficiencyEvaluationStep::cases() as $step)
@@ -22,4 +16,9 @@
             </div>
         </flux:table.cell>
     @endforeach
+
+    <flux:table.cell align="end">
+        <flux:button size="xs" variant="ghost" icon="trash" wire:click="remove"
+            wire:confirm="¿Eliminar este ítem y sus pasos marcados?" />
+    </flux:table.cell>
 </flux:table.row>

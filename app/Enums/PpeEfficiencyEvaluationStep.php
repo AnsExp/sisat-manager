@@ -5,11 +5,12 @@ namespace App\Enums;
 use App\Enums\Concerns\StageFlow;
 
 /**
- * Pasos de la línea base de peligros y riesgos de un puesto de trabajo (literal 2.1.a).
+ * Pasos de un ítem de protección (EPP o protección colectiva) en la evaluación de
+ * su eficacia (literal 2.1.b).
  *
- * Orden: peligros identificados → riesgos evaluados → medidas definidas → vigente.
- * Un paso solo puede marcarse si el anterior está marcado, y un puesto cuenta como
- * «con matriz IPER vigente» (indicador 2.1.a.1) cuando alcanza el último paso.
+ * Orden: requerido en la matriz → eficacia evaluada → entregado a expuestos → vigente.
+ * Un paso solo puede marcarse si el anterior está marcado, y un ítem cuenta como
+ * evaluado y vigente (indicador 2.1.b.1) cuando alcanza el último paso.
  */
 enum PpeEfficiencyEvaluationStep: string
 {
@@ -24,29 +25,22 @@ enum PpeEfficiencyEvaluationStep: string
     {
         return match ($this) {
             self::REQUIRED => 'Requerido en matriz',
-            self::EVALUATED => 'Eficacio evaluada',
+            self::EVALUATED => 'Eficacia evaluada',
             self::DELIVERED => 'Entregado a expuestos',
             self::CURRENT => 'Vigente',
         };
     }
 
     /**
-     * Nombre para los conteos («5 puestos con peligros identificados»).
+     * Nombre para los conteos («3 ítems con eficacia evaluada»).
      */
     public function pluralLabel(): string
     {
         return match ($this) {
             self::REQUIRED => 'Requeridos en matriz',
-            self::EVALUATED => 'Con eficacion evaluada',
+            self::EVALUATED => 'Con eficacia evaluada',
             self::DELIVERED => 'Entregados a expuestos',
             self::CURRENT => 'Vigentes',
         };
-    }
-
-    public function previous(): ?self
-    {
-        $cases = self::cases();
-
-        return $cases[array_search($this, $cases, true) - 1] ?? null;
     }
 }

@@ -2,17 +2,18 @@
 
 use App\Enums\PpeEfficiencyEvaluationStep;
 use App\Models\Company;
-use App\Models\Position;
 use App\Models\SisatActivity;
 use App\Models\SisatModule;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 /**
- * Línea base de identificación de peligros, evaluación de riesgos y medidas de
- * control (literal 2.1.a). Cada puesto avanza por: peligros identificados →
- * riesgos evaluados → medidas definidas → vigente.
+ * Evaluación y control de la eficacia de los equipos de protección personal y
+ * colectiva (literal 2.1.b). El usuario arma la lista de ítems de protección y
+ * cada ítem avanza por: requerido en matriz → eficacia evaluada → entregado a
+ * expuestos → vigente.
  */
 new class extends Component
 {
@@ -30,46 +31,45 @@ new class extends Component
     }
 
     /**
-     * Total de puestos de la empresa: denominador del indicador 2.1.a.1.
+     * Paso actual de cada ítem de la lista (null si aún no tiene pasos marcados).
+     *
+     * @return Collection<int, PpeEfficiencyEvaluationStep|null>
      */
     #[Computed]
-    public function totalPositions(): int
+    public function itemSteps()
     {
-        return Position::whereIn('workspace_id', $this->company->workspaces()->select('id'))->count();
+        return $this->activity
+            ->results()
+            ->where('company_id', $this->company->id)
+            ->pluck('results')
+            ->filter(fn ($results) => isset($results['item']['name']))
+            ->map(fn ($results) => PpeEfficiencyEvaluationStep::tryFrom($results['status'] ?? ''))
+            ->values();
     }
 
     /**
-     * Cuántos puestos alcanzaron cada paso, de forma acumulada: un puesto vigente
-     * cuenta también en los pasos anteriores. % vigente = vigentes ÷ total de puestos.
+     * Cuántos ítems alcanzaron cada paso, de forma acumulada: un ítem vigente
+     * cuenta también en los pasos anteriores. % vigentes = vigentes ÷ ítems.
      *
-     * @return array<string, int> ['identified' => n, 'evaluated' => n, 'controls_defined' => n, 'current' => n]
+     * @return array<string, int> ['required' => n, 'evaluated' => n, 'delivered' => n, 'current' => n]
      */
     #[Computed]
     public function stepTotals(): array
     {
-        $positionIds = Position::whereIn('workspace_id', $this->company->workspaces()->select('id'))->pluck('id');
-
-        // Solo puestos que siguen existiendo en la empresa.
-        $currentSteps = $this->activity
-            ->results()
-            ->where('company_id', $this->company->id)
-            ->pluck('results')
-            ->filter(fn ($results) => $positionIds->contains($results['position']['id'] ?? null))
-            ->map(fn ($results) => PpeEfficiencyEvaluationStep::tryFrom($results['status'] ?? ''))
-            ->filter();
-
         $totals = [];
 
         foreach (PpeEfficiencyEvaluationStep::cases() as $step) {
-            $totals[$step->value] = $currentSteps->filter(fn ($current) => $current->hasReached($step))->count();
+            $totals[$step->value] = $this->itemSteps
+                ->filter(fn ($current) => $current?->hasReached($step))
+                ->count();
         }
 
         return $totals;
     }
 
-    #[On('baseline-updated')]
+    #[On('ppe-items-updated')]
     public function reloadTotals(): void
     {
-        unset($this->stepTotals);
+        unset($this->itemSteps, $this->stepTotals);
     }
 };

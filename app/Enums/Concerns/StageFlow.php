@@ -20,6 +20,14 @@ trait StageFlow
         return self::cases()[$this->position() + 1] ?? null;
     }
 
+    /**
+     * Etapa anterior, o null si esta es la primera.
+     */
+    public function previous(): ?self
+    {
+        return self::cases()[$this->position() - 1] ?? null;
+    }
+
     public function isFirst(): bool
     {
         return $this->position() === 0;

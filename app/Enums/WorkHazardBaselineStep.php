@@ -42,11 +42,4 @@ enum WorkHazardBaselineStep: string
             self::CURRENT => 'Con línea base vigente',
         };
     }
-
-    public function previous(): ?self
-    {
-        $cases = self::cases();
-
-        return $cases[array_search($this, $cases, true) - 1] ?? null;
-    }
 }
