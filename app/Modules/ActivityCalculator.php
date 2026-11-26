@@ -8,24 +8,31 @@ use Illuminate\Support\Str;
 
 class ActivityCalculator
 {
-    /**
-     * Summary of calculate
-     *
-     * @return float
-     */
-    public static function calculate(Company $company, SisatActivity $activity)
+    /** @var array<string, float> */
+    private static array $calculateCache = [];
+
+    public static function calculate(Company $company, SisatActivity $activity): float
     {
         $moduleCode = Str::studly($activity->module->slug);
         $activityCode = Str::studly($activity->slug);
-        $class = "App\\Modules\\{$moduleCode}\\{$activityCode}";
-        if (! class_exists($class)) {
-            return (new DefaultCalculate)->calculate($company, $activity);
-        }
-        $item = new $class;
-        if ($item instanceof ActivityItem) {
-            return $item->calculate($company, $activity);
+        $cacheKey = $company->getKey().':'.$moduleCode.'-'.$activityCode;
+
+        if (\array_key_exists($cacheKey, self::$calculateCache)) {
+            return self::$calculateCache[$cacheKey];
         }
 
-        return 0.0;
+        $class = "App\\Modules\\{$moduleCode}\\{$activityCode}";
+
+        if (! class_exists($class)) {
+            return self::$calculateCache[$cacheKey] = (float) (new DefaultCalculate)->calculate($company, $activity);
+        }
+
+        $item = new $class;
+
+        if ($item instanceof ActivityItem) {
+            return self::$calculateCache[$cacheKey] = (float) $item->calculate($company, $activity);
+        }
+
+        return self::$calculateCache[$cacheKey] = 0.0;
     }
 }

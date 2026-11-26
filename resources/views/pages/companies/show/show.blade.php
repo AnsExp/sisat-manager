@@ -22,6 +22,35 @@
         </flux:text>
         <flux:separator variant="subtle" />
     </div>
+
+    @php
+        $formattedProgress = number_format((float) $progress, 2, ',', '.');
+        $clampedProgress = max(0, min(100, (float) $progress));
+
+        [$badgeColor, $barColor, $statusLabel] = match (true) {
+            $clampedProgress >= 80 => ['emerald', 'bg-emerald-500', 'Óptimo'],
+            $clampedProgress >= 50 => ['amber', 'bg-amber-500', 'En progreso'],
+            default => ['rose', 'bg-rose-500', 'Bajo'],
+        };
+    @endphp
+
+    <div class="space-y-2">
+        <div class="flex items-center justify-between gap-3">
+            <flux:heading size="lg" level="2" class="font-mono tabular-nums tracking-tight">
+                {{ $formattedProgress }}%
+            </flux:heading>
+
+            <flux:badge size="sm" :color="$badgeColor" inset="top bottom">
+                {{ $statusLabel }}
+            </flux:badge>
+        </div>
+
+        <div class="h-2.5 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-700">
+            <div class="h-full rounded-full transition-all duration-500 {{ $barColor }}"
+                style="width: {{ $clampedProgress }}%"></div>
+        </div>
+    </div>
+
     <flux:heading size="lg" level="2">Objetivos a cumplir</flux:heading>
     <div class="space-y-2">
         @foreach ($modules as $module)

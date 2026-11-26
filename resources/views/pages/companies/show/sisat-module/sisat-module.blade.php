@@ -2,11 +2,12 @@
     /**
      * @var App\Models\Company $company
      * @var App\Models\SisatModule $module
+     * @var array<App\Models\SisatActivity> $activities
      */
 @endphp
 
 <div>
-    @if ($module->activities)
+    @if ($activities)
         <flux:card body="inset" variant="outline" x-data="{ open: @entangle('open') }">
             <flux:card.header class="cursor-pointer select-none" wire:click="toggle">
                 <flux:heading size="sm">{{ $module->name }}</flux:heading>
@@ -14,10 +15,8 @@
 
             <div x-show="open" x-collapse.duration.350ms>
                 <flux:card.body>
-                    @foreach ($module->activities as $activity)
-                        @php
-                            $progress = App\Modules\ActivityCalculator::calculate($company, $activity) * 100;
-                        @endphp
+                    @foreach ($activities as $activity)
+                        @php $progress = $this->progress($activity) @endphp
                         <div class="flex flex-col justify-between gap-4 px-5 py-3.5 sm:flex-row sm:items-center">
                             <flux:text class="font-medium text-zinc-800 dark:text-zinc-200">
                                 {{ $activity->name }}
