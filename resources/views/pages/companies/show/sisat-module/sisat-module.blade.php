@@ -2,12 +2,12 @@
     /**
      * @var App\Models\Company $company
      * @var App\Models\SisatModule $module
-     * @var array<App\Models\SisatActivity> $activities
+     * @var Illuminate\Support\Collection<int,App\Models\SisatActivity> $activities
      */
 @endphp
 
 <div>
-    @if ($activities)
+    @if (!$activities->isEmpty())
         <flux:card body="inset" variant="outline" x-data="{ open: @entangle('open') }">
             <flux:card.header class="cursor-pointer select-none" wire:click="toggle">
                 <flux:heading size="sm">{{ $module->name }}</flux:heading>
