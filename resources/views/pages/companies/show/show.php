@@ -32,7 +32,10 @@ new class extends Component
                 $countAccumulated++;
             }
         }
-        $this->progress += ($progressAccumulated / $countAccumulated) * 100;
+        if ($countAccumulated === 0) {
+            return;
+        }
+        $this->progress = ($progressAccumulated / $countAccumulated) * 100;
     }
 
     public function render()
