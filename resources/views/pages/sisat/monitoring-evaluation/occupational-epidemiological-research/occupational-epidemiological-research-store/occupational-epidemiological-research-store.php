@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\OccupationalEpidemiologicalResearchStatus;
 use App\Models\Company;
 use App\Models\SisatActivity;
 use Flux\Flux;
@@ -37,21 +38,24 @@ new class extends Component
     {
         $this->validate();
 
-        // DB::transaction(function () {
-        //     $this->activity->results()->create([
-        //         'company_id' => $this->company->id,
-        //         'results' => [
-        //             'map' => [
-        //                 'path' => null,
-        //                 'sha256' => null,
-        //             ],
-        //             'name' => $this->activityName,
-        //         ],
-        //     ]);
-        //     Flux::toast('Se guardo un nuevo proceso.');
-        //     $this->dispatch('processes-update');
-        //     Flux::modal('process-store')->close();
-        // });
+        DB::transaction(function () {
+            $this->activity->results()->create([
+                'company_id' => $this->company->id,
+                'results' => [
+                    'activity' => $this->activityName,
+                    'month' => $this->month,
+                    'called' => (int) $this->called,
+                    'participants' => null,
+                    'date_execution' => null,
+                    'evidence' => [],
+                    'status' => OccupationalEpidemiologicalResearchStatus::PROGRAMMED->value,
+                ],
+            ]);
+            $this->resetExcept('activity', 'company');
+            $this->dispatch('occupational-epidemiological-research-update');
+            Flux::toast('Se guardo una nueva actividad');
+            Flux::modal('occupational-epidemiological-research-store')->close();
+        });
 
     }
 };
