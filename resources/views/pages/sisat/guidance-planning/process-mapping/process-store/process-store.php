@@ -4,7 +4,6 @@ use App\Models\Company;
 use App\Models\SisatActivity;
 use Flux\Flux;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 new class extends Component

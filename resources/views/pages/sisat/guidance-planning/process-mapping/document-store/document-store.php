@@ -36,12 +36,18 @@ new class extends Component
     public function documentStore(int $idResult)
     {
         $this->result = SisatResult::find($idResult);
+        $this->reset('document');
+        $this->resetValidation();
         Flux::modal('document-store')->show();
     }
 
     public function submit()
     {
         $this->validate();
+
+        if (! $this->result) {
+            return;
+        }
 
         DB::transaction(function () {
             $path = sprintf(
@@ -61,11 +67,11 @@ new class extends Component
             ];
             $this->result->results = $results;
             $this->result->save();
-
-            Flux::toast('Se guardo un nuevo mapa de proceso.');
-            $this->dispatch('processes-update');
-            Flux::modal('document-store')->close();
         });
 
+        $this->reset('document');
+        Flux::toast('Se guardo un nuevo mapa de proceso.');
+        $this->dispatch('processes-update');
+        Flux::modal('document-store')->close();
     }
 };

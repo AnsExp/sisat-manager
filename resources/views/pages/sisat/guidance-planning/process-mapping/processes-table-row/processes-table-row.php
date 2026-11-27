@@ -15,7 +15,7 @@ new class extends Component
     public function mount(SisatResult $result)
     {
         $this->result = $result;
-        $this->sha = $result->results['map']['sha256'];
+        $this->sha = $result->results['map']['sha256'] ?? null;
     }
 
     public function uploadMap()

@@ -9,7 +9,7 @@
         <flux:table.rows>
             @foreach ($this->data as $result)
                 <livewire:pages::sisat.guidance-planning.process-mapping.processes-table-row :result="$result"
-                    :key="$result->id" />
+                    :key="$result->id.'-'.md5(json_encode($result->results))" />
             @endforeach
         </flux:table.rows>
     </flux:table>
